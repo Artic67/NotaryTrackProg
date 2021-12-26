@@ -11,9 +11,16 @@
     <script src="https://www.google.com/jsapi"></script>
     <script defer src="dbcontroller.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      const {app} = require('electron').remote;
+
+      window.closeProgram = function() {
+        app.emit('closeProgram');
+      }
+    </script>
     <!-- <link rel="stylesheet" href="debug.css" /> -->
   </head>
-  <body class="is-inverted">
+  <body>
     <section class="section is-family-raleway" style="padding: 2rem 2rem 0;">
       <div class="container">
         <div class="columns">
@@ -72,9 +79,9 @@
       </div>
     </section>
     
-    <section class="section is-family-raleway is-full">
+    <section class="section is-family-raleway is-full is-dark white-text" style="border-radius: 2rem 2rem 0 0; height: 50%; bottom: 0; width: 100%; position: absolute;">
       <div class="container">
-        <h1 class="title">
+        <h1 class="title white">
           Действия:
         </h1>
         <div class="columns is-multiline">
@@ -86,8 +93,8 @@
               <div class="media-content">
                 <div class="content">
                   <a href="./main.html">
-                    <h1 class="title is-size-4">Добавить запись</h1>
-                    <h2 class="subtitle is-size-7">Добавление записи в учет</h2>
+                    <h1 class="title is-size-4 white">Добавить запись</h1>
+                    <h2 class="subtitle is-size-7 white">Добавление записи в учет</h2>
                   </a>
                 </div>
               </div>
@@ -99,10 +106,10 @@
                 <i class="fas fa-edit"></i>
               </figure>
               <div class="media-content">
-                <div class="content">
+                <div class="content white-text">
                   <a>
-                    <h1 class="title is-size-4">Изменить запись</h1>
-                    <h2 class="subtitle is-size-7">Изменить уже существующую запись</h2>
+                    <h1 class="title is-size-4 white">Изменить запись</h1>
+                    <h2 class="subtitle is-size-7 white">Изменить уже существующую запись</h2>
                   </a>
                 </div>
               </div>
@@ -116,27 +123,15 @@
               <div class="media-content">
                 <div class="content">
                   <a>
-                    <h1 class="title is-size-4">Удалить запись</h1>
-                    <h2 class="subtitle is-size-7">Удалить уже существующую запись</h2>
+                    <h1 class="title is-size-4 white">Удалить запись</h1>
+                    <h2 class="subtitle is-size-7 white">Удалить уже существующую запись</h2>
                   </a>
                 </div>
               </div>
             </article>
           </div>
           <div class="column is-one-quarter column-link">
-            <article class="media">
-              <figure class="media-left">
-                <i class="fas fa-chart-line"></i>
-              </figure>
-              <div class="media-content">
-                <div class="content">
-                  <a>
-                    <h1 class="title is-size-4">Статистика</h1>
-                    <h2 class="subtitle is-size-7">Просмотр статистики</h2>
-                  </a>
-                </div>
-              </div>
-            </article>
+            Forth column
           </div>
           <div class="column is-one-quarter column-link">
             Fifth column
@@ -144,11 +139,20 @@
           <div class="column is-one-quarter column-link">
             Sixth column
           </div>
-          <div class="column is-one-quarter column-link">
-            Seventh column
-          </div>
-          <div class="column is-one-quarter column-link">
-            Eighth column
+          <div class="column is-half column-link">
+            <article class="media">
+              <figure class="media-left">
+                <i class="fas fa-chart-line"></i>
+              </figure>
+              <div class="media-content">
+                <div class="content">
+                  <a>
+                    <h1 class="title is-size-4 white">Статистика прибыли и совершённых услуг</h1>
+                    <h2 class="subtitle is-size-7 white">Просмотр статистики доходов, расходов и услуг нотариуса</h2>
+                  </a>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </div>
