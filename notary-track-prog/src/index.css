@@ -1,0 +1,27 @@
+@font-face {
+ font-family: Raleway; /* Гарнитура шрифта */
+ src: url(fonts/Raleway-VariableFont_wght.ttf); /* Путь к файлу со шрифтом */
+}
+
+.is-family-raleway {
+  font-family: 'Raleway';
+}
+
+a {
+  color:#7a7a7a;
+}
+
+.column-link:hover {
+  background-color: #ebfffc;
+}
+
+.chart-container {
+  position: relative;
+  margin: 0 0 0 auto;
+  height: 15%;
+  width: 100%;
+}
+
+::selection {
+  background: transparent;
+}
