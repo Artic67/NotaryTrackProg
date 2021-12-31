@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"><!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Учет для Нотариусов</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
+        <link rel="stylesheet" href="index.css" />
+        <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+        <script defer src="render.js"></script>
+        <script src="https://www.google.com/jsapi"></script>
+        <script defer src="dbcontroller.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+          const {app} = require('electron').remote;
+    
+          window.closeProgram = function() {
+            app.emit('closeProgram');
+          }
+        </script>
+        <!-- <link rel="stylesheet" href="debug.css" /> -->
+      </head>
+      <body>
+        <main>
+          <div class="bg"></div>
+        <nav class="navbar" role="navigation" aria-label="main navigation" style="background: transparent;">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="">
+              <img src="logo.png" width="28" height="28">
+            </a>
+        
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+        
+          <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item navbar-item-trans">
+                Home
+              </a>
+        
+              <a class="navbar-item navbar-item-trans">
+                Documentation
+              </a>
+        
+              <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link navbar-item-trans">
+                  More
+                </a>
+        
+                <div class="navbar-dropdown navbar-item-trans">
+                  <a class="navbar-item navbar-item-trans">
+                    About
+                  </a>
+                  <a class="navbar-item navbar-item-trans">
+                    Jobs
+                  </a>
+                  <a class="navbar-item navbar-item-trans">
+                    Contact
+                  </a>
+                  <hr class="navbar-divider">
+                  <a class="navbar-item navbar-item-trans">
+                    Report an issue
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="navbar-end">
+              <div class="navbar-item">
+                <div class="buttons" style="display: flex; align-items: baseline;">
+                  <div>
+                    <a class="modal-launch navbar-item-trans">
+                      <i class="fas fa-cog"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <div class="modal is-family-raleway">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title" style="font-weight: 700;">Settings</p>
+              <button class="delete close-modal" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+              This is settings
+            </section>
+            <footer class="modal-card-foot">
+              <button class="button is-success is-family-raleway">Save changes</button>
+              <button class="button is-family-raleway">Cancel</button>
+            </footer>
+          </div>
+        </div>
+
+        <section class="section is-family-raleway is-full is-dark white-text actions-block" style="background-color: #1f2330; border-radius: 2rem 2rem 0 0; height: 100%; width: 100%; position: fixed; top: 0;">
+          <div class="container">
+            <h1 class="title white" style="margin-bottom: 2rem;">
+              Статистика:
+            </h1>
+            <div class="container">
+              <div class="chart-container">
+                <canvas id="myChart"></canvas>
+              </div>
+              <script defer>
+                import { drawDiagram } from "./diagram.js"
+                drawDiagram();
+              </script>
+            </div>
+          </div>
+        </section>
+        </main>
+        <div class="cd-loading-bar"></div>
+      </body>
+    </html>

@@ -1,6 +1,6 @@
 export function drawDiagram() {
     let gradient;
-    
+
     function getGradient(ctx, chartArea, color0, color1) {
       gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
       gradient.addColorStop(0, color0);
@@ -64,6 +64,13 @@ export function drawDiagram() {
         type: 'line',
         data: data,
         options: {
+          animations: {
+            radius: {
+              duration: 400,
+              easing: 'linear',
+              loop: (context) => context.active
+            }
+          },
           responsive: true,
           interaction: {
             mode: 'index',
@@ -72,8 +79,12 @@ export function drawDiagram() {
           stacked: false,
           plugins: {
             title: {
+              font: {
+                size: 21
+              },
+              weight: 800,
               display: true,
-              text: 'Прибыль к количеству клиентов'
+              text: 'Соотношение прибыли к количеству клиентов'
             }
           },
           scales: {
@@ -96,5 +107,8 @@ export function drawDiagram() {
         },
       };
 
+    Chart.defaults.font.family = 'Raleway';
+    Chart.defaults.color = '#FFFFFF';
+    Chart.defaults.font.weight = 700;
     const myChart = new Chart(ctx, config);
 }

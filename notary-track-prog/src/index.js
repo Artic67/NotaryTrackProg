@@ -12,16 +12,17 @@ let mainWindow;
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1920,
+    height: 1080,
     minWidth: 800,
     minHeight: 600,
-    icon: __dirname + "/icon.ico",
+    icon: __dirname + "/icon_new.ico",
     webPreferences: {
       nodeIntegration: true,
     },
   });
 
+  mainWindow.maximize();
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
