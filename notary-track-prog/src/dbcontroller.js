@@ -1,25 +1,26 @@
-const ADODB = require('node-adodb');
-const connection = ADODB.open('Provider=Microsoft.ACE.OLEDB.12.0;Data Source=./src/Access.accdb;Persist Security Info=False;');
-
+export const ADODB = require('node-adodb');
+export const connection = ADODB.open('Provider=Microsoft.ACE.OLEDB.12.0;Data Source=./src/Access.accdb;Persist Security Info=False;');
 
  
-let BDController = {
-    GetData: async function() {
+export let DBController = {
+    getData: async function(query) {
         try {
-          let users = await connection.query('SELECT ft.Num AS Id, ft.Name AS Name, ft.SubCatName AS SubCatName, c.Name AS CatName FROM (SELECT s.Id as Num, s.Name as Name , su.Name as SubCatName, su.CategoryId as CatId FROM Services as s LEFT JOIN SubCategories as su ON s.SubCategoryId = su.Id)  AS ft LEFT JOIN Categories AS c ON ft.CatId = c.Id;');
+          let users = await connection.query(query);
+
+          return await users;
        
-          console.log(JSON.stringify(users, null, 2));
+          //console.log(JSON.stringify(users, null, 2));
         } catch (error) {
           console.log(error);
         }
     },
-    WriteData: async function() {
+    writeData: async function(query) {
         try {
-          let users = await connection.execute('INSERT INTO Країни(Код, Країна, Континент, Середній_вік, Кількість_населення) VALUES ("NEW", "Newton", "Newtoria", 18, 18)');
+          let users = await connection.execute(query);
        
           console.log(JSON.stringify(users, null, 2));
         } catch (error) {
-          console.log(error);
+          console.log(JSON.stringify(error, null, 2));
         }
     }
 }

@@ -4,12 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Учет для Нотариусов</title>
+    <link rel="stylesheet" href="bulmavars.scss">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="../node_modules\bulma-calendar\dist\css\bulma-calendar.min.css">
+
+    <link rel="stylesheet" href="the-datepicker.css">
+    <script src="the-datepicker.js"></script>
+
+    <script src="../node_modules\bulma-calendar\dist/js/bulma-calendar.min.js"></script>
+    <script src="calendar.js"></script>
+
     <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <script defer src="render.js"></script>
     <script src="https://www.google.com/jsapi"></script>
-    <script defer src="dbcontroller.js"></script>
+    <!-- <script defer src="dbcontroller.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
       const {app} = require('electron').remote;
@@ -45,28 +55,6 @@
             <a class="navbar-item navbar-item-trans">
               Documentation
             </a>
-      
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link navbar-item-trans">
-                More
-              </a>
-      
-              <div class="navbar-dropdown navbar-item-trans">
-                <a class="navbar-item navbar-item-trans">
-                  About
-                </a>
-                <a class="navbar-item navbar-item-trans">
-                  Jobs
-                </a>
-                <a class="navbar-item navbar-item-trans">
-                  Contact
-                </a>
-                <hr class="navbar-divider">
-                <a class="navbar-item navbar-item-trans">
-                  Report an issue
-                </a>
-              </div>
-            </div>
           </div>
       
           <div class="navbar-end">
@@ -89,7 +77,7 @@
             <div class="column is-half">
               <div class="container" style="margin: 10% 0 0 5%;">
                 <div class="columns">
-                  <div class="column is-half">
+                  <div class="column is-three-quarters">
                     <article class="media">
                       <figure class="media-left">
                         <span class="icon">
@@ -103,12 +91,12 @@
                       </div>
                     </article>
                   </div>
-                  <div class="column is-half">
+                  <div class="column is-one-quarter">
                     <h1 class="title is-size-3 white">3</h1>
                   </div>
                 </div>
                 <div class="columns">
-                  <div class="column is-half">
+                  <div class="column is-three-quarters">
                     <article class="media">
                       <figure class="media-left">
                         <span class="icon">
@@ -122,7 +110,7 @@
                       </div>
                     </article>
                   </div>
-                  <div class="column is-half">
+                  <div class="column is-one-quarter">
                     <h1 class="title is-size-3 white">36</h1>
                   </div>
                 </div>
@@ -132,10 +120,6 @@
               <div class="chart-container">
                 <canvas id="myChart"></canvas>
               </div>
-              <script defer>
-                import { drawDiagram } from "./diagram.js"
-                drawDiagram();
-              </script>
             </div>
           </div>
         </div>
@@ -145,15 +129,15 @@
         <div class="modal-background"></div>
         <div class="modal-card">
           <header class="modal-card-head">
-            <p class="modal-card-title" style="font-weight: 700;">Settings</p>
+            <p class="modal-card-title" style="font-weight: 700;">Настройки</p>
             <button class="delete close-modal" aria-label="close"></button>
           </header>
           <section class="modal-card-body">
-            This is settings
+            Это Настройки
           </section>
           <footer class="modal-card-foot">
-            <button class="button is-success is-family-raleway">Save changes</button>
-            <button class="button is-family-raleway">Cancel</button>
+            <button class="button is-success is-family-raleway">Сохранить изменения</button>
+            <button class="button is-family-raleway">Отменить</button>
           </footer>
         </div>
       </div>
@@ -164,14 +148,14 @@
             Действия:
           </h1>
           <div class="columns is-multiline">
-            <div class="column is-one-quarter column-link">
+            <div class="column is-one-third column-link">
               <article class="media">
                 <figure class="media-left">
                   <i class="fas fa-address-card"></i>
                 </figure>
                 <div class="media-content">
                   <div class="content">
-                    <a class="action-add-record" href="">
+                    <a class="action-add-record menu-trans-anim" href="./addrecord.html">
                       <h1 class="title is-size-4 white">Добавить запись</h1>
                       <h2 class="subtitle is-size-7 white">Добавление записи в учет</h2>
                     </a>
@@ -179,14 +163,14 @@
                 </div>
               </article>
             </div>
-            <div class="column is-one-quarter column-link">
+            <div class="column is-one-third column-link">
               <article class="media">
                 <figure class="media-left">
                   <i class="fas fa-edit"></i>
                 </figure>
                 <div class="media-content">
                   <div class="content white-text">
-                    <a>
+                    <a class="action-change-record menu-trans-anim" href="./changerecord.html">
                       <h1 class="title is-size-4 white">Изменить запись</h1>
                       <h2 class="subtitle is-size-7 white">Изменить уже существующую запись</h2>
                     </a>
@@ -194,14 +178,14 @@
                 </div>
               </article>
             </div>
-            <div class="column is-one-quarter column-link">
+            <div class="column is-one-third column-link">
               <article class="media">
                 <figure class="media-left">
                   <i class="fas fa-trash-alt"></i>
                 </figure>
                 <div class="media-content">
                   <div class="content">
-                    <a>
+                    <a class="action-delete-record menu-trans-anim" href="./deleterecord.html">
                       <h1 class="title is-size-4 white">Удалить запись</h1>
                       <h2 class="subtitle is-size-7 white">Удалить уже существующую запись</h2>
                     </a>
@@ -209,6 +193,7 @@
                 </div>
               </article>
             </div>
+            <!--
             <div class="column is-one-quarter column-link">
               Forth column
             </div>
@@ -218,7 +203,8 @@
             <div class="column is-one-quarter column-link">
               Sixth column
             </div>
-            <div class="column is-half column-link">
+            -->
+            <div class="column is-two-thirds column-link">
               <article class="media">
                 <figure class="media-left">
                   <i class="fas fa-chart-line"></i>
@@ -233,9 +219,11 @@
                 </div>
               </article>
             </div>
+            <!--
             <div class="column is-three-quarters">
             </div>
-            <div class="column is-one-quarter column-link">
+            -->
+            <div class="column is-one-third column-link">
               <article class="media">
                 <figure class="media-left">
                   <i class="fas fa-times-circle"></i>
@@ -253,10 +241,15 @@
           </div>
         </div>
       </section>
-      <a class="right-arrow" href="./stat.html">
+      <a class="right-arrow menu-trans-anim" href="./stat.html">
         <i class="fas fa-chevron-right fa-2x"></i>
       </a>
+      <script defer>
+        import { drawDiagram } from "./diagram.js"
+        drawDiagram();
+      </script>
+      <scr src="./diagram.js"></scr>
     </main>
-    <div class="cd-loading-bar"></div>
+    <div class="cd-loading-bar is-dark"></div>
   </body>
 </html>

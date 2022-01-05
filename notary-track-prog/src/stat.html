@@ -12,7 +12,6 @@
         <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
         <script defer src="render.js"></script>
         <script src="https://www.google.com/jsapi"></script>
-        <script defer src="dbcontroller.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
           const {app} = require('electron').remote;
@@ -102,7 +101,7 @@
           </div>
         </div>
 
-        <section class="section is-family-raleway is-full is-dark white-text actions-block" style="background-color: #1f2330; border-radius: 2rem 2rem 0 0; height: 100%; width: 100%; position: fixed; top: 0;">
+        <section class="section is-family-raleway is-full is-dark white-text actions-block" style="border-radius: 2rem 2rem 0 0; height: 100%; width: 100%; position: fixed; top: 0;">
           <div class="container">
             <h1 class="title white" style="margin-bottom: 2rem;">
               Статистика:
@@ -118,6 +117,10 @@
             </div>
           </div>
         </section>
+        <a class="left-arrow to-menu-trans-anim" href="./index.html">
+          <i class="fas fa-chevron-left fa-2x"></i>
+        </a>
+        <scr src="./diagram.js"></scr>
         </main>
         <div class="cd-loading-bar"></div>
       </body>

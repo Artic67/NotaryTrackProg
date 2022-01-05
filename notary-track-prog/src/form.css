@@ -1,0 +1,33 @@
+.input, .select select, .textarea {
+    background-color: #25252a;
+    border-color: #25252a;
+    color: #fffdfd;
+}
+
+.input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #5f5f5f;
+  opacity: 1; /* Firefox */
+}
+
+.label {
+  color: #fff;
+}
+
+.the-datepicker__container {
+
+}
+
+a.the-datepicker__button:hover .the-datepicker__day-content {
+  background-color: #5f5f5f !important;
+}
+
+
+.the-datepicker__container .the-datepicker__main {
+  border-radius: 0 1rem 1rem;
+  background-color: #25252a;
+  border-color: #25252a;
+}
+
+div.the-datepicker__body > table > tbody > tr td a {
+  color: white !important;
+}
