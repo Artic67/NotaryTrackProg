@@ -144,14 +144,14 @@
             Действия:
           </h1>
           <div class="columns is-multiline">
-            <div class="column is-one-third column-link">
+            <div class="column is-one-third column-link menu-el menu-trans-anim" href="./addrecord.html">
               <article class="media">
                 <figure class="media-left">
                   <i class="fas fa-address-card"></i>
                 </figure>
                 <div class="media-content">
                   <div class="content">
-                    <a class="action-add-record menu-trans-anim" href="./addrecord.html">
+                    <a class="action-add-record" href="./addrecord.html">
                       <h1 class="title is-size-4 white">Добавить запись</h1>
                       <h2 class="subtitle is-size-7 white">Добавление записи в учет</h2>
                     </a>
@@ -159,14 +159,14 @@
                 </div>
               </article>
             </div>
-            <div class="column is-one-third column-link">
+            <div class="column is-one-third column-link menu-el menu-trans-anim" href="./changerecord.html">
               <article class="media">
                 <figure class="media-left">
                   <i class="fas fa-edit"></i>
                 </figure>
                 <div class="media-content">
                   <div class="content white-text">
-                    <a class="action-change-record menu-trans-anim" href="./changerecord.html">
+                    <a class="action-change-record" href="./changerecord.html">
                       <h1 class="title is-size-4 white">Изменить запись</h1>
                       <h2 class="subtitle is-size-7 white">Изменить уже существующую запись</h2>
                     </a>
@@ -174,14 +174,14 @@
                 </div>
               </article>
             </div>
-            <div class="column is-one-third column-link">
+            <div class="column is-one-third column-link menu-el menu-trans-anim" href="./deleterecord.html">
               <article class="media">
                 <figure class="media-left">
                   <i class="fas fa-trash-alt"></i>
                 </figure>
                 <div class="media-content">
                   <div class="content">
-                    <a class="action-delete-record menu-trans-anim" href="./deleterecord.html">
+                    <a class="action-delete-record" href="./deleterecord.html">
                       <h1 class="title is-size-4 white">Удалить запись</h1>
                       <h2 class="subtitle is-size-7 white">Удалить уже существующую запись</h2>
                     </a>
@@ -200,7 +200,7 @@
               Sixth column
             </div>
             -->
-            <div class="column is-two-thirds column-link">
+            <div class="column is-two-thirds column-link menu-el">
               <article class="media">
                 <figure class="media-left">
                   <i class="fas fa-chart-line"></i>
@@ -219,14 +219,14 @@
             <div class="column is-three-quarters">
             </div>
             -->
-            <div class="column is-one-third column-link">
+            <div class="column is-one-third column-link menu-el" onclick="closeProgram();">
               <article class="media">
                 <figure class="media-left">
                   <i class="fas fa-times-circle"></i>
                 </figure>
                 <div class="media-content">
                   <div class="content">
-                    <a onclick="closeProgram();">
+                    <a>
                       <h1 class="title is-size-4 white">Выход</h1>
                       <h2 class="subtitle is-size-7 white">Выйти из приложения</h2>
                     </a>
@@ -246,6 +246,8 @@
       </script>
       <scr src="./diagram.js"></scr>
     </main>
+    <div class="notification-container">
+    </div>
     <div class="cd-loading-bar is-dark"></div>
   </body>
 </html>

@@ -43,7 +43,7 @@ a {
 }
 
 .column-link:hover {
-  background-color: #2a3042;
+  background-color: #303036;
 }
 
 .navbar-item-trans {
@@ -149,3 +149,57 @@ a {
   display: none !important;
 }
 
+tr.tabletr:hover {
+  cursor: pointer;
+}
+
+tr.selectedtr {
+  background-color: #adadad;
+}
+
+tr.selectedtr:hover {
+  background-color: #adadad !important;
+}
+
+.menu-el {
+  cursor: pointer;
+}
+
+div.notification-container {
+  position: fixed;
+  bottom: 0;
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+div.notification {
+  width: 50%;
+  margin: 0 auto;
+  animation-name: notification-raise;
+  animation-fill-mode: forwards;
+  animation-duration: 2s;
+}
+
+@keyframes notification-raise {
+  from {-webkit-transform: translate(0, 100px);}
+  10% {-webkit-transform: translate(0, -20px);}
+  12% {-webkit-transform: translate(0, -22px);}
+  16% {-webkit-transform: translate(0, -20px);}
+  80% {-webkit-transform: translate(0, -20px);}
+  to {-webkit-transform: translate(0, -20px);}
+}
+
+div.notification-fade-out {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, -20px);
+  animation-name: notification-fade-out;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+}
+
+@keyframes notification-fade-out {
+  from {opacity: 1; visibility: visible;}
+  to {opacity: 0; visibility: hidden;}
+}

@@ -109,132 +109,41 @@
         <section class="section is-family-raleway is-full is-dark white-text actions-block" style="border-radius: 2rem 2rem 0 0; height: 100%; width: 100%; position: fixed; top: 0;">
           <div class="container">
             <h1 class="title white" style="margin-bottom: 2rem;">
-              Добавить запись:
+              Изменить запись:
             </h1>
             <section class="section">
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Категория</label>
-                </div>
-                <div class="field-body">
-                  <div class="field is-narrow">
-                    <div class="control">
-                      <div class="select is-fullwidth">
-                        <select class="select-cat">
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <table class="table is-fullwidth is-hoverable">
+                    <thead>
+                        <tr>
+                          <th>Номер записи</th>
+                          <th>Номер услуги</th>
+                          <th>Дата</th>
+                          <th>Цена</th>
+                          <th>Факт. цена</th>
+                          <th>Выезд</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Подкатегория</label>
-                </div>
-                <div class="field-body">
-                  <div class="field is-narrow">
-                    <div class="control">
-                      <div class="select is-fullwidth">
-                        <select class="select-subcat">
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Услуга</label>
-                </div>
-                <div class="field-body">
-                  <div class="field is-narrow">
-                    <div class="control">
-                      <div class="select is-fullwidth">
-                        <select class="select-service">
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Прибыль</label>
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <p class="control is-expanded">
-                      <input class="input income-input" type="text" placeholder="Прибыль">
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Фактическая прибыль</label>
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <p class="control is-expanded">
-                      <input class="input real-income-input" type="text" placeholder="Факт. прибыль">
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="field is-horizontal">
-                <div class="field-label">
-                  <label class="label">Дата</label>
-                </div>
-                <div class="field-body">
-                  <div class="field is-expanded">
-                    <div class="field has-addons">
-                      <p class="control is-expanded">
-                        <input class="input date-input" type="text" id="datepicker">
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="field is-horizontal">
-                <div class="field-label">
-                  <label class="label">Выезд</label>
-                </div>
-                <div class="field-body">
-                  <div class="field is-narrow">
-                    <div class="control">
-                      <label class="checkbox">
-                        <input class="dropoff-input" type="checkbox">
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="field is-horizontal">
-                <div class="field-label">
-                  <!-- Left empty for spacing -->
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <div class="control">
-                      <button class="button is-primary addrecord-button" hreflink="./index.html">
-                        Добавить запись
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                    </tbody>
+                </table>
             </section>
           </div>
         </section>
-        <scr src="./calendar.js"></scr>
-        <scr src="./dbcontroller.js" query="select * from Categories"></scr>
+        <scr src="./dbcontroller.js" query=
+        "select top 10
+        Log.Id as Id,
+        Services.Name as Name,
+        Log.RecordDate as RecordDate,
+        Log.Price as Price,
+        Log.ActualPrice as ActualPrice,
+        Log.DropOff as DropOff
+        from 
+        Log
+        left join Services
+        on Log.ServiceId = Services.Id
+        order by Log.Id desc"
+        ></scr>
         <a class="left-arrow to-menu-trans-anim" href="./index.html">
           <i class="fas fa-chevron-left fa-2x"></i>
         </a>
