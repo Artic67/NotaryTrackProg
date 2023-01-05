@@ -14,8 +14,8 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1920,
     height: 1080,
-    minWidth: 800,
-    minHeight: 600,
+    minWidth: 1536,
+    minHeight: 794,
     icon: __dirname + "/icon_new.ico",
     webPreferences: {
       nodeIntegration: true,
@@ -27,7 +27,7 @@ const createWindow = () => {
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

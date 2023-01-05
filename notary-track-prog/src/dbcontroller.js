@@ -12,7 +12,7 @@ export let DBController = {
        
           //console.log(JSON.stringify(users, null, 2));
         } catch (error) {
-          console.log(error);
+          console.log(JSON.stringify(error, null, 2));
         }
     },
     writeData: async function(query) {

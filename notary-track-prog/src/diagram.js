@@ -1,6 +1,5 @@
 export async function drawDiagram() {
-
-    const db = require('./dbcontroller.js');
+    let db = require('./dbcontroller.js');
     let gradient;
 
     //db.DBController.getData()
@@ -30,18 +29,18 @@ export async function drawDiagram() {
     let chartvar = document.getElementById('myChart');
 
     if(chartvar) {
-      const ctx = chartvar.getContext('2d');
+      let ctx = chartvar.getContext('2d');
 
     
-      const data = {
+      let data = {
         labels: labels,
         datasets: [
           {
             label: 'Количество клиентов',
             data: data1,
             borderColor: function(context) {
-              const chart = context.chart;
-              const {ctx, chartArea} = chart;
+              let chart = context.chart;
+              let {ctx, chartArea} = chart;
   
               if (!chartArea) {
                 // This case happens on initial chart load
@@ -60,8 +59,8 @@ export async function drawDiagram() {
             label: 'Прибыль',
             data: data2,
             borderColor: function(context) {
-              const chart2 = context.chart;
-              const {ctx, chartArea} = chart2;
+              let chart2 = context.chart;
+              let {ctx, chartArea} = chart2;
   
               if (!chartArea) {
                 // This case happens on initial chart load
@@ -79,7 +78,7 @@ export async function drawDiagram() {
         ]
       };
   
-      const config = {
+      let config = {
           type: 'line',
           data: data,
           options: {
@@ -129,6 +128,6 @@ export async function drawDiagram() {
       Chart.defaults.font.family = 'Raleway';
       Chart.defaults.color = '#FFFFFF';
       Chart.defaults.font.weight = 700;
-      const myChart = new Chart(ctx, config);
+      let myChart = new Chart(ctx, config);
     }
 }

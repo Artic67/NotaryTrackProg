@@ -4,18 +4,31 @@
     color: #fffdfd;
 }
 
+input[disabled] {
+    background-color: #702e2e !important;
+    border-color: #702e2e !important;
+}
+
+.input-white, .textarea-white {
+  background-color: #f8f8f8;
+  border-color: #fffdfd;
+  color: #25252a;
+}
+
 .input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #5f5f5f;
   opacity: 1; /* Firefox */
 }
 
+
 .label {
   color: #fff;
 }
 
-.the-datepicker__container {
-
+.label-dark {
+  color: rgb(43, 43, 43);
 }
+
 
 a.the-datepicker__button:hover .the-datepicker__day-content {
   background-color: #5f5f5f !important;
@@ -30,4 +43,26 @@ a.the-datepicker__button:hover .the-datepicker__day-content {
 
 div.the-datepicker__body > table > tbody > tr td a {
   color: white !important;
+}
+
+.file.is-black .file-cta {
+  background-color: #25252a;
+  border-color: transparent;
+  color: #fff;
+}
+
+.file.is-black:hover .file-cta {
+  background-color: #25252a;
+  border-color: transparent;
+  color: #fff;
+}
+
+.file.is-black .file-cta:hover {
+  background-color: #303036;
+  border-color: transparent;
+  color: #fff;
+}
+
+.modal h1.title.is-size-5.is-white {
+  color: #fff;
 }

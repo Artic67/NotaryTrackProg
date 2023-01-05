@@ -1,5 +1,5 @@
 export const notification = {
-    raise : function (notificationText) {
+    raise : function (notificationText, notificationBulmaClass = 'is-danger') {
         const notificationContainer = document.querySelector('div.notification-container');
 
         if (!notificationContainer) { console.error(new Error('Can`t find div with class notification-container')); return;}
@@ -7,7 +7,7 @@ export const notification = {
         let mainDiv = document.createElement('div');
         let button = document.createElement('button');
 
-        mainDiv.classList.add('notification', 'is-danger');
+        mainDiv.classList.add('notification', notificationBulmaClass);
         button.classList.add('delete', 'delete-notification');
 
         mainDiv.append(button);

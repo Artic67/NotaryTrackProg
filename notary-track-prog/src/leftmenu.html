@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"><!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Програма обліку для нотаріусів</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
+        <link rel="stylesheet" href="index.css" />
+        <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+        <script defer src="render.js"></script>
+        <script src="https://www.google.com/jsapi"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+          const {app} = require('electron').remote;
+    
+          window.closeProgram = function() {
+            app.emit('closeProgram');
+          }
+        </script>
+        <!-- <link rel="stylesheet" href="debug.css" /> -->
+      </head>
+      <body>
+        <main>
+          <div class="bg"></div>
+        <nav class="navbar" role="navigation" aria-label="main navigation" style="background: transparent;">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="">
+              <img src="logo.png" width="28" height="28">
+            </a>
+        
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+        
+          <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+            </div>
+            <div class="navbar-end">
+              <div class="navbar-item">
+                <div class="buttons" style="display: flex; align-items: baseline;">
+                  <div>
+                    <a class="modal-launch navbar-item-trans">
+                      <i class="fas fa-cog"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <div class="settings-modal modal is-family-raleway">
+          <div class="modal-background"></div>
+          <div class="modal-card report-settings">
+            <header class="modal-card-head">
+              <p class="modal-card-title" style="font-weight: 700;">Налаштування звітів</p>
+              <button class="delete close-modal" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+              <div class="tabs is-centered">
+                <ul>
+                  <li class="is-active main-report">
+                    <a>
+                      <span class="icon is-small"><i class="fas fa-bars" aria-hidden="true"></i></span>
+                      <span>Загальні</span>
+                    </a>
+                  </li>
+                  <li class="year-report">
+                    <a>
+                      <span class="icon is-small"><i class="fas fa-book" aria-hidden="true"></i></span>
+                      <span>Річний звіт</span>
+                    </a>
+                  </li>
+                  <li class="quart-report">
+                    <a>
+                      <span class="icon is-small"><i class="fas fa-address-book" aria-hidden="true"></i></span>
+                      <span>Щоквартальний звіт</span>
+                    </a>
+                  </li>
+                  <li class="pension-fund-report">
+                    <a>
+                      <span class="icon is-small"><i class="fas fa-file-alt" aria-hidden="true"></i></span>
+                      <span>Звіт до пенсійного фонду</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="main-report-div">
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Папка для звітів</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <div class="file is-black">
+                          <label class="file-label">
+                            <input class="file-input" type="file" name="resume" id="folderpick" webkitdirectory directory multiple/>
+                            <span class="file-cta">
+                              <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                              </span>
+                              <span class="file-label folder-pick-text">
+                                Оберіть папку...
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Найменування нотаріуса</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <input class="input" type="text" id="notary-name" placeholder="Приклад: приватний нотаріус Київського міського...">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Місцезнаходження</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <input class="input" type="text" id="notary-loc" placeholder="Приклад: 03058, м. Київ, вул. Вадима Гетьмана...">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">ПІБ</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <input class="input" type="text" id="notary-fio" placeholder="Приклад: Смірнова Ольга Миколаївна">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Виконувач</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <input class="input" type="text" id="notary-performer" placeholder="Приклад: Смірнова О.М.">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Номер телефону</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <input class="input" type="text" id="notary-tel" placeholder="Приклад: (096) 036 58 58">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Електронна пошта</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <input class="input" type="text" id="notary-email" placeholder="Приклад: notarius@gmail.com">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="year-report-div nonedisplay">
+  
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Утримується додаткових робочих місць</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <input class="input" type="text" id="notary-employment" placeholder="Приклад: 2">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Рік звіту:</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field is-grouped">
+                      <p class="control">
+                        <a class="button year-kind is-modal-black" value="0">
+                          Попередній
+                        </a>
+                      </p>
+                      <p class="control">
+                        <a class="button year-kind is-modal-black" value="1">
+                          Поточний
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="quart-report-div nonedisplay">
+
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Квартал звіту:</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field is-grouped">
+                      <p class="control">
+                        <a class="button quart-kind is-modal-black" value="0">
+                          Попередній
+                        </a>
+                      </p>
+                      <p class="control">
+                        <a class="button quart-kind is-modal-black" value="1">
+                          Поточний
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!--
+                <section class="section">
+                  <h1 class="title is-size-6 has-text-grey has-text-center">Цей звіт ще не потребує налаштувань</h1>
+                </section>
+                -->
+
+              </div>
+              <div class="pension-fund-report-div nonedisplay">
+
+                <h1 class="title is-size-5 is-white">Поля в родовому відмінку:</h1>
+
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">ПІБ</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <input class="input" type="text" id="notary-fior" placeholder="Приклад: Смірнова Людмила Миколаївна">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Найменування нотаріуса</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <input class="input" type="text" id="notary-namer" placeholder="Приклад: приватного нотаріуса Київського...">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Назва пенсійного фонду</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <input class="input" type="text" id="notary-pensionFundName" placeholder="Приклад: Головного управління Пенсійного фонду...">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <h1 class="title is-size-5 is-white">Інші поля:</h1>
+
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">РНОКПП нотаріуса</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <input class="input" type="text" id="notary-rnokpp" placeholder="Приклад: 2894672574">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Вид звіту:</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field is-grouped">
+                      <p class="control">
+                        <a class="button report-kind is-modal-black" value="0">
+                          Первинний
+                        </a>
+                      </p>
+                      <p class="control">
+                        <a class="button report-kind is-modal-black" value="1">
+                          Уточнений
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Квартал звіту:</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field is-grouped">
+                      <p class="control">
+                        <a class="button pens-quart-kind is-modal-black" value="0">
+                          Попередній
+                        </a>
+                      </p>
+                      <p class="control">
+                        <a class="button pens-quart-kind is-modal-black" value="1">
+                          Поточний
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+            <footer class="modal-card-foot">
+              <button class="button is-success is-family-raleway apply-settings">Зберегти зміни</button>
+              <button class="button is-family-raleway close-modal is-modal-black">Відмінити</button>
+            </footer>
+          </div>
+        </div>
+
+        <!-- START year report modal -->
+
+        <div class="tax-modal modal is-family-raleway">
+          <div class="modal-background"></div>
+          <div class="modal-card tax-settings">
+            <header class="modal-card-head">
+              <p class="modal-card-title" style="font-weight: 700;">
+                Налаштування податків
+              </p>
+              <button class="delete close-tax-modal" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Сплачено до бюджету податків</label>
+                </div>
+                <div class="field-body">
+                  <div class="field has-addons">
+                    <p class="control is-expanded">
+                      <input class="input" type="text" id="notary-budgetTax" placeholder="Приклад: 12543.64">
+                    </p>
+                    <p class="control">
+                      <a class="button is-static">
+                        грн
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Сплачено до Пенсійного фонду</label>
+                </div>
+                <div class="field-body">
+                  <div class="field has-addons">
+                    <p class="control is-expanded">
+                      <input class="input" type="text" id="notary-pensionFundTax" placeholder="Приклад: 1203.42">
+                    </p>
+                    <p class="control">
+                      <a class="button is-static">
+                        грн
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </section>
+            <footer class="modal-card-foot">
+              <button class="button is-success is-family-raleway create-year-report">Продовжити</button>
+              <button class="button is-family-raleway close-tax-modal is-modal-black">Відмінити</button>
+            </footer>
+          </div>
+        </div>
+
+        <section class="section is-family-raleway is-full is-dark white-text actions-block" style="border-radius: 2rem 2rem 0 0; height: 100%; width: 100%; position: fixed; top: 0;">
+          <div class="container" style="height: 100%;">
+            <h1 class="title white" style="margin-bottom: 2rem;">
+              Звіти:
+            </h1>
+            <div class="columns is-multiline">
+              <div class="column is-one-third menu-info-cards-div menu-el tax-modal-launch">
+                <div class="menu-info-cards">
+                  <article class="media">
+                    <figure class="media-left">
+                      <i class="fas fa-book"></i>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content">
+                        <a class="action-create-report">
+                          <h1 class="title is-size-4 white">Статистичний річний звіт</h1>
+                          <h2 class="subtitle is-size-7 white">Створення статистичного річного звіту в форматі pdf</h2>
+                        </a>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </div>
+              <div class="column is-one-third menu-info-cards-div menu-el create-quartal-report">
+                <div class="menu-info-cards">
+                  <article class="media">
+                    <figure class="media-left">
+                      <i class="fas fa-address-book"></i>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content">
+                        <a class="action-create-report">
+                          <h1 class="title is-size-4 white">Правочини з нерухомістю (щоквартальний звіт)</h1>
+                          <h2 class="subtitle is-size-7 white">Створення щоквартального звіту в форматі pdf</h2>
+                        </a>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </div>
+              <div class="column is-one-third menu-info-cards-div menu-el create-pension-report">
+                <div class="menu-info-cards">
+                  <article class="media">
+                    <figure class="media-left">
+                      <i class="fas fa-file-alt"></i>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content">
+                        <a class="action-create-report">
+                          <h1 class="title is-size-4 white">Звіт до пенсійного фонду</h1>
+                          <h2 class="subtitle is-size-7 white">Створення звіту до пенсійного фонду в форматі pdf</h2>
+                        </a>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <a class="right-arrow to-menu-trans-anim" href="./index.html">
+          <i class="fas fa-chevron-right fa-2x"></i>
+        </a>
+        </main>
+        <div class="cd-loading-bar"></div>
+      </body>
+    </html>
