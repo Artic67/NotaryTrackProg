@@ -1471,9 +1471,15 @@ async function leftMenuFunc() {
             '6.6': countData('SubcatId', 6),
             '6.7': countData('SubcatId', 7),
             '7': countData('CatId', 2),
-            '7.1': countData('SubcatId', 8),
-            '7.2': countData('SubcatId', 9),
-            '7.3': countData('SubcatId', 10),
+            '7.1': ((parseInt(countData('SubcatId', 8)) || 0) +
+                (parseInt(countData('SubcatId', 11)) || 0)
+                || '-').toString(),
+            '7.2': ((parseInt(countData('SubcatId', 9)) || 0) +
+                (parseInt(countData('SubcatId', 12)) || 0)
+                || '-').toString(),
+            '7.3': ((parseInt(countData('SubcatId', 10)) || 0) +
+                (parseInt(countData('SubcatId', 13)) || 0)
+                || '-').toString(),
             '8': countData('CatId', 3),
             '9': countData('CatId', 4),
             '10': countData('CatId', 5),
@@ -1498,20 +1504,20 @@ async function leftMenuFunc() {
             '18': countData('CatId', 13),
             '19': countData('CatId', 14),
             '20': countData('CatId', 15),
-            '20.1': countData('SubcatId', 39),
-            '20.2': countData('SubcatId', 40),
-            '20.3': countData('SubcatId', 41),
+            '20.1': countData('SubcatId', 40),
+            '20.2': countData('SubcatId', 41),
+            '20.3': countData('SubcatId', 42),
             '21': countData('CatId', 16),
             '22': countData('CatId', 17),
             '23': countData('CatId', 18),
             '24': countData('CatId', 19),
-            '24.1': countData('SubcatId', 45),
-            '24.2': countData('SubcatId', 46),
+            '24.1': countData('SubcatId', 46),
+            '24.2': countData('SubcatId', 47),
             '25': countData('CatId', 20),
             '26': countData('CatId', 21),
-            '26.1': countData('SubcatId', 48),
-            '26.2': countData('SubcatId', 49),
-            '26.3': countData('SubcatId', 50),
+            '26.1': countData('SubcatId', 49),
+            '26.2': countData('SubcatId', 50),
+            '26.3': countData('SubcatId', 51),
             '27': countData('CatId', 22),
             '28': countData('CatId', 23),
             '29': countData('CatId', 24),
@@ -1580,9 +1586,7 @@ async function leftMenuFunc() {
         from
         Log
         where
-        Year(Log.RecordDate) = Year(Now()) ${yearAndQuartNumToQuery[yearQuartNumberOfReport]}
-        And
-        DatePart("q", Log.RecordDate) = DatePart("q", Now()) ${yearAndQuartNumToQuery[quartNumberOfReport]}
+        Year([Log.RecordDate])*4 + DatePart("q",[Log.RecordDate]) = Year(Date())*4 + DatePart("q",Date()) ${yearAndQuartNumToQuery[quartNumberOfReport]}
         group by Log.ServiceId) as ft
         WHERE Services.SubCategoryId = SubCategories.Id
         and
@@ -1759,7 +1763,7 @@ async function leftMenuFunc() {
                 (parseInt(sumPensDataByDate(reportDataByMonths[1])) || 0) +
                 (parseInt(sumPensDataByDate(reportDataByMonths[2])) || 0)
                 || '-').toString(),
-            '2y': sumPensDataByDate(reportData),
+            '2y': ((Math.round(parseFloat(sumPensDataByDate(reportData)) * 100) / 100) || '-').toString(),
             '2.1': sumPensDataByDate(reportDataByMonths[0]),
             '2.2': sumPensDataByDate(reportDataByMonths[1]),
             '2.3': sumPensDataByDate(reportDataByMonths[2]),
