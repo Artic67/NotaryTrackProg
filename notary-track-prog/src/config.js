@@ -1,24 +1,26 @@
-import { AsyncLocalStorage } from 'async_hooks';
-
 const fs = require('fs');
 
 
-
-export const config = {
+const config = {
     createFile: function (filename) {
-        fs.open(filename, 'w', (err) => {
-            if(err) console.error(err);
-            console.log('File created');
+        return new Promise(resolve => {
+            fs.open(filename, 'w', (err) => {
+                if(err) console.error(err);
+                //console.log('File created');
+                resolve(true);
+            });
         });
     },
     isFileExisting: function (filename) {
         let ans = fs.existsSync(filename);
         return ans;
     },
-    read: function () {
-        let filename = './src/config.csv';
+    read: function (filename) {
         if (config.isFileExisting(filename)) {
-            let data = fs.readFileSync('./src/config.csv', 'utf8');
+            let data = fs.readFileSync(filename, 'utf8');
+            if (data.length === 0) {
+                return {};
+            }
             let obj = {};
             for (let row of data.split('\n')) {
                 let arr = row.split(';');
@@ -26,28 +28,47 @@ export const config = {
             }
             return obj;
         } else {
-            console.log(filename);
-            console.log(config.isFileExisting(filename));
-            //config.createFile(filename);
+            //console.log(filename);
+            //console.log(config.isFileExisting(filename));
+            config.createFile(filename);
             return {};
         }
         
     },
-    write: function (obj) {
-        let object = config.read();
-        for (let key in obj) {
-            object[key] = obj[key];
-        }
+    write: function (filename, obj) {
+        try {
+            let object = config.read(filename);
+            for (let key in obj) {
+                object[key] = obj[key];
+            }
 
-        let string = '';
-        for (let key in object) {
-            let substr = `${key};${object[key]}\n`;
-            string += substr;
-        }
+            let string = '';
+            for (let key in object) {
+                let substr = `${key};${object[key]}\n`;
+                string += substr;
+            }
 
-        string = string.slice(0, -1);
-        console.log(string);
+            string = string.slice(0, -1);
+            //console.log(string);
+            
+            fs.writeFileSync(filename, string);
+            return true;
+        } catch (err) {
+            console.error(err);
+            return false;
+        }
         
-        fs.writeFileSync('./src/config.csv', string);
+    },
+    delete: function (filename) {
+        try {
+            fs.rmSync(filename);
+            return true;
+        } catch (err) {
+            console.error(err);
+            return false;
+        }
+        
     }
 }
+
+module.exports = { config };

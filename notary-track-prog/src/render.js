@@ -8,6 +8,8 @@ const { loading } = require('./loading.js');
 
 const db = require('./dbcontroller.js');
 
+const configFile = './src/config.csv';
+
 setMainClientsForDates(() => {
     let el = document.querySelector('.start-prog-loading');
     el.parentNode.removeChild(el);
@@ -1168,7 +1170,7 @@ async function leftMenuFunc() {
         '#notary-rnokpp': 'rnokpp',
     };
 
-    let configObject = config.read();
+    let configObject = config.read(configFile);
 
     // Settings filling when page is loading
     for (let key in idToConfigName) {
@@ -1251,7 +1253,7 @@ async function leftMenuFunc() {
                 }
             }
 
-            config.write(configObectToWrite);
+            config.write(configFile, configObectToWrite);
 
             notification.raise('Налаштування звітів успішно збережені', 'is-primary');
 
@@ -1387,7 +1389,7 @@ async function leftMenuFunc() {
             }
         }
 
-        config.write(configObectToWrite2);
+        config.write(configFile, configObectToWrite2);
 
         notification.raise('Створення звіту', 'is-info');
 
@@ -1395,7 +1397,7 @@ async function leftMenuFunc() {
         taxModal.classList.remove('is-active');
 
 
-        let configObject = config.read();
+        let configObject = config.read(configFile);
 
         if (!configObject['reportFolder']) {
             console.error(new Error('Don`t choosed the report folder!'));
@@ -1554,7 +1556,7 @@ async function leftMenuFunc() {
     // START Quartal report button EventListener
     document.querySelector('.create-quartal-report').addEventListener('click', async () => {
 
-        let configObject = config.read();
+        let configObject = config.read(configFile);
 
         if (!configObject['reportFolder']) {
             console.error(new Error('Don`t choosed the report folder!'));
@@ -1663,7 +1665,7 @@ async function leftMenuFunc() {
     // START Pension report button EventListener
     document.querySelector('.create-pension-report').addEventListener('click', async () => {
 
-        let configObject = config.read();
+        let configObject = config.read(configFile);
 
         if (!configObject['reportFolder']) {
             console.error(new Error('Don`t choosed the report folder!'));

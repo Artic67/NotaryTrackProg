@@ -1,9 +1,9 @@
-export const ADODB = require('node-adodb');
+const ADODB = require('node-adodb');
 let filesource = "./src/Access.accdb";
-export const connection = ADODB.open(`Provider=Microsoft.ACE.OLEDB.12.0;Data Source=${filesource};Persist Security Info=False;`);
+const connection = ADODB.open(`Provider=Microsoft.ACE.OLEDB.12.0;Data Source=${filesource};Persist Security Info=False;`);
 
  
-export let DBController = {
+let DBController = {
     getData: async function(query) {
         try {
           let users = await connection.query(query);
@@ -26,3 +26,5 @@ export let DBController = {
         }
     }
 }
+
+module.exports = { DBController,ADODB, connection };
