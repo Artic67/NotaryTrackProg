@@ -1,60 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Учет для Нотариусов</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
-    <link rel="stylesheet" href="index.css" />
-    <link rel="stylesheet" href="form.css">
 
-    <link rel="stylesheet" href="the-datepicker.css">
-    <script src="the-datepicker.js"></script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Програма обліку для нотаріусів</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" />
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="form.css">
 
-    <script src="calendar.js"></script>
+  <link rel="stylesheet" href="the-datepicker.css">
+  <script src="the-datepicker.js"></script>
 
-    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-    <script defer src="render.js"></script>
-    <!-- <script defer src="dbcontroller.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-      const {app} = require('electron').remote;
+  <script src="calendar.js"></script>
 
-      window.closeProgram = function() {
-        app.emit('closeProgram');
-      }
-    </script>
-    <!-- <link rel="stylesheet" href="debug.css" /> -->
-  </head>
-  <body>
-    <main>
-      <div class="bg"></div>
-      <nav class="navbar" role="navigation" aria-label="main navigation" style="background: transparent;">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="">
-            <img src="logo.png" width="28" height="28">
-          </a>
-      
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  <script defer src="render.js"></script>
+  <!-- <script defer src="dbcontroller.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"
+    integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    const { app } = require('electron').remote;
+
+    window.closeProgram = function () {
+      app.emit('closeProgram');
+    }
+  </script>
+  <!-- <link rel="stylesheet" href="debug.css" /> -->
+</head>
+
+<body>
+  <main>
+    <div class="bg"></div>
+    <nav class="navbar" role="navigation" aria-label="main navigation" style="background: transparent;">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="">
+          <img src="logo.png" width="28" height="28">
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
         </div>
-      
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item navbar-item-trans">
-              Home
-            </a>
-      
-            <a class="navbar-item navbar-item-trans">
-              Documentation
-            </a>
-          </div>
-      
-          <div class="navbar-end">
-            <div class="navbar-item">
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <!--
               <div class="buttons" style="display: flex; align-items: baseline;">
                 <div>
                   <a class="modal-launch navbar-item-trans">
@@ -62,65 +60,67 @@
                   </a>
                 </div>
               </div>
-            </div>
+              -->
           </div>
         </div>
-      </nav>
-  
-      <section class="section is-family-raleway white-text" style="padding: 2rem 2rem 0; height: 50%;">
-        <div class="container">
-          <div class="columns">
-            <div class="column is-half">
-              <div class="container" style="margin: 10% 0 0 5%;">
-                <div class="columns">
-                  <div class="column is-three-quarters">
-                    <article class="media">
-                      <figure class="media-left">
-                        <span class="icon">
-                          <i class="fas fa-user fa-2x"></i>
-                        </span>
-                      </figure>
-                      <div class="media-content">
-                        <div class="content">
-                            <h1 class="title is-size-3 white">Клиентов сегодня:</h1>
-                        </div>
+      </div>
+    </nav>
+
+    <section class="section is-family-raleway white-text" style="padding: 2rem 2rem 0; height: 50%;">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-half">
+            <div class="container" style="margin: 10% 0 0 5%;">
+              <div class="columns" style="margin-bottom: 0;">
+                <div class="column is-three-quarters">
+                  <article class="media">
+                    <figure class="media-left main-icons-clients">
+                      <span class="icon">
+                        <i class="fas fa-user fa-2x"></i>
+                      </span>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content">
+                        <h1 class="title is-size-1 white">Клієнтів сьогодні:</h1>
                       </div>
-                    </article>
-                  </div>
-                  <div class="column is-one-quarter">
-                    <h1 class="title is-size-3 white">3</h1>
-                  </div>
+                    </div>
+                  </article>
                 </div>
-                <div class="columns">
-                  <div class="column is-three-quarters">
-                    <article class="media">
-                      <figure class="media-left">
-                        <span class="icon">
-                          <i class="fas fa-users fa-2x"></i>
-                        </span>
-                      </figure>
-                      <div class="media-content">
-                        <div class="content">
-                            <h1 class="title is-size-3 white">Клиентов за 7 дней:</h1>
-                        </div>
+                <div class="column is-one-quarter">
+                  <h1 class="title is-size-1 white" id="clients-for-day"></h1>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-three-quarters">
+                  <article class="media">
+                    <figure class="media-left main-icons-clients">
+                      <span class="icon">
+                        <i class="fas fa-users fa-2x"></i>
+                      </span>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content">
+                        <h1 class="title is-size-1 white">Клієнтів за 7 днів:</h1>
                       </div>
-                    </article>
-                  </div>
-                  <div class="column is-one-quarter">
-                    <h1 class="title is-size-3 white">36</h1>
-                  </div>
+                    </div>
+                  </article>
+                </div>
+                <div class="column is-one-quarter">
+                  <h1 class="title is-size-1 white" id="clients-for-seven-days"></h1>
                 </div>
               </div>
             </div>
-            <div class="column is-half">
-              <div class="chart-container">
-                <canvas id="myChart"></canvas>
-              </div>
+          </div>
+          <div class="column is-half">
+            <div class="chart-container">
+              <canvas id="mainChart"></canvas>
             </div>
           </div>
         </div>
-      </section>
-  
+      </div>
+    </section>
+
+    <!-- 
       <div class="modal is-family-raleway">
         <div class="modal-background"></div>
         <div class="modal-card">
@@ -129,97 +129,95 @@
             <button class="delete close-modal" aria-label="close"></button>
           </header>
           <section class="modal-card-body">
-            Это Настройки
           </section>
           <footer class="modal-card-foot">
-            <button class="button is-success is-family-raleway">Сохранить изменения</button>
-            <button class="button is-family-raleway">Отменить</button>
+            <button class="button is-success is-family-raleway apply-settings">Сохранить изменения</button>
+            <button class="button is-family-raleway close-modal">Отменить</button>
           </footer>
         </div>
       </div>
-      
-      <section class="section is-family-raleway is-full is-dark white-text actions-block">
-        <div class="container">
-          <h1 class="title white" style="margin-bottom: 2rem;">
-            Действия:
-          </h1>
-          <div class="columns is-multiline">
-            <div class="column is-one-third column-link menu-el menu-trans-anim" href="./addrecord.html">
+      -->
+
+    <section class="section is-family-raleway is-full is-dark white-text actions-block">
+      <div class="container">
+        <h1 class="title white" style="margin-bottom: 2rem;">
+          Операції:
+        </h1>
+        <div class="columns is-multiline">
+          <div class="column is-one-third menu-info-cards-div menu-el menu-trans-anim" href="./addrecord.html">
+            <div class="menu-info-cards">
               <article class="media">
                 <figure class="media-left">
-                  <i class="fas fa-address-card"></i>
+                  <i class="fas fa-address-card" style="color: #09A603;"></i>
                 </figure>
                 <div class="media-content">
                   <div class="content">
                     <a class="action-add-record" href="./addrecord.html">
-                      <h1 class="title is-size-4 white">Добавить запись</h1>
-                      <h2 class="subtitle is-size-7 white">Добавление записи в учет</h2>
+                      <h1 class="title is-size-4 white">Додати запис</h1>
+                      <h2 class="subtitle is-size-7 white">Додавання записів до обліку</h2>
                     </a>
                   </div>
                 </div>
               </article>
             </div>
-            <div class="column is-one-third column-link menu-el menu-trans-anim" href="./changerecord.html">
+          </div>
+          <div class="column is-one-third menu-info-cards-div menu-el menu-trans-anim" href="./changerecord.html">
+            <div class="menu-info-cards">
               <article class="media">
                 <figure class="media-left">
-                  <i class="fas fa-edit"></i>
+                  <i class="fas fa-edit" style="color: #F2CB05;"></i>
                 </figure>
                 <div class="media-content">
                   <div class="content white-text">
                     <a class="action-change-record" href="./changerecord.html">
-                      <h1 class="title is-size-4 white">Изменить запись</h1>
-                      <h2 class="subtitle is-size-7 white">Изменить уже существующую запись</h2>
+                      <h1 class="title is-size-4 white">Змінити запис</h1>
+                      <h2 class="subtitle is-size-7 white">Змінити вже існуючий запис</h2>
                     </a>
                   </div>
                 </div>
               </article>
             </div>
-            <div class="column is-one-third column-link menu-el menu-trans-anim" href="./deleterecord.html">
+          </div>
+          <div class="column is-one-third menu-info-cards-div menu-el menu-trans-anim" href="./deleterecord.html">
+            <div class="menu-info-cards">
               <article class="media">
                 <figure class="media-left">
-                  <i class="fas fa-trash-alt"></i>
+                  <i class="fas fa-trash-alt" style="color: #F21B54;"></i>
                 </figure>
                 <div class="media-content">
                   <div class="content">
                     <a class="action-delete-record" href="./deleterecord.html">
-                      <h1 class="title is-size-4 white">Удалить запись</h1>
-                      <h2 class="subtitle is-size-7 white">Удалить уже существующую запись</h2>
+                      <h1 class="title is-size-4 white">Видалити запис</h1>
+                      <h2 class="subtitle is-size-7 white">Видалити вже існуючий запис</h2>
                     </a>
                   </div>
                 </div>
               </article>
             </div>
-            <!--
-            <div class="column is-one-quarter column-link">
-              Forth column
-            </div>
-            <div class="column is-one-quarter column-link">
-              Fifth column
-            </div>
-            <div class="column is-one-quarter column-link">
-              Sixth column
-            </div>
-            -->
-            <div class="column is-two-thirds column-link menu-el">
+          </div>
+          <div class="column is-two-thirds menu-info-cards-div menu-el coming-soon" href="./stat.html">
+            <div class="menu-info-cards">
               <article class="media">
                 <figure class="media-left">
-                  <i class="fas fa-chart-line"></i>
+                  <i class="fas fa-chart-line" style="color: #0487D9;"></i>
                 </figure>
                 <div class="media-content">
                   <div class="content">
                     <a>
-                      <h1 class="title is-size-4 white">Статистика прибыли и совершённых услуг</h1>
-                      <h2 class="subtitle is-size-7 white">Просмотр статистики доходов, расходов и услуг нотариуса</h2>
+                      <h1 class="title is-size-4 white">Статистика доходу та наданих послуг</h1>
+                      <h2 class="subtitle is-size-7 white">Перегляд статистики доходів та послуг нотаріуса</h2>
                     </a>
                   </div>
                 </div>
               </article>
             </div>
-            <!--
+          </div>
+          <!--
             <div class="column is-three-quarters">
             </div>
             -->
-            <div class="column is-one-third column-link menu-el" onclick="closeProgram();">
+          <div class="column is-one-third menu-info-cards-div menu-el" onclick="closeProgram();">
+            <div class="menu-info-cards">
               <article class="media">
                 <figure class="media-left">
                   <i class="fas fa-times-circle"></i>
@@ -227,8 +225,8 @@
                 <div class="media-content">
                   <div class="content">
                     <a>
-                      <h1 class="title is-size-4 white">Выход</h1>
-                      <h2 class="subtitle is-size-7 white">Выйти из приложения</h2>
+                      <h1 class="title is-size-4 white">Вихід</h1>
+                      <h2 class="subtitle is-size-7 white">Вийти з програми</h2>
                     </a>
                   </div>
                 </div>
@@ -236,18 +234,32 @@
             </div>
           </div>
         </div>
-      </section>
-      <a class="right-arrow menu-trans-anim" href="./stat.html">
-        <i class="fas fa-chevron-right fa-2x"></i>
-      </a>
-      <script defer>
-        import { drawDiagram } from "./diagram.js"
-        drawDiagram();
-      </script>
-      <scr src="./diagram.js"></scr>
-    </main>
-    <div class="notification-container">
-    </div>
-    <div class="cd-loading-bar is-dark"></div>
-  </body>
+      </div>
+    </section>
+    <a class="right-arrow menu-trans-anim" href="./rightmenu.html">
+      <i class="fas fa-chevron-right fa-2x"></i>
+    </a>
+    <a class="left-arrow menu-trans-anim" href="./leftmenu.html">
+      <i class="fas fa-chevron-left fa-2x"></i>
+    </a>
+    <script defer>
+      let md = require('./mainDiagram.js');
+      md.main();
+    </script>
+
+    <scr src="./mainDiagram.js"></scr>
+  </main>
+  <div class="notification-container">
+  </div>
+  <div class="cd-loading-bar is-dark nonedisplay"></div>
+  <div class="loading nonedisplay">
+    <div class="modal-background loading-background"></div>
+    <img class="loading-gif" src="./logo-big-white.png" alt="This is a loading gif" />
+  </div>
+  <div class="start-prog-loading">
+    <div class="modal-background start-prog-loading-background"></div>
+    <img class="start-loading-gif" src="./start-loading.gif" alt="This is a loading gif" />
+  </div>
+</body>
+
 </html>

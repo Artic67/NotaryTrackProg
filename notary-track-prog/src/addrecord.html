@@ -1,82 +1,60 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+  <meta charset="utf-8">
+  <!DOCTYPE html>
+  <html>
+
   <head>
-    <meta charset="utf-8"><!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Учет для Нотариусов</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
-        <link rel="stylesheet" href="index.css" />
-        <link rel="stylesheet" href="form.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Програма обліку для нотаріусів</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="form.css">
 
-        <link rel="stylesheet" href="the-datepicker.css">
-        <script src="the-datepicker.js"></script>
+    <link rel="stylesheet" href="the-datepicker.css">
+    <script src="the-datepicker.js"></script>
 
-        <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-        <script defer src="render.js"></script>
-        <script src="https://www.google.com/jsapi"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script>
-          const {app} = require('electron').remote;
-    
-          window.closeProgram = function() {
-            app.emit('closeProgram');
-          }
-        </script>
-        <!-- <link rel="stylesheet" href="debug.css" /> -->
-      </head>
-      <body>
-        <main>
-          <div class="bg"></div>
-        <nav class="navbar" role="navigation" aria-label="main navigation" style="background: transparent;">
-          <div class="navbar-brand">
-            <a class="navbar-item" href="">
-              <img src="logo.png" width="28" height="28">
-            </a>
-        
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-            </a>
-          </div>
-        
-          <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-              <a class="navbar-item navbar-item-trans">
-                Home
-              </a>
-        
-              <a class="navbar-item navbar-item-trans">
-                Documentation
-              </a>
-        
-              <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link navbar-item-trans">
-                  More
-                </a>
-        
-                <div class="navbar-dropdown navbar-item-trans">
-                  <a class="navbar-item navbar-item-trans">
-                    About
-                  </a>
-                  <a class="navbar-item navbar-item-trans">
-                    Jobs
-                  </a>
-                  <a class="navbar-item navbar-item-trans">
-                    Contact
-                  </a>
-                  <hr class="navbar-divider">
-                  <a class="navbar-item navbar-item-trans">
-                    Report an issue
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="navbar-end">
-              <div class="navbar-item">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <script defer src="render.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"
+      integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      const { app } = require('electron').remote;
+
+      window.closeProgram = function () {
+        app.emit('closeProgram');
+      }
+    </script>
+    <!-- <link rel="stylesheet" href="debug.css" /> -->
+  </head>
+
+<body>
+  <main>
+    <div class="bg"></div>
+    <nav class="navbar" role="navigation" aria-label="main navigation" style="background: transparent;">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="">
+          <img src="logo.png" width="28" height="28">
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <!--
                 <div class="buttons" style="display: flex; align-items: baseline;">
                   <div>
                     <a class="modal-launch navbar-item-trans">
@@ -84,10 +62,13 @@
                     </a>
                   </div>
                 </div>
-              </div>
-            </div>
+                -->
           </div>
-        </nav>
+        </div>
+      </div>
+    </nav>
+
+    <!--
 
         <div class="modal is-family-raleway">
           <div class="modal-background"></div>
@@ -106,104 +87,170 @@
           </div>
         </div>
 
-        <section class="section is-family-raleway is-full is-dark white-text actions-block" style="border-radius: 2rem 2rem 0 0; height: 100%; width: 100%; position: fixed; top: 0;">
-          <div class="container">
-            <h1 class="title white" style="margin-bottom: 2rem;">
-              Добавить запись:
-            </h1>
-            <section class="section">
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Категория</label>
-                </div>
-                <div class="field-body">
-                  <div class="field is-narrow">
-                    <div class="control">
-                      <div class="select is-fullwidth">
-                        <select class="select-cat">
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        -->
 
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Подкатегория</label>
-                </div>
-                <div class="field-body">
-                  <div class="field is-narrow">
-                    <div class="control">
-                      <div class="select is-fullwidth">
-                        <select class="select-subcat">
-                        </select>
-                      </div>
-                    </div>
+    <section class="section is-family-raleway is-full is-dark white-text actions-block"
+      style="border-radius: 2rem 2rem 0 0; height: 100%; width: 100%; position: fixed; top: 0;">
+      <div class="container">
+        <h1 class="title white" style="margin-bottom: 2rem; margin-left: 2rem;">
+          Додати запис:
+        </h1>
+        <section class="section">
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Категорія</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select class="select-cat">
+                    </select>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Услуга</label>
-                </div>
-                <div class="field-body">
-                  <div class="field is-narrow">
-                    <div class="control">
-                      <div class="select is-fullwidth">
-                        <select class="select-service">
-                        </select>
-                      </div>
-                    </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Підкатегорія</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select class="select-subcat">
+                    </select>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Прибыль</label>
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <p class="control is-expanded">
-                      <input class="input income-input" type="text" placeholder="Прибыль">
-                    </p>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Нотаріальна дія</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select class="select-service">
+                    </select>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Фактическая прибыль</label>
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <p class="control is-expanded">
-                      <input class="input real-income-input" type="text" placeholder="Факт. прибыль">
-                    </p>
-                  </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Плата за нот. дію</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input class="input income-input" type="text" placeholder="Дохід">
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Фактичний дохід</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input class="input real-income-input" type="text" placeholder="Факт. дохід">
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="field is-horizontal">
+            <div class="field-label">
+              <label class="label">Дата</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-expanded">
+                <div class="field has-addons">
+                  <p class="control is-expanded">
+                    <input class="input date-input" type="text" id="datepicker">
+                  </p>
                 </div>
               </div>
-              
-              <div class="field is-horizontal">
-                <div class="field-label">
-                  <label class="label">Дата</label>
+            </div>
+          </div>
+
+          <div class="columns">
+            <div class="column is-half">
+
+              <div class="field is-horizontal contruct-sum-div">
+                <div class="field-label left-input-min-width">
+                  <label class="label">Сума договору</label>
                 </div>
                 <div class="field-body">
                   <div class="field is-expanded">
                     <div class="field has-addons">
                       <p class="control is-expanded">
-                        <input class="input date-input" type="text" id="datepicker">
+                        <input class="input contruct-sum-input" type="text">
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
-              
+
+              <div class="field is-horizontal pdfo-div">
+                <div class="field-label left-input-min-width">
+                  <label class="label">ПДФО</label>
+                </div>
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control is-expanded">
+                        <input class="input pdfo-input" type="text">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field is-horizontal military-levy-div">
+                <div class="field-label left-input-min-width">
+                  <label class="label">Військовий збір</label>
+                </div>
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control is-expanded">
+                        <input class="input military-levy-input" type="text">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field is-horizontal pension-fund-payment-div">
+                <div class="field-label left-input-min-width">
+                  <label class="label">Оплата в пенсійний фонд</label>
+                </div>
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control is-expanded">
+                        <input class="input pension-fund-payment-input" type="text">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div class="field is-horizontal">
-                <div class="field-label">
-                  <label class="label">Выезд</label>
+                <div class="field-label left-input-min-width">
+                  <label class="label">Виїзд</label>
                 </div>
                 <div class="field-body">
                   <div class="field is-narrow">
@@ -215,30 +262,83 @@
                   </div>
                 </div>
               </div>
-              
-              <div class="field is-horizontal">
+
+            </div>
+            <div class="column is-half">
+
+              <div class="field is-horizontal comment-div">
                 <div class="field-label">
-                  <!-- Left empty for spacing -->
+                  <label class="label">Коментар</label>
                 </div>
                 <div class="field-body">
-                  <div class="field">
-                    <div class="control">
-                      <button class="button is-primary addrecord-button" hreflink="./index.html">
-                        Добавить запись
-                      </button>
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control is-expanded">
+                        <textarea class="textarea comment-input"></textarea>
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
-            </section>
+
+              <div class="field is-horizontal tax-free-div">
+                <div class="field-label">
+                  <label class="label">Без збору</label>
+                </div>
+                <div class="field-body">
+                  <div class="field is-narrow">
+                    <div class="control">
+                      <label class="checkbox">
+                        <input class="tax-free-input" type="checkbox">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field is-horizontal freedom-reason-div nonedisplay">
+                <div class="field-label is-normal">
+                  <label class="label">Підстава звільнення</label>
+                </div>
+                <div class="field-body">
+                  <div class="field is-narrow">
+                    <div class="control">
+                      <div class="select is-fullwidth">
+                        <select class="freedom-reason-select">
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="field is-horizontal">
+            <div class="field-label">
+              <!-- Left empty for spacing -->
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <div class="control">
+                  <button class="button is-primary addrecord-button" hreflink="./index.html">
+                    Додати запис
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
-        <scr src="./calendar.js"></scr>
-        <scr src="./dbcontroller.js" query="select * from Categories"></scr>
-        <a class="left-arrow to-menu-trans-anim" href="./index.html">
-          <i class="fas fa-chevron-left fa-2x"></i>
-        </a>
-        </main>
-        <div class="cd-loading-bar"></div>
-      </body>
-    </html>
+      </div>
+    </section>
+    <scr src="./calendar.js"></scr>
+    <scr src="./dbcontroller.js" query="select * from Categories"></scr>
+    <a class="back-arrow to-menu-trans-anim" href="./index.html">
+      <i class="fas fa-chevron-left fa-2x"></i>
+    </a>
+  </main>
+  <div class="cd-loading-bar"></div>
+</body>
+
+</html>

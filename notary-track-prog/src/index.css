@@ -42,6 +42,10 @@ a {
   color:#7a7a7a;
 }
 
+.has-text-center {
+  text-align: center;
+}
+
 .column-link:hover {
   background-color: #303036;
 }
@@ -62,9 +66,15 @@ a {
   width: 100%;
 }
 
+.report-settings {
+  width: 800px;
+}
+
 ::selection {
   background: transparent;
 }
+
+/* Changing of actions block in transition */
 
 .actions-block {
   border-radius: 2rem 2rem 0 0;
@@ -74,27 +84,31 @@ a {
   position: relative;
 }
 
-.page-is-changing {
+.actions-block.page-is-changing {
   position: fixed;
   animation-fill-mode: forwards;
-  animation-name: page-transition;
+  animation-name: actions-block-transition;
   animation-timing-function: ease;
   animation-duration: 1s;
 }
 
-@keyframes page-transition {
+.actions-block.page-is-back-changing {
+  position: fixed;
+  animation-fill-mode: forwards;
+  animation-direction: reverse;
+  animation-name: actions-block-transition;
+  animation-timing-function: ease;
+  animation-duration: 1s;
+}
+
+@keyframes actions-block-transition {
   0%   {height: 50%; top: 28.09rem;}
   100% {height: 100%; top: 0}
 }
 
-.page-is-back-changing {
-  position: fixed;
-  animation-fill-mode: forwards;
-  animation-direction: reverse;
-  animation-name: page-transition;
-  animation-timing-function: ease;
-  animation-duration: 1s;
-}
+/* End of Changing of actions block in transition */
+
+/* Changing of loading bar-block in transition*/
 
 .cd-loading-bar {
   border-radius: 2rem 2rem 0 0;
@@ -102,36 +116,58 @@ a {
   width: 100%;
   position: fixed;
   top: 28.09rem;
-  opacity: 0;
-  display: none;
 }
 
-.cd-loading-bar.page-is-changing  {
-  display: block;
+.cd-loading-bar.at-top {
+  border-radius: 2rem 2rem 0 0;
+  height: 100%;
+  width: 100%;
   position: fixed;
-  animation-fill-mode: forwards;
-  animation-name: page-transition-lb;
-  animation-timing-function: linear;
-  animation-duration: 2s;
+  top: 0;
+  opacity: 1;
 }
 
-@keyframes page-transition-lb {
-  0%    {height: 50%; top: 28.09rem; opacity: 0; display: block;}
-  50%   {height: 100%; top: 0; opacity: 1; display: block;}
-  60%   {height: 100%; top: 0; opacity: 1; display: block;}
-  99%   {height: 100%; top: 0; opacity: 0; display: block;}
-  100%  {height: 100%; top: 0; opacity: 0; display: none;}
+.cd-loading-bar.lb-fade-in-forward  {
+  animation-fill-mode: forwards;
+  animation-name: lb-transition-up;
+  animation-timing-function: ease;
+  animation-duration: 1s;
 }
 
-.cd-loading-bar.page-is-back-changing  {
-  display: block;
-  position: fixed;
+.cd-loading-bar.lb-fade-out-forward  {
   animation-fill-mode: forwards;
-  animation-name: page-transition-lb;
+  animation-name: lb-transition-down;
+  animation-timing-function: ease;
+  animation-duration: 1s;
+}
+
+.cd-loading-bar.lb-fade-in-backward  {
   animation-direction: reverse;
-  animation-timing-function: linear;
-  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-name: lb-transition-down;
+  animation-timing-function: ease;
+  animation-duration: 1s;
 }
+
+.cd-loading-bar.lb-fade-out-backward  {
+  animation-direction: reverse;
+  animation-fill-mode: forwards;
+  animation-name: lb-transition-up;
+  animation-timing-function: ease;
+  animation-duration: 1s;
+}
+
+@keyframes lb-transition-up {
+  0%    {height: 50%; top: 28.09rem; opacity: 0;}
+  100%   {height: 100%; top: 0; opacity: 1;}
+}
+
+@keyframes lb-transition-down {
+  0%    {opacity: 1;}
+  100%   {opacity: 0;}
+}
+
+/* End of Changing of loading bar-block in transition*/
 
 .right-arrow {
   position: fixed;
@@ -145,20 +181,57 @@ a {
   left: 2rem;
 }
 
+.back-arrow {
+  position: fixed;
+  top: 3.25rem;
+  left: 3.5rem;
+}
+
 .nonedisplay {
   display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.loading-gif {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  top: calc(50% - 40px);
+  left: calc(50% - 40px);
+  animation-name: loading;
+  animation-timing-function: ease-in-out;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+.start-loading-gif {
+  position: fixed;
+  width: 160px;
+  height: 160px;
+  top: calc(50% - 80px);
+  left: calc(50% - 80px);
+}
+
+.start-prog-loading-background {
+  background-color: rgba(10,10,10);
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 tr.tabletr:hover {
   cursor: pointer;
 }
 
-tr.selectedtr {
-  background-color: #adadad;
-}
-
-tr.selectedtr:hover {
-  background-color: #adadad !important;
+nav.navbar {
+  margin: 0 1rem;
 }
 
 .menu-el {
@@ -202,4 +275,119 @@ div.notification-fade-out {
 @keyframes notification-fade-out {
   from {opacity: 1; visibility: visible;}
   to {opacity: 0; visibility: hidden;}
+}
+
+
+.right-menu-chart-container {
+  position: relative;
+  margin: 0 auto;
+  height: 100%;
+  width: 50%;
+}
+
+.left-input-min-width {
+  min-width: 33.3%;
+}
+
+.rightmenu-info-cards {
+  padding: 0.75rem;
+  height: 100%;
+  background-color: #25252a;
+  border-radius: 1rem;
+}
+
+.rightmenu-info-cards:hover {
+  background-color: #303036;
+}
+
+.rightmenu-info-cards-div {
+  padding: 0.3rem !important;
+}
+
+.menu-info-cards {
+  padding: 0.75rem;
+  height: 100%;
+  background-color: #25252a;
+  border-radius: 0.5rem;
+}
+
+.menu-info-cards:hover {
+  background-color: #303036;
+}
+
+.menu-info-cards-div {
+  padding: 0.3rem !important;
+}
+
+.table {
+  background-color: #1c1c20 !important;
+  color: #fff !important;
+}
+
+.table thead th {
+  color: #fff !important;
+}
+
+.table tr > td {
+  border: 1px solid #45454e;
+  border-width: 0 0 1px;
+}
+
+tbody > tr:hover {
+  background-color: #25252a !important;
+}
+
+tbody > tr.selectedtr {
+  background-color: #303036;
+}
+
+tbody > tr.selectedtr:hover {
+  background-color: #303036 !important;
+}
+
+figure.main-icons-clients {
+  margin-top: 0.5rem;
+}
+
+.modal-card-body {
+  background-color: #1d1d21;
+}
+
+.modal-card-foot, .modal-card-head {
+  background-color: #25252a;
+}
+
+.modal-card-title {
+  color: #fff;
+}
+
+.tabs li a {
+  color: #fff;
+}
+
+.tabs a:hover {
+  border-bottom-color: rgb(170, 170, 170);
+  color: rgb(170, 170, 170);
+}
+
+.button.is-modal-black {
+  background-color: #303036;
+  border-color: transparent;
+  color: #fff;
+}
+
+.modal .button.is-primary {
+  background-color: #00d1b2;
+  border-color: transparent;
+  color: #fff;
+}
+
+p.control .button.is-static {
+  background-color: #303036;
+  border-color: transparent;
+  color: #fff;
+}
+
+section.modal-card-body.is-white {
+  color: #fff;
 }

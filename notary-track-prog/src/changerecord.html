@@ -6,7 +6,7 @@
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Учет для Нотариусов</title>
+        <title>Програма обліку для нотаріусів</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
         <link rel="stylesheet" href="index.css" />
         <link rel="stylesheet" href="form.css">
@@ -45,38 +45,10 @@
         
           <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
-              <a class="navbar-item navbar-item-trans">
-                Home
-              </a>
-        
-              <a class="navbar-item navbar-item-trans">
-                Documentation
-              </a>
-        
-              <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link navbar-item-trans">
-                  More
-                </a>
-        
-                <div class="navbar-dropdown navbar-item-trans">
-                  <a class="navbar-item navbar-item-trans">
-                    About
-                  </a>
-                  <a class="navbar-item navbar-item-trans">
-                    Jobs
-                  </a>
-                  <a class="navbar-item navbar-item-trans">
-                    Contact
-                  </a>
-                  <hr class="navbar-divider">
-                  <a class="navbar-item navbar-item-trans">
-                    Report an issue
-                  </a>
-                </div>
-              </div>
             </div>
             <div class="navbar-end">
               <div class="navbar-item">
+                <!--
                 <div class="buttons" style="display: flex; align-items: baseline;">
                   <div>
                     <a class="modal-launch navbar-item-trans">
@@ -84,43 +56,33 @@
                     </a>
                   </div>
                 </div>
+                -->
               </div>
             </div>
           </div>
         </nav>
 
-        <div class="modal is-family-raleway">
-          <div class="modal-background"></div>
-          <div class="modal-card">
-            <header class="modal-card-head">
-              <p class="modal-card-title" style="font-weight: 700;">Settings</p>
-              <button class="delete close-modal" aria-label="close"></button>
-            </header>
-            <section class="modal-card-body">
-              This is settings
-            </section>
-            <footer class="modal-card-foot">
-              <button class="button is-success is-family-raleway">Save changes</button>
-              <button class="button is-family-raleway">Cancel</button>
-            </footer>
-          </div>
-        </div>
-
         <section class="section is-family-raleway is-full is-dark white-text actions-block" style="border-radius: 2rem 2rem 0 0; height: 100%; width: 100%; position: fixed; top: 0;">
           <div class="container">
-            <h1 class="title white" style="margin-bottom: 2rem;">
-              Изменить запись:
+            <h1 class="title white" style="margin-bottom: 2rem; margin-left: 2rem;">
+              Змінити запис:
             </h1>
             <section class="section">
                 <table class="table is-fullwidth is-hoverable">
                     <thead>
                         <tr>
-                          <th>Номер записи</th>
-                          <th>Номер услуги</th>
+                          <th>Номер запису</th>
+                          <th>Назва послуги</th>
                           <th>Дата</th>
-                          <th>Цена</th>
-                          <th>Факт. цена</th>
-                          <th>Выезд</th>
+                          <th>Дохід</th>
+                          <th>Факт. дохід</th>
+                          <th>Виїзд</th>
+                          <th>Сума договору</th>
+                          <th>ПДФО</th>
+                          <th>ВЗ</th>
+                          <th>ПФ</th>
+                          <th>Без пенс. збору</th>
+                          <th>Комментар</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -131,20 +93,26 @@
           </div>
         </section>
         <scr src="./dbcontroller.js" query=
-        "select top 10
+        "select top 8
         Log.Id as Id,
         Services.Name as Name,
         Log.RecordDate as RecordDate,
         Log.Price as Price,
         Log.ActualPrice as ActualPrice,
-        Log.DropOff as DropOff
+        Log.DropOff as DropOff,
+        Log.ContractSum as ContractSum,
+        Log.PersonalIncomeTax as PersonalIncomeTax,
+        Log.MilitaryLevy as MilitaryLevy,
+        Log.PensionFundPayment as PensionFundPayment,
+        Log.PensionTaxFree as PensionTaxFree,
+        Log.Comment as Comment
         from 
         Log
         left join Services
         on Log.ServiceId = Services.Id
         order by Log.Id desc"
         ></scr>
-        <a class="left-arrow to-menu-trans-anim" href="./index.html">
+        <a class="back-arrow to-menu-trans-anim" href="./index.html">
           <i class="fas fa-chevron-left fa-2x"></i>
         </a>
         </main>
