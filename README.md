@@ -78,7 +78,7 @@ npm run make
 - [ ] Make functionality to scroll or chose pages with records on change record tab and statistics tab
 - [ ] Add functionslity to check expances and costs
 - [ ] Include expances and costs to statictics
-- [ ] Tale into consideration expances and costs in reports
+- [ ] Take into consideration expances and costs in reports
 
 You can also write us your requests for this application on the page [Suggestions and issues](https://github.com/Artic67/NotaryTrackProg/issues)
 
