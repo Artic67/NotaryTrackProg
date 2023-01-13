@@ -17,6 +17,7 @@ This program is designed to provide efficient and secure management of notary af
 * [Electron](https://www.electronjs.org/)
 * [Node adodb](https://github.com/nuintun/node-adodb)
 * [HummusJS](https://github.com/galkahana/HummusJS)
+* the-datepicker.js
 
 ### What this program can do:
 1. Working with database records
