@@ -1,19 +1,18 @@
 export function drawDiagram(chartId, header, label1, data1Arr, labels) {
-
   const CHART_COLORS = {
-    red: 'rgb(242, 27, 84)',
-    yellow: 'rgb(242, 203, 5)',
-    green: 'rgb(9, 166, 3)',
-    blue: 'rgb(4, 135, 217)',
-    lightblue: 'rgb(4, 157, 217)',
-    purple: 'rgb(153, 102, 255)',
-    grey: 'rgb(201, 203, 207)'
+    red: "rgb(242, 27, 84)",
+    yellow: "rgb(242, 203, 5)",
+    green: "rgb(9, 166, 3)",
+    blue: "rgb(4, 135, 217)",
+    lightblue: "rgb(4, 157, 217)",
+    purple: "rgb(153, 102, 255)",
+    grey: "rgb(201, 203, 207)",
   };
 
   let chartvar = document.getElementById(chartId);
 
   if (chartvar) {
-    let ctx = chartvar.getContext('2d');
+    let ctx = chartvar.getContext("2d");
 
     const data = {
       labels: labels,
@@ -21,13 +20,13 @@ export function drawDiagram(chartId, header, label1, data1Arr, labels) {
         {
           label: label1,
           data: data1Arr,
-          backgroundColor: Object.values(CHART_COLORS)
+          backgroundColor: Object.values(CHART_COLORS),
         },
-      ]
+      ],
     };
 
     const config = {
-      type: 'doughnut',
+      type: "doughnut",
       data: data,
       options: {
         responsive: true,
@@ -37,38 +36,38 @@ export function drawDiagram(chartId, header, label1, data1Arr, labels) {
           },
           title: {
             display: true,
-            text: header
-          }
-        }
+            text: header,
+          },
+        },
       },
     };
 
     const config2 = {
-      type: 'bar',
+      type: "bar",
       data: data,
       options: {
         animations: {
           radius: {
             duration: 400,
-            easing: 'linear',
-            loop: (context) => context.active
-          }
+            easing: "linear",
+            loop: (context) => context.active,
+          },
         },
         responsive: true,
         plugins: {
           legend: {
-            position: 'top',
+            position: "top",
           },
           title: {
             display: true,
-            text: header
-          }
-        }
-      }
+            text: header,
+          },
+        },
+      },
     };
 
-    Chart.defaults.font.family = 'Raleway';
-    Chart.defaults.color = '#FFFFFF';
+    Chart.defaults.font.family = "Raleway";
+    Chart.defaults.color = "#FFFFFF";
     Chart.defaults.font.weight = 700;
     Chart.defaults.elements.arc.borderWidth = 0;
     console.log(Chart.defaults.elements.arc);

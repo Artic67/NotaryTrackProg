@@ -1,13 +1,13 @@
 export async function main(name) {
   const { drawDiagram } = require("./diagram2.js");
-  const db = require('./dbcontroller.js');
+  const db = require("./dbcontroller.js");
 
   async function makeMainDiagram() {
-
     let labels = [];
     let data1Arr = [];
 
-    let dbdata = await db.DBController.getData(`SELECT Services.Id as ServiceId, SubCategories.Id as SubcatId, Categories.Id as CatId, ft.Num as Num, Categories.Name as CatName
+    let dbdata = await db.DBController
+      .getData(`SELECT Services.Id as ServiceId, SubCategories.Id as SubcatId, Categories.Id as CatId, ft.Num as Num, Categories.Name as CatName
           FROM Services, SubCategories, Categories, (SELECT Log.ServiceId as ServiceId,
           count(Log.ServiceId)  as Num
           from
@@ -28,11 +28,11 @@ export async function main(name) {
     let catNums = [];
 
     for (let el of dbdata) {
-      if (!catNums.includes(el['CatId'])) catNums.push(el['CatId']);
+      if (!catNums.includes(el["CatId"])) catNums.push(el["CatId"]);
     }
 
     for (let num of catNums) {
-      data1Arr.push(countData('CatId', num));
+      data1Arr.push(countData("CatId", num));
       labels.push(checkLength(findLabel(num)));
     }
 
@@ -44,7 +44,13 @@ export async function main(name) {
        data1Arr.push(dbdata[i]['ClientsNumber']);
      }*/
 
-    let arr = drawDiagram(name, 'Кількість виконаних послуг за категоріями', 'Кількість клієнтів', data1Arr, labels);
+    let arr = drawDiagram(
+      name,
+      "Кількість виконаних послуг за категоріями",
+      "Кількість клієнтів",
+      data1Arr,
+      labels
+    );
 
     let myChart = new Chart(arr[0], arr[1]);
   }
@@ -61,19 +67,19 @@ export async function main(name) {
         }
       }
       if (count > 0) return count.toString();
-      return '-';
-    }
+      return "-";
+    };
   }
 
   function findLabelMemorize(arr) {
     let array = arr;
     return function (id) {
       for (let obj of array) {
-        if (obj['CatId'] === id) {
-          return obj['CatName'];
+        if (obj["CatId"] === id) {
+          return obj["CatName"];
         }
       }
-    }
+    };
   }
 
   function checkLength(string) {
@@ -81,4 +87,3 @@ export async function main(name) {
     return string;
   }
 }
-

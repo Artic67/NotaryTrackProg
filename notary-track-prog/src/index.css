@@ -1,9 +1,10 @@
 @font-face {
- font-family: Raleway; /* Гарнитура шрифта */
- src: url(fonts/Raleway-VariableFont_wght.ttf); /* Путь к файлу со шрифтом */
+  font-family: Raleway; /* Гарнитура шрифта */
+  src: url(fonts/Raleway-VariableFont_wght.ttf); /* Путь к файлу со шрифтом */
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow-y: hidden;
 }
@@ -23,7 +24,7 @@ main {
 }
 
 .is-family-raleway {
-  font-family: 'Raleway';
+  font-family: "Raleway";
 }
 
 .is-dark {
@@ -34,12 +35,13 @@ main {
   color: #fff;
 }
 
-h1.white, h2.white {
+h1.white,
+h2.white {
   color: #fff;
 }
 
 a {
-  color:#7a7a7a;
+  color: #7a7a7a;
 }
 
 .has-text-center {
@@ -102,8 +104,14 @@ a {
 }
 
 @keyframes actions-block-transition {
-  0%   {height: 50%; top: 28.09rem;}
-  100% {height: 100%; top: 0}
+  0% {
+    height: 50%;
+    top: 28.09rem;
+  }
+  100% {
+    height: 100%;
+    top: 0;
+  }
 }
 
 /* End of Changing of actions block in transition */
@@ -127,21 +135,21 @@ a {
   opacity: 1;
 }
 
-.cd-loading-bar.lb-fade-in-forward  {
+.cd-loading-bar.lb-fade-in-forward {
   animation-fill-mode: forwards;
   animation-name: lb-transition-up;
   animation-timing-function: ease;
   animation-duration: 1s;
 }
 
-.cd-loading-bar.lb-fade-out-forward  {
+.cd-loading-bar.lb-fade-out-forward {
   animation-fill-mode: forwards;
   animation-name: lb-transition-down;
   animation-timing-function: ease;
   animation-duration: 1s;
 }
 
-.cd-loading-bar.lb-fade-in-backward  {
+.cd-loading-bar.lb-fade-in-backward {
   animation-direction: reverse;
   animation-fill-mode: forwards;
   animation-name: lb-transition-down;
@@ -149,7 +157,7 @@ a {
   animation-duration: 1s;
 }
 
-.cd-loading-bar.lb-fade-out-backward  {
+.cd-loading-bar.lb-fade-out-backward {
   animation-direction: reverse;
   animation-fill-mode: forwards;
   animation-name: lb-transition-up;
@@ -158,13 +166,25 @@ a {
 }
 
 @keyframes lb-transition-up {
-  0%    {height: 50%; top: 28.09rem; opacity: 0;}
-  100%   {height: 100%; top: 0; opacity: 1;}
+  0% {
+    height: 50%;
+    top: 28.09rem;
+    opacity: 0;
+  }
+  100% {
+    height: 100%;
+    top: 0;
+    opacity: 1;
+  }
 }
 
 @keyframes lb-transition-down {
-  0%    {opacity: 1;}
-  100%   {opacity: 0;}
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 /* End of Changing of loading bar-block in transition*/
@@ -214,7 +234,7 @@ a {
 }
 
 .start-prog-loading-background {
-  background-color: rgba(10,10,10);
+  background-color: rgba(10, 10, 10);
 }
 
 @keyframes loading {
@@ -255,12 +275,24 @@ div.notification {
 }
 
 @keyframes notification-raise {
-  from {-webkit-transform: translate(0, 100px);}
-  10% {-webkit-transform: translate(0, -20px);}
-  12% {-webkit-transform: translate(0, -22px);}
-  16% {-webkit-transform: translate(0, -20px);}
-  80% {-webkit-transform: translate(0, -20px);}
-  to {-webkit-transform: translate(0, -20px);}
+  from {
+    -webkit-transform: translate(0, 100px);
+  }
+  10% {
+    -webkit-transform: translate(0, -20px);
+  }
+  12% {
+    -webkit-transform: translate(0, -22px);
+  }
+  16% {
+    -webkit-transform: translate(0, -20px);
+  }
+  80% {
+    -webkit-transform: translate(0, -20px);
+  }
+  to {
+    -webkit-transform: translate(0, -20px);
+  }
 }
 
 div.notification-fade-out {
@@ -273,10 +305,15 @@ div.notification-fade-out {
 }
 
 @keyframes notification-fade-out {
-  from {opacity: 1; visibility: visible;}
-  to {opacity: 0; visibility: hidden;}
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
-
 
 .right-menu-chart-container {
   position: relative;
@@ -353,7 +390,8 @@ figure.main-icons-clients {
   background-color: #1d1d21;
 }
 
-.modal-card-foot, .modal-card-head {
+.modal-card-foot,
+.modal-card-head {
   background-color: #25252a;
 }
 

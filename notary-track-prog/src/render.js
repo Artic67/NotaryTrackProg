@@ -18,8 +18,9 @@ const comingSoonArr = document.querySelectorAll('.coming-soon');
 for (const el of comingSoonArr) {
   el.addEventListener('click', () => {
     notification.raise(
-      'Цей функціонал буде доданий найближчим часом :)', 'is-info'
-      );
+      'Цей функціонал буде доданий найближчим часом :)',
+      'is-info'
+    );
   });
 }
 
@@ -59,15 +60,11 @@ function changePage(url) {
 }
 
 async function changePageWA(url) {
-
   window.section = document.createElement('div');
   window.section.innerHTML = await fetchHtmlAsText(url);
 
-  document.querySelector(
-    'main'
-    ).innerHTML = window.section.querySelector(
-      'main'
-    ).innerHTML;
+  document.querySelector('main').innerHTML =
+    window.section.querySelector('main').innerHTML;
 
   const scripts = window.section.querySelectorAll('main scr');
   if (scripts.length > 0) {
@@ -76,40 +73,35 @@ async function changePageWA(url) {
 
       if (!fileScript.hasOwnProperty(url)) {
         console.error(
-          new Error(`FileScript object doesn't have this url: ${url}`));
+          new Error(`FileScript object doesn't have this url: ${url}`)
+        );
         return;
       }
 
       fileScript[url](filename, script);
-
     }
   }
 }
 
 function changeBackPage(url) {
-
   lb.classList.add('lb-fade-in-backward');
   lb.classList.remove('nonedisplay');
 
-
   setTimeout(() => {
-    loadMainContent(url); lb.classList.remove('lb-fade-in-backward');
+    loadMainContent(url);
+    lb.classList.remove('lb-fade-in-backward');
   }, 1000);
 }
 
 async function loadNewContent(url) {
-
   window.section = document.createElement('div');
 
   window.section.innerHTML = await fetchHtmlAsText(url);
 
   console.log('Main: ' + window.section.querySelector('main'));
 
-  document.querySelector(
-    'main'
-    ).innerHTML = window.section.querySelector(
-    'main'
-    ).innerHTML;
+  document.querySelector('main').innerHTML =
+    window.section.querySelector('main').innerHTML;
 
   const animElems = document.querySelectorAll('.to-menu-trans-anim');
   for (const ael of animElems) {
@@ -128,7 +120,7 @@ async function loadNewContent(url) {
       if (!fileScript.hasOwnProperty(url)) {
         console.error(
           new Error(`FileScript object doesn't have this url: ${url}`)
-          );
+        );
         return;
       }
 
@@ -150,13 +142,12 @@ async function loadNewContent(url) {
           }, 1000);
         }
       }
-
     }
   } else {
     if (!fileScript.hasOwnProperty(url)) {
       console.error(
         new Error(`FileScript object doesn't have this url: ${url}`)
-        );
+      );
       return;
     }
 
@@ -183,17 +174,13 @@ async function loadNewContent(url) {
 }
 
 async function loadMainContent(url) {
-
   // Changing page content
 
   window.section = document.createElement('div');
   window.section.innerHTML = await fetchHtmlAsText(url);
 
-  document.querySelector(
-    'main'
-    ).innerHTML = window.section.querySelector(
-    'main'
-    ).innerHTML;
+  document.querySelector('main').innerHTML =
+    window.section.querySelector('main').innerHTML;
 
   // End of Changing page content
 
@@ -207,8 +194,6 @@ async function loadMainContent(url) {
     lb.classList.remove('lb-fade-out-backward');
     lb.classList.add('nonedisplay');
   }, 1000);
-
-
 
   const animElems = document.querySelectorAll('.menu-trans-anim');
   for (const ael of animElems) {
@@ -229,7 +214,7 @@ async function loadMainContent(url) {
       notification.raise(
         'Цей функціонал буде доданий найближчим часом :)',
         'is-info'
-        );
+      );
     });
   }
 
@@ -275,11 +260,8 @@ async function addRecordFunc(filename, script) {
     const db = require(filename);
 
     document.querySelector('.income-input').onchange = function() {
-      document.querySelector(
-        '.real-income-input'
-        ).value = document.querySelector(
-        '.income-input'
-        ).value;
+      document.querySelector('.real-income-input').value =
+        document.querySelector('.income-input').value;
     };
 
     let dbdata = await db.DBController.getData(scrquery);
@@ -296,20 +278,20 @@ async function addRecordFunc(filename, script) {
     const militaryLevyInput = document.querySelector('.military-levy-input');
     const pensionFundPaymentInput = document.querySelector(
       '.pension-fund-payment-input'
-      );
+    );
 
     const contractSumDiv = document.querySelector('.contruct-sum-div');
     const pdfoDiv = document.querySelector('.pdfo-div');
     const militaryLevyDiv = document.querySelector('.military-levy-div');
     const pensionFundPaymentDiv = document.querySelector(
       '.pension-fund-payment-div'
-      );
+    );
 
     const commentInput = document.querySelector('.comment-input');
     const taxFreeInput = document.querySelector('.tax-free-input');
     const freedomReasonSelect = document.querySelector(
       '.freedom-reason-select'
-      );
+    );
 
     const taxFreeDiv = document.querySelector('.tax-free-div');
     const freedomReasonDiv = document.querySelector('.freedom-reason-div');
@@ -327,7 +309,6 @@ async function addRecordFunc(filename, script) {
       }
     };
 
-
     for (const el of dbdata) {
       const option = document.createElement('option');
       option.innerText = el['Name'];
@@ -336,8 +317,8 @@ async function addRecordFunc(filename, script) {
     }
 
     const frReasons = [
-            { 'Id': 0, 'Name': 'Перебування у черзі на одержання житла' },
-            { 'Id': 1, 'Name': 'Придбання житла вперше' },
+      { Id: 0, Name: 'Перебування у черзі на одержання житла' },
+      { Id: 1, Name: 'Придбання житла вперше' },
     ];
 
     for (const el of frReasons) {
@@ -348,7 +329,6 @@ async function addRecordFunc(filename, script) {
     }
 
     const subcatSelectorChange = async () => {
-
       const hidePensionFundField = pensionFundFieldCheck(subcatSelector.value);
 
       if (hidePensionFundField) {
@@ -366,7 +346,7 @@ async function addRecordFunc(filename, script) {
       serviceSelector.innerHTML = '';
       dbdata = await db.DBController.getData(
         `select * from Services where SubCategoryId = ${subcatSelector.value}`
-        );
+      );
       console.log(dbdata);
 
       console.log('SubcatSelector: ' + subcatSelector.value);
@@ -380,7 +360,6 @@ async function addRecordFunc(filename, script) {
     };
 
     const catSelectorChange = async () => {
-
       const hideThreeFields = threefieldsCheck(catSelector.value);
 
       if (hideThreeFields) {
@@ -401,7 +380,7 @@ async function addRecordFunc(filename, script) {
       serviceSelector.innerHTML = '';
       dbdata = await db.DBController.getData(
         `select * from SubCategories where CategoryId = ${catSelector.value}`
-        );
+      );
       for (const el of dbdata) {
         const option = document.createElement('option');
         option.innerText = el['Name'];
@@ -413,8 +392,6 @@ async function addRecordFunc(filename, script) {
       subcatSelectorChange();
     };
 
-
-
     catSelectorChange();
 
     catSelector.onchange = catSelectorChange;
@@ -425,27 +402,23 @@ async function addRecordFunc(filename, script) {
 
     let clickAllowed = true;
 
-
     catSelector.onchange = catSelectorChange;
     subcatSelector.onchange = subcatSelectorChange;
 
-
-    document.querySelector(
-      '.addrecord-button'
-      ).addEventListener('click', async () => {
-
+    document
+      .querySelector('.addrecord-button')
+      .addEventListener('click', async () => {
         if (
-                serviceSelector.value !== '' &&
-                incomeInput.value !== '' &&
-                !isNaN(parseInt(incomeInput.value)) &&
-                realIncomeInput.value !== '' &&
-                !isNaN(parseInt(realIncomeInput.value)) &&
-                dateInput.value !== '' &&
-                clickAllowed === true
-            ) {
+          serviceSelector.value !== '' &&
+          incomeInput.value !== '' &&
+          !isNaN(parseInt(incomeInput.value)) &&
+          realIncomeInput.value !== '' &&
+          !isNaN(parseInt(realIncomeInput.value)) &&
+          dateInput.value !== '' &&
+          clickAllowed === true
+        ) {
           let freedomReasonSelectValue = freedomReasonSelect.value;
           const taxFreeInputChecked = taxFreeInput.checked;
-
 
           if (!taxFreeInputChecked) {
             freedomReasonSelectValue = '';
@@ -456,12 +429,14 @@ async function addRecordFunc(filename, script) {
 
           let nextid = await db.DBController.getData(
             'select top 1 Id from log order by Id desc'
-            );
+          );
           console.log(nextid);
           if (nextid.length === 0) {
-            nextid = [{
-              'Id': 0
-            }];
+            nextid = [
+              {
+                Id: 0,
+              },
+            ];
           }
           const recordAdded = await db.DBController.writeData(
             `INSERT INTO Log (
@@ -478,7 +453,7 @@ async function addRecordFunc(filename, script) {
               PensionTaxFree, 
               Comment
               ) VALUES (
-                ${(nextid[0]['Id'] + 1)}, 
+                ${nextid[0]['Id'] + 1}, 
                 ${serviceSelector.value}, 
                 "${dateInput.value}", 
                 ${incomeInput.value}, 
@@ -490,15 +465,13 @@ async function addRecordFunc(filename, script) {
                 ${pensionFundPaymentInput.value || 'NULL'}, 
                 ${freedomReasonSelectValue || 'NULL'}, 
                 "${commentInput.value || ''}")`
-            );
+          );
 
           if (recordAdded) {
             loading.end();
-            const link = document.querySelector(
-              '.addrecord-button'
-              ).getAttribute(
-                'hreflink'
-              );
+            const link = document
+              .querySelector('.addrecord-button')
+              .getAttribute('hreflink');
             notification.raise('Запис успішно додано', 'is-primary');
             changeBackPage(link, true);
           }
@@ -514,7 +487,6 @@ async function addRecordFunc(filename, script) {
 }
 
 async function changeRecordFunc(filename, script) {
-
   if (filename === './dbcontroller.js') {
     const scrquery = script.getAttribute('query');
     const db = require(filename);
@@ -531,11 +503,12 @@ async function changeRecordFunc(filename, script) {
 
       const date = new Date(row['RecordDate']);
 
-      const day = (date.getDate() < 10) ? '0' + date.getDate() : date.getDate();
+      const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
 
-      const month = ((date.getMonth() + 1) < 10) ?
-      '0' + (date.getMonth() + 1) :
-      (date.getMonth() + 1);
+      const month =
+        date.getMonth() + 1 < 10 ?
+          '0' + (date.getMonth() + 1) :
+          date.getMonth() + 1;
 
       const year = date.getFullYear();
       const datestring = `${day}.${month}.${year}`;
@@ -558,7 +531,7 @@ async function changeRecordFunc(filename, script) {
 
       const dropOffNames = {
         true: 'Так',
-        false: 'Ні'
+        false: 'Ні',
       };
 
       const dropOffName = row['DropOff'];
@@ -584,9 +557,9 @@ async function changeRecordFunc(filename, script) {
       tr.setAttribute('href', './changerecordtr.html');
 
       /* eslint-disable */
-      tr.addEventListener('click', () => {
-        const newPage = tr.getAttribute('href');
-        ChosenChangeId = tr.getAttribute('id');
+      tr.addEventListener("click", () => {
+        const newPage = tr.getAttribute("href");
+        ChosenChangeId = tr.getAttribute("id");
         changePageWA(newPage);
       });
       /* eslint-enable */
@@ -604,7 +577,6 @@ async function changeRecordFunc(filename, script) {
       tbody.append(tr);
       console.log(row);
     }
-
   } else {
     const file = require(filename);
     console.log(file);
@@ -615,7 +587,6 @@ async function changeRecordFunc(filename, script) {
 }
 
 async function changeRecordTrFunc(filename, script) {
-
   if (filename === './dbcontroller.js') {
     const scrquery = script.getAttribute('query');
     const db = require(filename);
@@ -623,11 +594,8 @@ async function changeRecordTrFunc(filename, script) {
     loading.start();
 
     document.querySelector('.income-input').onchange = function() {
-      document.querySelector(
-        '.real-income-input'
-        ).value = document.querySelector(
-        '.income-input'
-        ).value;
+      document.querySelector('.real-income-input').value =
+        document.querySelector('.income-input').value;
     };
 
     let dbdata = await db.DBController.getData(scrquery);
@@ -644,20 +612,20 @@ async function changeRecordTrFunc(filename, script) {
     const militaryLevyInput = document.querySelector('.military-levy-input');
     const pensionFundPaymentInput = document.querySelector(
       '.pension-fund-payment-input'
-      );
+    );
 
     const contractSumDiv = document.querySelector('.contruct-sum-div');
     const pdfoDiv = document.querySelector('.pdfo-div');
     const militaryLevyDiv = document.querySelector('.military-levy-div');
     const pensionFundPaymentDiv = document.querySelector(
       '.pension-fund-payment-div'
-      );
+    );
 
     const commentInput = document.querySelector('.comment-input');
     const taxFreeInput = document.querySelector('.tax-free-input');
     const freedomReasonSelect = document.querySelector(
       '.freedom-reason-select'
-      );
+    );
 
     const taxFreeDiv = document.querySelector('.tax-free-div');
     const freedomReasonDiv = document.querySelector('.freedom-reason-div');
@@ -675,7 +643,6 @@ async function changeRecordTrFunc(filename, script) {
       }
     };
 
-
     for (const el of dbdata) {
       const option = document.createElement('option');
       option.innerText = el['Name'];
@@ -684,8 +651,8 @@ async function changeRecordTrFunc(filename, script) {
     }
 
     const frReasons = [
-            { 'Id': 0, 'Name': 'Перебування у черзі на одержання житла' },
-            { 'Id': 1, 'Name': 'Придбання житла вперше' },
+      { Id: 0, Name: 'Перебування у черзі на одержання житла' },
+      { Id: 1, Name: 'Придбання житла вперше' },
     ];
 
     for (const el of frReasons) {
@@ -696,7 +663,6 @@ async function changeRecordTrFunc(filename, script) {
     }
 
     const subcatSelectorChange = async () => {
-
       const hidePensionFundField = pensionFundFieldCheck(subcatSelector.value);
 
       if (hidePensionFundField) {
@@ -715,7 +681,7 @@ async function changeRecordTrFunc(filename, script) {
       console.log(subcatSelector.value);
       dbdata = await db.DBController.getData(
         `select * from Services where SubCategoryId = ${subcatSelector.value}`
-        );
+      );
       console.log(dbdata);
       for (const el of dbdata) {
         const option = document.createElement('option');
@@ -726,7 +692,6 @@ async function changeRecordTrFunc(filename, script) {
     };
 
     const catSelectorChange = async () => {
-
       const hideThreeFields = threefieldsCheck(catSelector.value);
 
       if (hideThreeFields) {
@@ -747,7 +712,7 @@ async function changeRecordTrFunc(filename, script) {
       serviceSelector.innerHTML = '';
       dbdata = await db.DBController.getData(
         `select * from SubCategories where CategoryId = ${catSelector.value}`
-        );
+      );
       for (const el of dbdata) {
         const option = document.createElement('option');
         option.innerText = el['Name'];
@@ -757,22 +722,22 @@ async function changeRecordTrFunc(filename, script) {
       subcatSelectorChange();
     };
 
-
     //Choose category
 
     const dbRecord = await db.DBController.getData(
       `SELECT * FROM Log where Id = ${ChosenChangeId}`
-      );
+    );
 
     const date = new Date(dbRecord[0]['RecordDate']);
 
     //Make normal Date
 
-    const day = (date.getDate() < 10) ? '0' + date.getDate() : date.getDate();
+    const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
 
-    const month = ((date.getMonth() + 1) < 10) ?
-    '0' + (date.getMonth() + 1) :
-    (date.getMonth() + 1);
+    const month =
+      date.getMonth() + 1 < 10 ?
+        '0' + (date.getMonth() + 1) :
+        date.getMonth() + 1;
 
     const year = date.getFullYear();
     const datestring = `${day}.${month}.${year}`;
@@ -821,7 +786,6 @@ async function changeRecordTrFunc(filename, script) {
     militaryLevyInput.value = dbRecord[0]['MilitaryLevy'];
     pensionFundPaymentInput.value = dbRecord[0]['PensionFundPayment'];
 
-
     freedomReasonSelect.value = dbRecord[0]['PensionTaxFree'];
     if (dbRecord[0]['PensionTaxFree'] !== null) {
       taxFreeInput.checked = true;
@@ -837,23 +801,19 @@ async function changeRecordTrFunc(filename, script) {
 
     loading.end();
 
-
-    document.querySelector(
-      '.changerecord-button'
-      ).addEventListener('click', async () => {
-
+    document
+      .querySelector('.changerecord-button')
+      .addEventListener('click', async () => {
         if (
-                serviceSelector.value !== '' &&
-                incomeInput.value !== '' &&
-                !isNaN(parseInt(incomeInput.value)) &&
-                realIncomeInput.value !== '' &&
-                !isNaN(parseInt(realIncomeInput.value)) &&
-                dateInput.value !== ''
-            ) {
-
+          serviceSelector.value !== '' &&
+          incomeInput.value !== '' &&
+          !isNaN(parseInt(incomeInput.value)) &&
+          realIncomeInput.value !== '' &&
+          !isNaN(parseInt(realIncomeInput.value)) &&
+          dateInput.value !== ''
+        ) {
           let freedomReasonSelectValue = freedomReasonSelect.value;
           const taxFreeInputChecked = taxFreeInput.checked;
-
 
           if (!taxFreeInputChecked) {
             freedomReasonSelectValue = '';
@@ -875,15 +835,14 @@ async function changeRecordTrFunc(filename, script) {
                 }, 
                 PensionTaxFree = ${freedomReasonSelectValue || 'NULL'}, 
                 Comment = "${commentInput.value || ''}"
-                where Id = ${ChosenChangeId}`);
+                where Id = ${ChosenChangeId}`
+          );
 
           if (recordUpdated) {
             loading.end();
-            const link = document.querySelector(
-              '.changerecord-button'
-              ).getAttribute(
-              'hreflink'
-              );
+            const link = document
+              .querySelector('.changerecord-button')
+              .getAttribute('hreflink');
             notification.raise('Запис успішно змінено', 'is-primary');
             changeBackPage(link, true);
           }
@@ -897,7 +856,6 @@ async function changeRecordTrFunc(filename, script) {
 }
 
 async function deleteRecordFunc(filename, script) {
-
   if (filename === './dbcontroller.js') {
     const scrquery = script.getAttribute('query');
     const db = require(filename);
@@ -915,13 +873,12 @@ async function deleteRecordFunc(filename, script) {
 
         const date = new Date(row['RecordDate']);
 
-        const day = (date.getDate() < 10) ?
-        '0' + date.getDate() :
-        date.getDate();
+        const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
 
-        const month = ((date.getMonth() + 1) < 10) ?
-        '0' + (date.getMonth() + 1) :
-        (date.getMonth() + 1);
+        const month =
+          date.getMonth() + 1 < 10 ?
+            '0' + (date.getMonth() + 1) :
+            date.getMonth() + 1;
 
         const year = date.getFullYear();
         const datestring = `${day}.${month}.${year}`;
@@ -944,7 +901,7 @@ async function deleteRecordFunc(filename, script) {
 
         const dropOffNames = {
           true: 'Так',
-          false: 'Ні'
+          false: 'Ні',
         };
 
         const dropOffName = row['DropOff'];
@@ -968,15 +925,15 @@ async function deleteRecordFunc(filename, script) {
         // END Normal Tax Freedom Reason
 
         /* eslint-disable */
-        tr.addEventListener('click', () => {
-          trToDelete = tr.getAttribute('id');
-          const trlist = document.querySelectorAll('table.table > tbody > tr');
+        tr.addEventListener("click", () => {
+          trToDelete = tr.getAttribute("id");
+          const trlist = document.querySelectorAll("table.table > tbody > tr");
           for (const trel of trlist) {
-            trel.classList.remove('selectedtr');
+            trel.classList.remove("selectedtr");
           }
-          tr.classList.add('selectedtr');
+          tr.classList.add("selectedtr");
 
-          console.log('trToDelete = ' + trToDelete);
+          console.log("trToDelete = " + trToDelete);
         });
         /* eslint-enable */
 
@@ -1010,7 +967,7 @@ async function deleteRecordFunc(filename, script) {
 
     const deletePopupCloseList = document.querySelectorAll(
       '.close-delete-popup'
-      );
+    );
     for (const deletePopupClose of deletePopupCloseList) {
       deletePopupClose.addEventListener('click', () => {
         const deletePopup = document.querySelector('.delete-popup');
@@ -1018,33 +975,30 @@ async function deleteRecordFunc(filename, script) {
       });
     }
 
-
-    document.querySelector(
-      '.deleterecord-button'
-      ).addEventListener('click', () => {
+    document
+      .querySelector('.deleterecord-button')
+      .addEventListener('click', () => {
         if (trToDelete) {
           const deletePopup = document.querySelector('.delete-popup');
           deletePopup.classList.add('is-active');
           console.log('is-active added');
         } else {
-          console.error(
-            new Error('Don`t choosed the record to delete!')
-            );
+          console.error(new Error('Don`t choosed the record to delete!'));
           notification.raise(
             `Не обраний запис для видалення. 
             Спрочатку оберіть запис який бажаєте видалити.`
-            );
+          );
         }
       });
 
-    document.querySelector(
-      '.truly-deleterecord-button'
-      ).addEventListener('click', async () => {
+    document
+      .querySelector('.truly-deleterecord-button')
+      .addEventListener('click', async () => {
         loading.start();
         const deletePopup = document.querySelector('.delete-popup');
         deletePopup.classList.remove('is-active');
         const recordDeleted = await db.DBController.writeData(
-        `delete from Log where Id = ${trToDelete}`
+          `delete from Log where Id = ${trToDelete}`
         );
 
         if (recordDeleted) {
@@ -1053,7 +1007,6 @@ async function deleteRecordFunc(filename, script) {
           notification.raise('Запис успішно видалено', 'is-primary');
         }
       });
-
   } else {
     const file = require(filename);
     console.log(file);
@@ -1110,11 +1063,12 @@ async function rightMenuFunc(filename, script) {
 
       const date = new Date(row['RecordDate']);
 
-      const day = (date.getDate() < 10) ? '0' + date.getDate() : date.getDate();
+      const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
 
-      const month = ((date.getMonth() + 1) < 10) ?
-      '0' + (date.getMonth() + 1) :
-      (date.getMonth() + 1);
+      const month =
+        date.getMonth() + 1 < 10 ?
+          '0' + (date.getMonth() + 1) :
+          date.getMonth() + 1;
 
       const year = date.getFullYear();
       const datestring = `${day}.${month}.${year}`;
@@ -1135,7 +1089,7 @@ async function rightMenuFunc(filename, script) {
 
       const dropOffNames = {
         true: 'Так',
-        false: 'Ні'
+        false: 'Ні',
       };
 
       const dropOffName = row['DropOff'];
@@ -1167,7 +1121,6 @@ async function rightMenuFunc(filename, script) {
       tbody.append(tr);
       console.log(row);
     }
-
   } else {
     const file = require(filename);
     console.log(file);
@@ -1178,7 +1131,6 @@ async function rightMenuFunc(filename, script) {
 }
 
 async function leftMenuFunc() {
-
   // START Report settings
 
   const modalButton = document.querySelector('.modal-launch');
@@ -1188,7 +1140,6 @@ async function leftMenuFunc() {
       modal.classList.add('is-active');
     });
   }
-
 
   const modalCloses = document.querySelectorAll('.close-modal');
   if (modalCloses) {
@@ -1212,7 +1163,6 @@ async function leftMenuFunc() {
     });
   }
 
-
   const taxModalClose = document.querySelectorAll('.close-tax-modal');
   if (taxModalClose) {
     for (const el of taxModalClose) {
@@ -1230,10 +1180,10 @@ async function leftMenuFunc() {
   const quartReportTab = document.querySelector('.quart-report');
   const pensionFundTab = document.querySelector('.pension-fund-report');
   const tabToDivSelector = {
-    'mainTab': '.main-report-div',
-    'yearReportTab': '.year-report-div',
-    'quartReportTab': '.quart-report-div',
-    'pensionFundTab': '.pension-fund-report-div'
+    mainTab: '.main-report-div',
+    yearReportTab: '.year-report-div',
+    quartReportTab: '.quart-report-div',
+    pensionFundTab: '.pension-fund-report-div',
   };
 
   mainTab.addEventListener('click', () => {
@@ -1261,14 +1211,14 @@ async function leftMenuFunc() {
     tab.classList.add('is-active');
 
     for (const key in tabToDivSelector) {
-      document.querySelector(
-        tabToDivSelector[key]
-        ).classList.add('nonedisplay');
+      document
+        .querySelector(tabToDivSelector[key])
+        .classList.add('nonedisplay');
     }
 
-    document.querySelector(
-      tabToDivSelector[tabSelector]
-      ).classList.remove('nonedisplay');
+    document
+      .querySelector(tabToDivSelector[tabSelector])
+      .classList.remove('nonedisplay');
   }
 
   const idToConfigName = {
@@ -1297,33 +1247,36 @@ async function leftMenuFunc() {
   }
 
   if (configObject['reportFolder']) {
-    document.querySelector(
-      'span.folder-pick-text'
-      ).innerHTML = configObject['reportFolder'];
+    document.querySelector('span.folder-pick-text').innerHTML =
+      configObject['reportFolder'];
   }
 
   if (configObject['reportKind']) {
-    document.querySelector(
-      `.button.report-kind[value="${configObject['reportKind']}"]`
-      ).classList.add('is-primary');
+    document
+      .querySelector(
+        `.button.report-kind[value="${configObject['reportKind']}"]`
+      )
+      .classList.add('is-primary');
   }
 
   if (configObject['yearKind']) {
-    document.querySelector(
-      `.button.year-kind[value="${configObject['yearKind']}"]`
-      ).classList.add('is-primary');
+    document
+      .querySelector(`.button.year-kind[value="${configObject['yearKind']}"]`)
+      .classList.add('is-primary');
   }
 
   if (configObject['quartKind']) {
-    document.querySelector(
-      `.button.quart-kind[value="${configObject['quartKind']}"]`
-      ).classList.add('is-primary');
+    document
+      .querySelector(`.button.quart-kind[value="${configObject['quartKind']}"]`)
+      .classList.add('is-primary');
   }
 
   if (configObject['pensQuartKind']) {
-    document.querySelector(
-      `.button.pens-quart-kind[value="${configObject['pensQuartKind']}"]`
-      ).classList.add('is-primary');
+    document
+      .querySelector(
+        `.button.pens-quart-kind[value="${configObject['pensQuartKind']}"]`
+      )
+      .classList.add('is-primary');
   }
 
   // End settings filling
@@ -1333,46 +1286,40 @@ async function leftMenuFunc() {
   const applySettingsButton = document.querySelector('.apply-settings');
 
   if (applySettingsButton) {
-
     const configObectToWrite = {};
 
     applySettingsButton.addEventListener('click', () => {
-
       if (document.querySelector('#folderpick').files[0]) {
-        const arr = document.querySelector(
-          '#folderpick'
-          ).files[0]['path'].split('\\');
+        const arr = document
+          .querySelector('#folderpick')
+          .files[0]['path'].split('\\');
         arr.pop();
         const selectedFolderPath = arr.join('\\');
         configObectToWrite['reportFolder'] = selectedFolderPath;
       }
 
       if (document.querySelector('.button.report-kind.is-primary')) {
-
         const button = document.querySelector('.button.report-kind.is-primary');
         const valueKind = button.getAttribute('value');
         configObectToWrite['reportKind'] = valueKind.toString();
       }
 
       if (document.querySelector('.button.year-kind.is-primary')) {
-
         const button = document.querySelector('.button.year-kind.is-primary');
         const valueKind = button.getAttribute('value');
         configObectToWrite['yearKind'] = valueKind.toString();
       }
 
       if (document.querySelector('.button.quart-kind.is-primary')) {
-
         const button = document.querySelector('.button.quart-kind.is-primary');
         const valueKind = button.getAttribute('value');
         configObectToWrite['quartKind'] = valueKind.toString();
       }
 
       if (document.querySelector('.button.pens-quart-kind.is-primary')) {
-
         const button = document.querySelector(
           '.button.pens-quart-kind.is-primary'
-          );
+        );
         const valueKind = button.getAttribute('value');
         configObectToWrite['pensQuartKind'] = valueKind.toString();
       }
@@ -1401,7 +1348,6 @@ async function leftMenuFunc() {
 
   for (const button of reportButtons) {
     button.addEventListener('click', e => {
-
       if (
         !reportButtons[0].classList.contains('is-primary') &&
         !reportButtons[1].classList.contains('is-primary')
@@ -1421,7 +1367,6 @@ async function leftMenuFunc() {
 
   for (const button of yearButtons) {
     button.addEventListener('click', e => {
-
       if (
         !yearButtons[0].classList.contains('is-primary') &&
         !yearButtons[1].classList.contains('is-primary')
@@ -1441,7 +1386,6 @@ async function leftMenuFunc() {
 
   for (const button of quartButtons) {
     button.addEventListener('click', e => {
-
       if (
         !quartButtons[0].classList.contains('is-primary') &&
         !quartButtons[1].classList.contains('is-primary')
@@ -1461,7 +1405,6 @@ async function leftMenuFunc() {
 
   for (const button of pensQuartButtons) {
     button.addEventListener('click', e => {
-
       if (
         !pensQuartButtons[0].classList.contains('is-primary') &&
         !pensQuartButtons[1].classList.contains('is-primary')
@@ -1479,15 +1422,14 @@ async function leftMenuFunc() {
 
   document.querySelector('#folderpick').onchange = function() {
     if (!document.querySelector('#folderpick').files[0]) return;
-    const arr = document.querySelector(
-      '#folderpick'
-      ).files[0]['path'].split('\\');
+    const arr = document
+      .querySelector('#folderpick')
+      .files[0]['path'].split('\\');
     arr.pop();
     const selectedFolderPath = arr.join('\\');
 
-    document.querySelector(
-      'span.folder-pick-text'
-      ).innerHTML = selectedFolderPath;
+    document.querySelector('span.folder-pick-text').innerHTML =
+      selectedFolderPath;
   };
 
   // END Folder pick functionality
@@ -1524,11 +1466,10 @@ async function leftMenuFunc() {
     '#notary-pensionFundTax': 'pensionFundTax',
   };
 
-    // START Year report button EventListener
-  document.querySelector(
-    '.create-year-report'
-    ).addEventListener('click', async () => {
-
+  // START Year report button EventListener
+  document
+    .querySelector('.create-year-report')
+    .addEventListener('click', async () => {
       const configObectToWrite2 = {};
 
       for (const key in idToConfigNameTaxSettings) {
@@ -1545,7 +1486,6 @@ async function leftMenuFunc() {
       const taxModal = document.querySelector('.tax-modal');
       taxModal.classList.remove('is-active');
 
-
       const configObject = config.read(configFile);
 
       if (!configObject['reportFolder']) {
@@ -1553,7 +1493,7 @@ async function leftMenuFunc() {
         notification.raise(
           `Не вказана папка для зберігання звіта. 
           Ви можете вказати її в налаштуваннях звітів.`
-          );
+        );
         return;
       }
 
@@ -1583,7 +1523,8 @@ async function leftMenuFunc() {
         WHERE Services.SubCategoryId = SubCategories.Id
         and
         SubCategories.CategoryId = Categories.Id
-        and ft.ServiceId = Services.Id`);
+        and ft.ServiceId = Services.Id`
+      );
 
       console.log(reportData);
 
@@ -1595,7 +1536,8 @@ async function leftMenuFunc() {
         And
         Year(Log.RecordDate) = Year(Date()) ${
           yearAndQuartNumToQuery[yearNumberOfReport]
-        }`);
+        }`
+      );
 
       const incomeSum = await db.DBController.getData(
         `SELECT sum(Price) as IncomeSum
@@ -1603,7 +1545,8 @@ async function leftMenuFunc() {
         WHERE
         Year(Log.RecordDate) = Year(Date()) ${
           yearAndQuartNumToQuery[yearNumberOfReport]
-        }`);
+        }`
+      );
 
       let performer = '';
 
@@ -1613,131 +1556,129 @@ async function leftMenuFunc() {
 
       const countData = countDataMemorize(reportData);
 
-
-
-      const pdfCreated = writePDF({
-        'year': yearOfReport.toString(),
-        'name': configObject['name'] || '',
-        'loc': configObject['loc'] || '',
-        '1': '-',
-        '2': '1',
-        '3': '-',
-        '4': '1',
-        '5': '-',
-        '6': countData('CatId', 1),
-        '6.1': countData('SubcatId', 1),
-        '6.1.1': countData('ServiceId', 1),
-        '6.1.2': countData('ServiceId', 2),
-        '6.2': countData('SubcatId', 2),
-        '6.2.1': countData('ServiceId', 6),
-        '6.2.2': countData('ServiceId', 7),
-        '6.3': countData('SubcatId', 3),
-        '6.3.1': countData('ServiceId', 11),
-        '6.3.2': countData('ServiceId', 12),
-        '6.4': countData('SubcatId', 4),
-        '6.5': countData('SubcatId', 5),
-        '6.6': countData('SubcatId', 6),
-        '6.7': countData('SubcatId', 7),
-        '7': countData('CatId', 2),
-        '7.1': ((parseInt(countData('SubcatId', 8)) || 0) +
-                (parseInt(countData('SubcatId', 11)) || 0) ||
-                '-').toString(),
-        '7.2': ((parseInt(countData('SubcatId', 9)) || 0) +
-                (parseInt(countData('SubcatId', 12)) || 0) ||
-                '-').toString(),
-        '7.3': ((parseInt(countData('SubcatId', 10)) || 0) +
-                (parseInt(countData('SubcatId', 13)) || 0) ||
-                '-').toString(),
-        '8': countData('CatId', 3),
-        '9': countData('CatId', 4),
-        '10': countData('CatId', 5),
-        '11': countData('CatId', 6),
-        '11.1': countData('SubcatId', 22),
-        '11.2': countData('SubcatId', 23),
-        '11.3': countData('SubcatId', 24),
-        '12': countData('CatId', 7),
-        '12.1': countData('SubcatId', 25),
-        '12.2': countData('SubcatId', 26),
-        '13': countData('CatId', 8),
-        '14': countData('CatId', 9),
-        '14.1': countData('SubcatId', 28),
-        '14.2': countData('SubcatId', 29),
-        '14.3': countData('SubcatId', 30),
-        '14.4': countData('SubcatId', 31),
-        '15': countData('CatId', 10),
-        '15.1': countData('SubcatId', 32),
-        '15.2': countData('SubcatId', 33),
-        '16': countData('CatId', 11),
-        '17': countData('CatId', 12),
-        '18': countData('CatId', 13),
-        '19': countData('CatId', 14),
-        '20': countData('CatId', 15),
-        '20.1': countData('SubcatId', 40),
-        '20.2': countData('SubcatId', 41),
-        '20.3': countData('SubcatId', 42),
-        '21': countData('CatId', 16),
-        '22': countData('CatId', 17),
-        '23': countData('CatId', 18),
-        '24': countData('CatId', 19),
-        '24.1': countData('SubcatId', 46),
-        '24.2': countData('SubcatId', 47),
-        '25': countData('CatId', 20),
-        '26': countData('CatId', 21),
-        '26.1': countData('SubcatId', 49),
-        '26.2': countData('SubcatId', 50),
-        '26.3': countData('SubcatId', 51),
-        '27': countData('CatId', 22),
-        '28': countData('CatId', 23),
-        '29': countData('CatId', 24),
-        '30': countData('CatId', 25),
-        '31': countData('CatId', 26),
-        '32': countData('CatId', 27),
-        '33': countData('CatId', 28),
-        '34': countData('CatId', 29),
-        '35': countDataSum(reportData),
-        '36': countDataSum(reportData),
-        '37': dropOffCount[0]['DropOffCount'].toString(),
-        '38': Math.ceil(
-          getRandomNumber(0.6, 0.7) * parseInt(countDataSum(reportData))
+      const pdfCreated = writePDF(
+        {
+          year: yearOfReport.toString(),
+          name: configObject['name'] || '',
+          loc: configObject['loc'] || '',
+          1: '-',
+          2: '1',
+          3: '-',
+          4: '1',
+          5: '-',
+          6: countData('CatId', 1),
+          6.1: countData('SubcatId', 1),
+          '6.1.1': countData('ServiceId', 1),
+          '6.1.2': countData('ServiceId', 2),
+          6.2: countData('SubcatId', 2),
+          '6.2.1': countData('ServiceId', 6),
+          '6.2.2': countData('ServiceId', 7),
+          6.3: countData('SubcatId', 3),
+          '6.3.1': countData('ServiceId', 11),
+          '6.3.2': countData('ServiceId', 12),
+          6.4: countData('SubcatId', 4),
+          6.5: countData('SubcatId', 5),
+          6.6: countData('SubcatId', 6),
+          6.7: countData('SubcatId', 7),
+          7: countData('CatId', 2),
+          7.1: (
+            (parseInt(countData('SubcatId', 8)) || 0) +
+              (parseInt(countData('SubcatId', 11)) || 0) || '-'
           ).toString(),
-        '39': '-',
-        '40': '-',
-        '41': incomeSum[0]['IncomeSum'].toString(),
-        '42': configObject['budgetTax'] || '-',
-        '43': configObject['pensionFundTax'] || '-',
-        '44': configObject['employment'] || '-',
-        '45': '-',
-        '46': '-',
-        'fio': configObject['fio'] || '',
-        'performer': configObject['performer'] || '',
-        'tel': configObject['tel'] || '',
-        'email': configObject['email'] || '',
-      },
-      configObject['reportFolder'],
-      `Статзвіт річний ${
-          date.getFullYear().toString()
-        } ПНКМНО ${
-          performer
-        }`,
-      'zvit_year.pdf'
+          7.2: (
+            (parseInt(countData('SubcatId', 9)) || 0) +
+              (parseInt(countData('SubcatId', 12)) || 0) || '-'
+          ).toString(),
+          7.3: (
+            (parseInt(countData('SubcatId', 10)) || 0) +
+              (parseInt(countData('SubcatId', 13)) || 0) || '-'
+          ).toString(),
+          8: countData('CatId', 3),
+          9: countData('CatId', 4),
+          10: countData('CatId', 5),
+          11: countData('CatId', 6),
+          11.1: countData('SubcatId', 22),
+          11.2: countData('SubcatId', 23),
+          11.3: countData('SubcatId', 24),
+          12: countData('CatId', 7),
+          12.1: countData('SubcatId', 25),
+          12.2: countData('SubcatId', 26),
+          13: countData('CatId', 8),
+          14: countData('CatId', 9),
+          14.1: countData('SubcatId', 28),
+          14.2: countData('SubcatId', 29),
+          14.3: countData('SubcatId', 30),
+          14.4: countData('SubcatId', 31),
+          15: countData('CatId', 10),
+          15.1: countData('SubcatId', 32),
+          15.2: countData('SubcatId', 33),
+          16: countData('CatId', 11),
+          17: countData('CatId', 12),
+          18: countData('CatId', 13),
+          19: countData('CatId', 14),
+          20: countData('CatId', 15),
+          20.1: countData('SubcatId', 40),
+          20.2: countData('SubcatId', 41),
+          20.3: countData('SubcatId', 42),
+          21: countData('CatId', 16),
+          22: countData('CatId', 17),
+          23: countData('CatId', 18),
+          24: countData('CatId', 19),
+          24.1: countData('SubcatId', 46),
+          24.2: countData('SubcatId', 47),
+          25: countData('CatId', 20),
+          26: countData('CatId', 21),
+          26.1: countData('SubcatId', 49),
+          26.2: countData('SubcatId', 50),
+          26.3: countData('SubcatId', 51),
+          27: countData('CatId', 22),
+          28: countData('CatId', 23),
+          29: countData('CatId', 24),
+          30: countData('CatId', 25),
+          31: countData('CatId', 26),
+          32: countData('CatId', 27),
+          33: countData('CatId', 28),
+          34: countData('CatId', 29),
+          35: countDataSum(reportData),
+          36: countDataSum(reportData),
+          37: dropOffCount[0]['DropOffCount'].toString(),
+          38: Math.ceil(
+            getRandomNumber(0.6, 0.7) * parseInt(countDataSum(reportData))
+          ).toString(),
+          39: '-',
+          40: '-',
+          41: incomeSum[0]['IncomeSum'].toString(),
+          42: configObject['budgetTax'] || '-',
+          43: configObject['pensionFundTax'] || '-',
+          44: configObject['employment'] || '-',
+          45: '-',
+          46: '-',
+          fio: configObject['fio'] || '',
+          performer: configObject['performer'] || '',
+          tel: configObject['tel'] || '',
+          email: configObject['email'] || '',
+        },
+        configObject['reportFolder'],
+        `Статзвіт річний ${date.getFullYear().toString()} ПНКМНО ${performer}`,
+        'zvit_year.pdf'
       );
 
       if (pdfCreated) {
         notification.raise(
           `Річний звіт успішно створений в папці ${
             configObject['reportFolder']
-          }`, 'is-primary'
-          );
+          }`,
+          'is-primary'
+        );
         loading.end();
       }
     });
   // END Year report button EventListener
 
   // START Quartal report button EventListener
-  document.querySelector(
-    '.create-quartal-report'
-    ).addEventListener('click', async () => {
-
+  document
+    .querySelector('.create-quartal-report')
+    .addEventListener('click', async () => {
       const configObject = config.read(configFile);
 
       if (!configObject['reportFolder']) {
@@ -1745,7 +1686,7 @@ async function leftMenuFunc() {
         notification.raise(
           `Не вказана папка для зберігання звіта. 
           Ви можете вказати її в налаштуваннях звітів.`
-          );
+        );
         return;
       }
 
@@ -1763,8 +1704,6 @@ async function leftMenuFunc() {
         yearOfReport--;
       }
 
-
-
       const reportData = await db.DBController.getData(
         `SELECT Services.Id as ServiceId, 
         SubCategories.Id as SubcatId, 
@@ -1781,7 +1720,8 @@ async function leftMenuFunc() {
         ) as ft
         WHERE Services.SubCategoryId = SubCategories.Id
         and SubCategories.CategoryId = Categories.Id
-        and ft.ServiceId = Services.Id`);
+        and ft.ServiceId = Services.Id`
+      );
 
       console.log(reportData);
 
@@ -1793,82 +1733,85 @@ async function leftMenuFunc() {
         performer = configObject['performer'].slice(0, -1);
       }
 
-      const pdfCreated = writePDF({
-        'quart': getQuart[quartOfReport],
-        'year': yearOfReport.toString(),
-        'name': configObject['name'] || '',
-        'loc': configObject['loc'] || '',
+      const pdfCreated = writePDF(
+        {
+          quart: getQuart[quartOfReport],
+          year: yearOfReport.toString(),
+          name: configObject['name'] || '',
+          loc: configObject['loc'] || '',
 
-        '1': countData('CatId', 1),
-        '1.1': countData('SubcatId', 1),
-        '1.1.1': countData('ServiceId', 1),
-        '1.1.2': countData('ServiceId', 2),
-        '1.2': countData('SubcatId', 2),
-        '1.2.1': countData('ServiceId', 6),
-        '1.2.2': countData('ServiceId', 7),
-        '1.3': countData('SubcatId', 3),
-        '1.3.1': countData('ServiceId', 11),
-        '1.3.2': countData('ServiceId', 12),
-        '1.4': countData('SubcatId', 4),
-        '1.5': countData('SubcatId', 5),
-        '1.6': countData('SubcatId', 6),
-        '1.7': countData('SubcatId', 7),
+          1: countData('CatId', 1),
+          1.1: countData('SubcatId', 1),
+          '1.1.1': countData('ServiceId', 1),
+          '1.1.2': countData('ServiceId', 2),
+          1.2: countData('SubcatId', 2),
+          '1.2.1': countData('ServiceId', 6),
+          '1.2.2': countData('ServiceId', 7),
+          1.3: countData('SubcatId', 3),
+          '1.3.1': countData('ServiceId', 11),
+          '1.3.2': countData('ServiceId', 12),
+          1.4: countData('SubcatId', 4),
+          1.5: countData('SubcatId', 5),
+          1.6: countData('SubcatId', 6),
+          1.7: countData('SubcatId', 7),
 
-        '2': countData('CatId', 2),
-        '2.1': countData('SubcatId', 8),
-        '2.2': countData('SubcatId', 9),
-        '2.3': countData('SubcatId', 10),
+          2: countData('CatId', 2),
+          2.1: countData('SubcatId', 8),
+          2.2: countData('SubcatId', 9),
+          2.3: countData('SubcatId', 10),
 
-        '2.4': countData('SubcatId', 14),
-        '3': (
-                (parseInt(countData('SubcatId', 11)) || 0) +
-                (parseInt(countData('SubcatId', 12)) || 0) +
-                (parseInt(countData('SubcatId', 13)) || 0) ||
-                '-').toString(),
-        '3.1': (
-                (parseInt(countData('ServiceId', 24)) || 0) +
-                (parseInt(countData('ServiceId', 26)) || 0) +
-                (parseInt(countData('ServiceId', 28)) || 0) ||
-                '-').toString(),
-        '3.2': (
-                (parseInt(countData('ServiceId', 25)) || 0) +
-                (parseInt(countData('ServiceId', 27)) || 0) +
-                (parseInt(countData('ServiceId', 29)) || 0) ||
-                '-').toString(),
-        '4': (
-                (parseInt(countData('CatId', 1)) || 0) +
-                (parseInt(countData('CatId', 2)) || 0) ||
-                '-').toString(),
+          2.4: countData('SubcatId', 14),
+          3: (
+            (parseInt(countData('SubcatId', 11)) || 0) +
+              (parseInt(countData('SubcatId', 12)) || 0) +
+              (parseInt(countData('SubcatId', 13)) || 0) || '-'
+          ).toString(),
+          3.1: (
+            (parseInt(countData('ServiceId', 24)) || 0) +
+              (parseInt(countData('ServiceId', 26)) || 0) +
+              (parseInt(countData('ServiceId', 28)) || 0) || '-'
+          ).toString(),
+          3.2: (
+            (parseInt(countData('ServiceId', 25)) || 0) +
+              (parseInt(countData('ServiceId', 27)) || 0) +
+              (parseInt(countData('ServiceId', 29)) || 0) || '-'
+          ).toString(),
+          4: (
+            (parseInt(countData('CatId', 1)) || 0) +
+              (parseInt(countData('CatId', 2)) || 0) || '-'
+          ).toString(),
 
-        'fio': configObject['fio'] || '',
-      }, configObject['reportFolder'],
-      `Статзвіт квартальний ${
-          date.getFullYear().toString()
-        } ПНКМНО ${performer}`,
-      'zvit_quar.pdf');
+          fio: configObject['fio'] || '',
+        },
+        configObject['reportFolder'],
+        `Статзвіт квартальний ${date
+          .getFullYear()
+          .toString()} ПНКМНО ${performer}`,
+        'zvit_quar.pdf'
+      );
 
       if (pdfCreated) {
         notification.raise(
           `Квартальний звіт успішно створений в папці ${
             configObject['reportFolder']
-          }`, 'is-primary'
-          );
+          }`,
+          'is-primary'
+        );
         loading.end();
       }
     });
   // END Quartal report button EventListener
 
   // START Pension report button EventListener
-  document.querySelector(
-    '.create-pension-report'
-    ).addEventListener('click', async () => {
-
+  document
+    .querySelector('.create-pension-report')
+    .addEventListener('click', async () => {
       const configObject = config.read(configFile);
 
       if (!configObject['reportFolder']) {
         console.error(new Error('Don`t choosed the report folder!'));
         notification.raise(
-        `Не вказана папка для зберігання звіта. 
+          `Не вказана папка для зберігання звіта. 
         Ви можете вказати її в налаштуваннях звітів.`
         );
         return;
@@ -1880,11 +1823,10 @@ async function leftMenuFunc() {
 
       const pensQuartNumberOfReport = parseInt(
         configObject['pensQuartKind'] || 1
-        );
+      );
       const pensQuartToday = quarterOfYear(date);
-      const pensQuartOfReport = pensQuartToday +
-                                pensQuartNumberOfReport -
-                                1 || 4;
+      const pensQuartOfReport =
+        pensQuartToday + pensQuartNumberOfReport - 1 || 4;
       let yearQuartNumberOfReport = 1;
 
       let yearOfReport = date.getFullYear();
@@ -1915,18 +1857,15 @@ async function leftMenuFunc() {
         and
         ft.ServiceId = Services.Id
         and
-        Services.SubCategoryId = 1`);
+        Services.SubCategoryId = 1`
+      );
 
       console.log(reportData);
 
-    //const sumPensDataByDate = sumPensDataByDateMemorize(reportData);
-    //const countPensDataByDate = countPensDataByDateMemorize(reportData);
+      //const sumPensDataByDate = sumPensDataByDateMemorize(reportData);
+      //const countPensDataByDate = countPensDataByDateMemorize(reportData);
 
-      const reportDataByMonths = [
-            [],
-            [],
-            [],
-      ];
+      const reportDataByMonths = [[], [], []];
 
       for (const el of reportData) {
         const recordDate = new Date(el.RecordDate);
@@ -1934,12 +1873,11 @@ async function leftMenuFunc() {
 
         if (quart === pensQuartOfReport) {
           const months = [quart * 3 - 2, quart * 3 - 1, quart * 3];
-          reportDataByMonths[
-            months.indexOf(recordDate.getMonth() + 1)
-          ].push(el);
+          reportDataByMonths[months.indexOf(recordDate.getMonth() + 1)].push(
+            el
+          );
         }
       }
-
 
       let performer = '';
 
@@ -1947,253 +1885,232 @@ async function leftMenuFunc() {
         performer = configObject['performer'].slice(0, -1);
       }
 
-    //const countData = countDataMemorize(reportData);
+      //const countData = countDataMemorize(reportData);
 
       console.log(reportDataByMonths[0]);
       console.log(reportDataByMonths);
 
+      const pdfCreated = writePDF(
+        {
+          quart: getQuart[pensQuartOfReport],
+          quartword: 'квартал',
+          yearEnding1: yearOfReport.toString().slice(2, 4),
+          scr1: pensionTopScribe('0', configObject),
+          scr2: pensionTopScribe('1', configObject),
+          fior: configObject['fior'] || '',
+          namer: configObject['namer'] || '',
+          pensfond: configObject['pensionFundName'] || '',
+          innnum: configObject['rnokpp'] || '',
+          loc: configObject['loc'] || '',
+          tel: configObject['tel'] || '',
 
-      const pdfCreated = writePDF({
-        'quart': getQuart[pensQuartOfReport],
-        'quartword': 'квартал',
-        'yearEnding1': yearOfReport.toString().slice(2, 4),
-        'scr1': pensionTopScribe('0', configObject),
-        'scr2': pensionTopScribe('1', configObject),
-        'fior': configObject['fior'] || '',
-        'namer': configObject['namer'] || '',
-        'pensfond': configObject['pensionFundName'] || '',
-        'innnum': configObject['rnokpp'] || '',
-        'loc': configObject['loc'] || '',
-        'tel': configObject['tel'] || '',
+          '1q': (
+            (parseInt(countPensDataByDate(reportDataByMonths[0])) || 0) +
+              (parseInt(countPensDataByDate(reportDataByMonths[1])) || 0) +
+              (parseInt(countPensDataByDate(reportDataByMonths[2])) || 0) || '-'
+          ).toString(),
+          '1y': countPensDataByDate(reportData),
+          1.1: countPensDataByDate(reportDataByMonths[0]),
+          1.2: countPensDataByDate(reportDataByMonths[1]),
+          1.3: countPensDataByDate(reportDataByMonths[2]),
+          '2q': (
+            (parseInt(sumPensDataByDate(reportDataByMonths[0])) || 0) +
+              (parseInt(sumPensDataByDate(reportDataByMonths[1])) || 0) +
+              (parseInt(sumPensDataByDate(reportDataByMonths[2])) || 0) || '-'
+          ).toString(),
+          '2y': (
+            Math.round(parseFloat(sumPensDataByDate(reportData)) * 100) / 100 ||
+            '-'
+          ).toString(),
+          2.1: sumPensDataByDate(reportDataByMonths[0]),
+          2.2: sumPensDataByDate(reportDataByMonths[1]),
+          2.3: sumPensDataByDate(reportDataByMonths[2]),
 
-        '1q': (
-                (parseInt(countPensDataByDate(reportDataByMonths[0])) || 0) +
-                (parseInt(countPensDataByDate(reportDataByMonths[1])) || 0) +
-                (parseInt(countPensDataByDate(reportDataByMonths[2])) || 0) ||
-                '-').toString(),
-        '1y': countPensDataByDate(reportData),
-        '1.1': countPensDataByDate(reportDataByMonths[0]),
-        '1.2': countPensDataByDate(reportDataByMonths[1]),
-        '1.3': countPensDataByDate(reportDataByMonths[2]),
-        '2q': (
-                (parseInt(sumPensDataByDate(reportDataByMonths[0])) || 0) +
-                (parseInt(sumPensDataByDate(reportDataByMonths[1])) || 0) +
-                (parseInt(sumPensDataByDate(reportDataByMonths[2])) || 0) ||
-                '-').toString(),
-        '2y': ((
-          Math.round(parseFloat(sumPensDataByDate(reportData)) * 100) / 100
-          ) || '-').toString(),
-        '2.1': sumPensDataByDate(reportDataByMonths[0]),
-        '2.2': sumPensDataByDate(reportDataByMonths[1]),
-        '2.3': sumPensDataByDate(reportDataByMonths[2]),
+          '3.1q': (
+            (parseInt(countPensExcDataByDate(reportDataByMonths[0], [0, 1])) ||
+              0) +
+              (parseInt(
+                countPensExcDataByDate(reportDataByMonths[1], [0, 1])
+              ) || 0) +
+              (parseInt(
+                countPensExcDataByDate(reportDataByMonths[2], [0, 1])
+              ) || 0) || '-'
+          ).toString(),
+          '3.1y': countPensExcDataByDate(reportData, [0, 1]),
+          '3.1.1': countPensExcDataByDate(reportDataByMonths[0], [0, 1]),
+          '3.1.2': countPensExcDataByDate(reportDataByMonths[1], [0, 1]),
+          '3.1.3': countPensExcDataByDate(reportDataByMonths[2], [0, 1]),
+          //---------
+          '3.2q': (
+            (parseInt(countPensExcDataByDate(reportDataByMonths[0], [0])) ||
+              0) +
+              (parseInt(countPensExcDataByDate(reportDataByMonths[1], [0])) ||
+                0) +
+              (parseInt(countPensExcDataByDate(reportDataByMonths[2], [0])) ||
+                0) || '-'
+          ).toString(),
+          '3.2y': countPensExcDataByDate(reportData, [0]),
+          '3.2.1': countPensExcDataByDate(reportDataByMonths[0], [0]),
+          '3.2.2': countPensExcDataByDate(reportDataByMonths[1], [0]),
+          '3.2.3': countPensExcDataByDate(reportDataByMonths[2], [0]),
+          //---------
+          '3.3q': (
+            (parseInt(countPensExcDataByDate(reportDataByMonths[0], [1])) ||
+              0) +
+              (parseInt(countPensExcDataByDate(reportDataByMonths[1], [1])) ||
+                0) +
+              (parseInt(countPensExcDataByDate(reportDataByMonths[2], [1])) ||
+                0) || '-'
+          ).toString(),
+          '3.3y': countPensExcDataByDate(reportData, [1]),
+          '3.3.1': countPensExcDataByDate(reportDataByMonths[0], [1]),
+          '3.3.2': countPensExcDataByDate(reportDataByMonths[1], [1]),
+          '3.3.3': countPensExcDataByDate(reportDataByMonths[2], [1]),
+          //---------
+          '4.1q': (
+            (parseInt(sumPensExcDataByDate(reportDataByMonths[0], [0, 1])) ||
+              0) +
+              (parseInt(sumPensExcDataByDate(reportDataByMonths[1], [0, 1])) ||
+                0) +
+              (parseInt(sumPensExcDataByDate(reportDataByMonths[2], [0, 1])) ||
+                0) || '-'
+          ).toString(),
+          '4.1y': sumPensExcDataByDate(reportData, [0, 1]),
+          '4.1.1': sumPensExcDataByDate(reportDataByMonths[0], [0, 1]),
+          '4.1.2': sumPensExcDataByDate(reportDataByMonths[1], [0, 1]),
+          '4.1.3': sumPensExcDataByDate(reportDataByMonths[2], [0, 1]),
+          //---------
+          '4.2q': (
+            (parseInt(sumPensExcDataByDate(reportDataByMonths[0], [0])) || 0) +
+              (parseInt(sumPensExcDataByDate(reportDataByMonths[1], [0])) ||
+                0) +
+              (parseInt(sumPensExcDataByDate(reportDataByMonths[2], [0])) ||
+                0) || '-'
+          ).toString(),
+          '4.2y': sumPensExcDataByDate(reportData, [0]),
+          '4.2.1': sumPensExcDataByDate(reportDataByMonths[0], [0]),
+          '4.2.2': sumPensExcDataByDate(reportDataByMonths[1], [0]),
+          '4.2.3': sumPensExcDataByDate(reportDataByMonths[2], [0]),
+          //----------
+          '4.3q': (
+            (parseInt(sumPensExcDataByDate(reportDataByMonths[0], [1])) || 0) +
+              (parseInt(sumPensExcDataByDate(reportDataByMonths[1], [1])) ||
+                0) +
+              (parseInt(sumPensExcDataByDate(reportDataByMonths[2], [1])) ||
+                0) || '-'
+          ).toString(),
+          '4.3y': sumPensExcDataByDate(reportData, [1]),
+          '4.3.1': sumPensExcDataByDate(reportDataByMonths[0], [1]),
+          '4.3.2': sumPensExcDataByDate(reportDataByMonths[1], [1]),
+          '4.3.3': sumPensExcDataByDate(reportDataByMonths[2], [1]),
 
-        '3.1q': (
-                (parseInt(
-                  countPensExcDataByDate(reportDataByMonths[0], [0, 1])
-                  ) || 0) +
-                (parseInt(
-                  countPensExcDataByDate(reportDataByMonths[1], [0, 1])
-                  ) || 0) +
-                (parseInt(
-                  countPensExcDataByDate(reportDataByMonths[2], [0, 1])
-                  ) || 0) ||
-                '-').toString(),
-        '3.1y': countPensExcDataByDate(reportData, [0, 1]),
-        '3.1.1': countPensExcDataByDate(reportDataByMonths[0], [0, 1]),
-        '3.1.2': countPensExcDataByDate(reportDataByMonths[1], [0, 1]),
-        '3.1.3': countPensExcDataByDate(reportDataByMonths[2], [0, 1]),
-      //---------
-        '3.2q': (
-                (parseInt(
-                  countPensExcDataByDate(reportDataByMonths[0], [0])
-                  ) || 0) +
-                (parseInt(
-                  countPensExcDataByDate(reportDataByMonths[1], [0])
-                  ) || 0) +
-                (parseInt(
-                  countPensExcDataByDate(reportDataByMonths[2], [0])
-                  ) || 0) ||
-                '-').toString(),
-        '3.2y': countPensExcDataByDate(reportData, [0]),
-        '3.2.1': countPensExcDataByDate(reportDataByMonths[0], [0]),
-        '3.2.2': countPensExcDataByDate(reportDataByMonths[1], [0]),
-        '3.2.3': countPensExcDataByDate(reportDataByMonths[2], [0]),
-      //---------
-        '3.3q': (
-                (parseInt(
-                  countPensExcDataByDate(reportDataByMonths[0], [1])
-                  ) || 0) +
-                (parseInt(
-                  countPensExcDataByDate(reportDataByMonths[1], [1])
-                  ) || 0) +
-                (parseInt(
-                  countPensExcDataByDate(reportDataByMonths[2], [1])
-                  ) || 0) ||
-                '-').toString(),
-        '3.3y': countPensExcDataByDate(reportData, [1]),
-        '3.3.1': countPensExcDataByDate(reportDataByMonths[0], [1]),
-        '3.3.2': countPensExcDataByDate(reportDataByMonths[1], [1]),
-        '3.3.3': countPensExcDataByDate(reportDataByMonths[2], [1]),
-      //---------
-        '4.1q': (
-                (parseInt(
-                  sumPensExcDataByDate(reportDataByMonths[0], [0, 1])
-                  ) || 0) +
+          '5q': (
+            ((parseInt(sumPensDataByDate(reportDataByMonths[0])) || 0) +
+              (parseInt(sumPensDataByDate(reportDataByMonths[1])) || 0) +
+              (parseInt(sumPensDataByDate(reportDataByMonths[2])) || 0) -
+              ((parseInt(sumPensExcDataByDate(reportDataByMonths[0], [0, 1])) ||
+                0) +
                 (parseInt(
                   sumPensExcDataByDate(reportDataByMonths[1], [0, 1])
-                  ) || 0) +
+                ) || 0) +
                 (parseInt(
                   sumPensExcDataByDate(reportDataByMonths[2], [0, 1])
-                  ) || 0) ||
-                '-').toString(),
-        '4.1y': sumPensExcDataByDate(reportData, [0, 1]),
-        '4.1.1': sumPensExcDataByDate(reportDataByMonths[0], [0, 1]),
-        '4.1.2': sumPensExcDataByDate(reportDataByMonths[1], [0, 1]),
-        '4.1.3': sumPensExcDataByDate(reportDataByMonths[2], [0, 1]),
-      //---------
-        '4.2q': (
-                (parseInt(
-                  sumPensExcDataByDate(reportDataByMonths[0], [0])
-                  ) || 0) +
-                (parseInt(
-                  sumPensExcDataByDate(reportDataByMonths[1], [0])
-                  ) || 0) +
-                (parseInt(
-                  sumPensExcDataByDate(reportDataByMonths[2], [0])
-                  ) || 0) ||
-                '-').toString(),
-        '4.2y': sumPensExcDataByDate(reportData, [0]),
-        '4.2.1': sumPensExcDataByDate(reportDataByMonths[0], [0]),
-        '4.2.2': sumPensExcDataByDate(reportDataByMonths[1], [0]),
-        '4.2.3': sumPensExcDataByDate(reportDataByMonths[2], [0]),
-      //----------
-        '4.3q': (
-                (parseInt(
-                  sumPensExcDataByDate(reportDataByMonths[0], [1])
-                  ) || 0) +
-                (parseInt(
-                  sumPensExcDataByDate(reportDataByMonths[1], [1])
-                  ) || 0) +
-                (parseInt(
-                  sumPensExcDataByDate(reportDataByMonths[2], [1])
-                  ) || 0) ||
-                '-').toString(),
-        '4.3y': sumPensExcDataByDate(reportData, [1]),
-        '4.3.1': sumPensExcDataByDate(reportDataByMonths[0], [1]),
-        '4.3.2': sumPensExcDataByDate(reportDataByMonths[1], [1]),
-        '4.3.3': sumPensExcDataByDate(reportDataByMonths[2], [1]),
+                ) || 0))) *
+              0.01 || '-'
+          ).toString(),
+          '5y': (
+            (sumPensDataByDate(reportData) -
+              sumPensExcDataByDate(reportData, [0, 1])) *
+              0.01 || '-'
+          ).toString(),
 
-        '5q': (
-                (
-                ((
-                (parseInt(
-                  sumPensDataByDate(reportDataByMonths[0])
-                  ) || 0) +
-                (parseInt(
-                  sumPensDataByDate(reportDataByMonths[1])
-                  ) || 0) +
-                (parseInt(
-                  sumPensDataByDate(reportDataByMonths[2]
-                    )) || 0)
-                ) -
-                (
-                (parseInt(
-                  sumPensExcDataByDate(reportDataByMonths[0], [0, 1])
-                  ) || 0) +
+          x1: 'X',
+          x2: 'X',
+          x3: 'X',
+          x4: 'X',
+          x5: 'X',
+          x6: 'X',
+          x7: 'X',
+          x8: 'X',
+          x9: 'X',
+
+          5.1: (
+            (sumPensDataByDate(reportDataByMonths[0]) -
+              sumPensExcDataByDate(reportDataByMonths[0], [0, 1])) *
+              0.01 || '-'
+          ).toString(),
+          5.2: (
+            (sumPensDataByDate(reportDataByMonths[1]) -
+              sumPensExcDataByDate(reportDataByMonths[1], [0, 1])) *
+              0.01 || '-'
+          ).toString(),
+          5.3: (
+            (sumPensDataByDate(reportDataByMonths[2]) -
+              sumPensExcDataByDate(reportDataByMonths[2], [0, 1])) *
+              0.01 || '-'
+          ).toString(),
+
+          '6q': (
+            ((parseInt(sumPensDataByDate(reportDataByMonths[0])) || 0) +
+              (parseInt(sumPensDataByDate(reportDataByMonths[1])) || 0) +
+              (parseInt(sumPensDataByDate(reportDataByMonths[2])) || 0) -
+              ((parseInt(sumPensExcDataByDate(reportDataByMonths[0], [0, 1])) ||
+                0) +
                 (parseInt(
                   sumPensExcDataByDate(reportDataByMonths[1], [0, 1])
-                  ) || 0) +
+                ) || 0) +
                 (parseInt(
                   sumPensExcDataByDate(reportDataByMonths[2], [0, 1])
-                  ) || 0)
-                )) * 0.01) ||
-                '-').toString(),
-        '5y': (((
-          sumPensDataByDate(reportData) -
-          sumPensExcDataByDate(reportData, [0, 1])
-          ) * 0.01) || '-').toString(),
+                ) || 0))) *
+              0.01 || '-'
+          ).toString(),
+          '6y': (
+            (sumPensDataByDate(reportData) -
+              sumPensExcDataByDate(reportData, [0, 1])) *
+              0.01 || '-'
+          ).toString(),
+          6.1: (
+            (sumPensDataByDate(reportDataByMonths[0]) -
+              sumPensExcDataByDate(reportDataByMonths[0], [0, 1])) *
+              0.01 || '-'
+          ).toString(),
+          6.2: (
+            (sumPensDataByDate(reportDataByMonths[1]) -
+              sumPensExcDataByDate(reportDataByMonths[1], [0, 1])) *
+              0.01 || '-'
+          ).toString(),
+          6.3: (
+            (sumPensDataByDate(reportDataByMonths[2]) -
+              sumPensExcDataByDate(reportDataByMonths[2], [0, 1])) *
+              0.01 || '-'
+          ).toString(),
 
-        'x1': 'X',
-        'x2': 'X',
-        'x3': 'X',
-        'x4': 'X',
-        'x5': 'X',
-        'x6': 'X',
-        'x7': 'X',
-        'x8': 'X',
-        'x9': 'X',
+          x10: 'X',
+          x11: 'X',
+          x12: 'X',
 
-        '5.1': (((
-          sumPensDataByDate(reportDataByMonths[0]) -
-          sumPensExcDataByDate(reportDataByMonths[0], [0, 1])
-          ) * 0.01) || '-').toString(),
-        '5.2': (((
-          sumPensDataByDate(reportDataByMonths[1]) -
-          sumPensExcDataByDate(reportDataByMonths[1], [0, 1])
-          ) * 0.01) || '-').toString(),
-        '5.3': (((
-          sumPensDataByDate(reportDataByMonths[2]) -
-          sumPensExcDataByDate(reportDataByMonths[2], [0, 1])
-          ) * 0.01) || '-').toString(),
+          fio: configObject['performer'] || '',
 
-        '6q': (
-                (
-                ((
-                (parseInt(sumPensDataByDate(reportDataByMonths[0])) || 0) +
-                (parseInt(sumPensDataByDate(reportDataByMonths[1])) || 0) +
-                (parseInt(sumPensDataByDate(reportDataByMonths[2])) || 0)
-                ) -
-                (
-                (parseInt(
-                  sumPensExcDataByDate(reportDataByMonths[0], [0, 1])
-                  ) || 0) +
-                (parseInt(
-                  sumPensExcDataByDate(reportDataByMonths[1], [0, 1])
-                  ) || 0) +
-                (parseInt(
-                  sumPensExcDataByDate(reportDataByMonths[2], [0, 1])
-                  ) || 0)
-                )) * 0.01) ||
-                '-').toString(),
-        '6y': (((
-          sumPensDataByDate(reportData) -
-          sumPensExcDataByDate(reportData, [0, 1])
-          ) * 0.01) || '-').toString(),
-        '6.1': (((
-          sumPensDataByDate(reportDataByMonths[0]) -
-          sumPensExcDataByDate(reportDataByMonths[0], [0, 1])
-          ) * 0.01) || '-').toString(),
-        '6.2': (((
-          sumPensDataByDate(reportDataByMonths[1]) -
-          sumPensExcDataByDate(reportDataByMonths[1], [0, 1])
-          ) * 0.01) || '-').toString(),
-        '6.3': (((
-          sumPensDataByDate(reportDataByMonths[2]) -
-          sumPensExcDataByDate(reportDataByMonths[2], [0, 1])
-          ) * 0.01) || '-').toString(),
+          scr3: '________________',
 
-        'x10': 'X',
-        'x11': 'X',
-        'x12': 'X',
-
-        'fio': configObject['performer'] || '',
-
-        'scr3': '________________',
-
-        'day': date.getDate().toString().padStart(2, 0),
-        'month': getUkrMonth[date.getMonth()],
-        'yearEnding2': date.getFullYear().toString().slice(2, 4),
-      }, configObject['reportFolder'],
-      `Статзвіт пенсійний ${
-          date.getFullYear().toString()
-        } ПНКМНО ${performer}`,
-      'zvit_pens.pdf');
+          day: date.getDate().toString().padStart(2, 0),
+          month: getUkrMonth[date.getMonth()],
+          yearEnding2: date.getFullYear().toString().slice(2, 4),
+        },
+        configObject['reportFolder'],
+        `Статзвіт пенсійний ${date
+          .getFullYear()
+          .toString()} ПНКМНО ${performer}`,
+        'zvit_pens.pdf'
+      );
 
       if (pdfCreated) {
         notification.raise(
           `Пенсійний звіт успішно створений в папці ${
             configObject['reportFolder']
-          }`, 'is-primary');
+          }`,
+          'is-primary'
+        );
         loading.end();
       }
     });
@@ -2213,7 +2130,7 @@ function pensionTopScribe(number, configObject) {
 
 function quarterOfYear(date) {
   const month = date.getMonth() + 1;
-  return (Math.ceil(month / 3));
+  return Math.ceil(month / 3);
 }
 
 function sumPensDataByDate(arr) {
@@ -2268,7 +2185,6 @@ function countDataMemorize(arr) {
 }
 
 function countDataSum(arr) {
-
   let count = 0;
 
   for (const obj of arr) {
@@ -2285,31 +2201,27 @@ function getRandomNumber(min, max) {
 }
 
 async function setMainClientsForDates(callback) {
-
   const clientsForDay = await db.DBController.getData(
     `SELECT count(*) as Clients
     FROM log
     WHERE RecordDate >= Date()`
-    );
+  );
 
   const clientsForSevenDays = await db.DBController.getData(
     `SELECT count(*) as Clients
     FROM log
     WHERE RecordDate >= Date()-7`
-    );
+  );
 
-  document.querySelector(
-    '#clients-for-day'
-    ).innerHTML = clientsForDay[0]['Clients'];
-  document.querySelector(
-    '#clients-for-seven-days'
-    ).innerHTML = clientsForSevenDays[0]['Clients'];
+  document.querySelector('#clients-for-day').innerHTML =
+    clientsForDay[0]['Clients'];
+  document.querySelector('#clients-for-seven-days').innerHTML =
+    clientsForSevenDays[0]['Clients'];
 
   if (callback) callback();
 }
 
 async function setInfoForDates() {
-
   const dataForAll = await db.DBController.getData(`SELECT ActualPrice, DropOff
     FROM log
     WHERE RecordDate >= Date()-30`);
@@ -2342,16 +2254,13 @@ async function setInfoForDates() {
   })(dataForAll);
 
   document.querySelector('#services-for-month').innerHTML = servicesForMonth;
-  document.querySelector(
-    '#income-for-month'
-    ).innerHTML = incomeForMonth + ' грн';
+  document.querySelector('#income-for-month').innerHTML =
+    incomeForMonth + ' грн';
   document.querySelector('#dropoffs-for-month').innerHTML = dropOffsForMonth;
-  document.querySelector(
-    '#avg-service-price'
-    ).innerHTML = avgServicePrice.toFixed(2) + ' грн';
-  document.querySelector(
-    '#max-service-price'
-    ).innerHTML = maxServicePrice + ' грн';
+  document.querySelector('#avg-service-price').innerHTML =
+    avgServicePrice.toFixed(2) + ' грн';
+  document.querySelector('#max-service-price').innerHTML =
+    maxServicePrice + ' грн';
 
   return true;
 }

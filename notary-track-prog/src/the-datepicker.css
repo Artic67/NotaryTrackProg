@@ -1,15 +1,18 @@
 .the-datepicker__container .the-datepicker__main {
   border-top-left-radius: 0;
 }
-.the-datepicker__container.the-datepicker__container--over .the-datepicker__main {
+.the-datepicker__container.the-datepicker__container--over
+  .the-datepicker__main {
   border-top-left-radius: 0.3em;
   border-bottom-left-radius: 0;
 }
-.the-datepicker__container.the-datepicker__container--left .the-datepicker__main {
+.the-datepicker__container.the-datepicker__container--left
+  .the-datepicker__main {
   border-top-left-radius: 0.3em;
   border-top-right-radius: 0;
 }
-.the-datepicker__container.the-datepicker__container--over.the-datepicker__container--left .the-datepicker__main {
+.the-datepicker__container.the-datepicker__container--over.the-datepicker__container--left
+  .the-datepicker__main {
   border-bottom-left-radius: 0.3em;
   border-top-right-radius: 0.3em;
   border-bottom-right-radius: 0;
@@ -130,42 +133,73 @@
 .the-datepicker__main td.the-datepicker__cell a.the-datepicker__button {
   padding: 0.1em;
 }
-.the-datepicker__main td.the-datepicker__cell a.the-datepicker__button .the-datepicker__day-content {
+.the-datepicker__main
+  td.the-datepicker__cell
+  a.the-datepicker__button
+  .the-datepicker__day-content {
   display: block;
   padding: 0.6em 0;
 }
-.the-datepicker__main td.the-datepicker__day a.the-datepicker__button .the-datepicker__day-content {
+.the-datepicker__main
+  td.the-datepicker__day
+  a.the-datepicker__button
+  .the-datepicker__day-content {
   text-align: center;
   border-radius: 0.3em;
 }
 .the-datepicker__main td.the-datepicker__day a.the-datepicker__button:hover {
   background-color: transparent;
 }
-.the-datepicker__main td.the-datepicker__day a.the-datepicker__button:hover .the-datepicker__day-content {
+.the-datepicker__main
+  td.the-datepicker__day
+  a.the-datepicker__button:hover
+  .the-datepicker__day-content {
   background-color: #d1e8ff;
 }
-.the-datepicker__main td.the-datepicker__day--highlighted a.the-datepicker__button .the-datepicker__day-content {
+.the-datepicker__main
+  td.the-datepicker__day--highlighted
+  a.the-datepicker__button
+  .the-datepicker__day-content {
   background-color: #d1e8ff;
 }
 .the-datepicker__main td.the-datepicker__day--outside a.the-datepicker__button {
   color: #8ac4ff;
 }
-.the-datepicker__main td.the-datepicker__day--unavailable a.the-datepicker__button {
+.the-datepicker__main
+  td.the-datepicker__day--unavailable
+  a.the-datepicker__button {
   color: #aaa;
 }
-.the-datepicker__main td.the-datepicker__day--unavailable a.the-datepicker__button:hover .the-datepicker__day-content {
+.the-datepicker__main
+  td.the-datepicker__day--unavailable
+  a.the-datepicker__button:hover
+  .the-datepicker__day-content {
   background-color: transparent;
 }
 .the-datepicker__main td.the-datepicker__day--selected a.the-datepicker__button,
-.the-datepicker__main td.the-datepicker__day--selected.the-datepicker__day--highlighted a.the-datepicker__button {
+.the-datepicker__main
+  td.the-datepicker__day--selected.the-datepicker__day--highlighted
+  a.the-datepicker__button {
   color: #fff;
 }
-.the-datepicker__main td.the-datepicker__day--selected a.the-datepicker__button .the-datepicker__day-content,
-.the-datepicker__main td.the-datepicker__day--selected.the-datepicker__day--highlighted a.the-datepicker__button .the-datepicker__day-content {
+.the-datepicker__main
+  td.the-datepicker__day--selected
+  a.the-datepicker__button
+  .the-datepicker__day-content,
+.the-datepicker__main
+  td.the-datepicker__day--selected.the-datepicker__day--highlighted
+  a.the-datepicker__button
+  .the-datepicker__day-content {
   background-color: #007eff;
 }
-.the-datepicker__main td.the-datepicker__day--selected a.the-datepicker__button:hover .the-datepicker__day-content,
-.the-datepicker__main td.the-datepicker__day--selected.the-datepicker__day--highlighted a.the-datepicker__button:hover .the-datepicker__day-content {
+.the-datepicker__main
+  td.the-datepicker__day--selected
+  a.the-datepicker__button:hover
+  .the-datepicker__day-content,
+.the-datepicker__main
+  td.the-datepicker__day--selected.the-datepicker__day--highlighted
+  a.the-datepicker__button:hover
+  .the-datepicker__day-content {
   background-color: #007eff;
 }
 .the-datepicker__main .the-datepicker__day--weekend,

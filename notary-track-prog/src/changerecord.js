@@ -1,3 +1,3 @@
-export let main = function() {
-    console.log('change record.js');
-}
+export let main = function () {
+  console.log("change record.js");
+};
