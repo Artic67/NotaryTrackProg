@@ -1237,7 +1237,7 @@ async function leftMenuFunc() {
     '#notary-rnokpp': 'rnokpp',
   };
 
-  const configObject = config.read(configFile);
+  const configObject = await config.read(configFile);
 
   // Settings filling when page is loading
   for (const key in idToConfigName) {
@@ -1288,7 +1288,7 @@ async function leftMenuFunc() {
   if (applySettingsButton) {
     const configObectToWrite = {};
 
-    applySettingsButton.addEventListener('click', () => {
+    applySettingsButton.addEventListener('click', async () => {
       if (document.querySelector('#folderpick').files[0]) {
         const arr = document
           .querySelector('#folderpick')
@@ -1331,9 +1331,15 @@ async function leftMenuFunc() {
         }
       }
 
-      config.write(configFile, configObectToWrite);
+      let fileWritten = await config.write(configFile, configObectToWrite);
 
-      notification.raise('Налаштування звітів успішно збережені', 'is-primary');
+      if (fileWritten) {
+        notification.raise('Налаштування звітів успішно збережені', 'is-primary');
+      }
+      else {
+        notification.raise('Налаштування звітів не збережені');
+      }
+      
 
       const settingsModal = document.querySelector('.settings-modal');
       settingsModal.classList.remove('is-active');
@@ -1479,14 +1485,19 @@ async function leftMenuFunc() {
         }
       }
 
-      config.write(configFile, configObectToWrite2);
+      let fileWritten = await config.write(configFile, configObectToWrite2);
+
+      if (!fileWritten) {
+        notification.raise('Помилка запису файлу');
+        return false;
+      }
 
       notification.raise('Створення звіту', 'is-info');
 
       const taxModal = document.querySelector('.tax-modal');
       taxModal.classList.remove('is-active');
 
-      const configObject = config.read(configFile);
+      const configObject = await config.read(configFile);
 
       if (!configObject['reportFolder']) {
         console.error(new Error('Don`t choosed the report folder!'));
@@ -1679,7 +1690,7 @@ async function leftMenuFunc() {
   document
     .querySelector('.create-quartal-report')
     .addEventListener('click', async () => {
-      const configObject = config.read(configFile);
+      const configObject = await config.read(configFile);
 
       if (!configObject['reportFolder']) {
         console.error(new Error('Don`t choosed the report folder!'));
@@ -1806,7 +1817,7 @@ async function leftMenuFunc() {
   document
     .querySelector('.create-pension-report')
     .addEventListener('click', async () => {
-      const configObject = config.read(configFile);
+      const configObject = await config.read(configFile);
 
       if (!configObject['reportFolder']) {
         console.error(new Error('Don`t choosed the report folder!'));
