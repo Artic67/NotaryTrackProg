@@ -2,7 +2,7 @@
 <div id="top"></div>
 
 # NotaryTrackProg
-This program is designed to provide efficient and secure management of notary affairs. It allows users to create and manage notarial documents, manage clients and their records, and securely store and access all related data. The program also provides a secure online platform for clients to access their documents and other information. It also provides full access of all activities related to the notary affairs for free. The program is designed to ensure the highest level of accuracy for all notarial activities and will help notaries analyse statistics and make reports about their income.
+This program is designed to provide efficient and secure management of notary affairs. It allows users to create and manage notarial documents, manage clients and their records, and securely store and access all related data. It also provides full access of all activities related to the notary affairs for free. The program is designed to ensure the highest level of accuracy for all notarial activities and will help notaries analyse statistics and make reports about their income.
 
 ## Images
 ### Main Tab
