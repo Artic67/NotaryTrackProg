@@ -59,7 +59,7 @@ npm run start
 ```
 4. To compile the program and create an installation file, use:
 ```sh
-npm run make
+npm run package
 ```
 
 ### Installing advices
