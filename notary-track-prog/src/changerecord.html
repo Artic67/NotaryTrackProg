@@ -71,7 +71,7 @@
                 <table class="table is-fullwidth is-hoverable">
                     <thead>
                         <tr>
-                          <th>Номер запису</th>
+                          <th>Реєстровий номер</th>
                           <th>Назва послуги</th>
                           <th>Дата</th>
                           <th>Дохід</th>
@@ -89,12 +89,63 @@
 
                     </tbody>
                 </table>
+                
+                <div class="columns">
+                  <div class="column is-2">
+                    
+                    <div class="field is-horizontal">
+                      <div class="field-label">
+                        <!-- Left empty for spacing -->
+                      </div>
+                      <div class="field-body">
+                        <div class="field">
+                          <div class="control">
+                            <button class="button has-text-weight-medium has-text-black has-background-info copyrecord-button">
+                              Копіювати запис
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="column is-2">
+                    
+                    <div class="field is-horizontal">
+                      <div class="field-label">
+                        <!-- Left empty for spacing -->
+                      </div>
+                      <div class="field-body">
+                        <div class="field">
+                          <div class="control">
+                            <button class="button has-text-weight-medium has-text-black has-background-warning changerecord-button">
+                              Змінити запис
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="column">
+                  </div>
+                  <div class="column">
+                  </div>
+                </div>
+                
             </section>
           </div>
         </section>
+        <a class="prev-tr-page-arrow to-prev-tr-page">
+          <i class="fas fa-chevron-left fa-2x"></i>
+        </a>
+        <a class="next-tr-page-arrow to-next-tr-page">
+          <i class="fas fa-chevron-right fa-2x"></i>
+        </a>
         <scr src="./dbcontroller.js" query=
-        "select top 8
+        "select top 7
         Log.Id as Id,
+        Log.RegistryId as RegistryId,
         Services.Name as Name,
         Log.RecordDate as RecordDate,
         Log.Price as Price,

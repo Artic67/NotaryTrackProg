@@ -115,7 +115,7 @@
                 <table class="table is-fullwidth is-hoverable">
                     <thead>
                       <tr>
-                        <th>Номер запису</th>
+                        <th>Реєстровий номер</th>
                         <th>Назва нот. дії</th>
                         <th>Дата</th>
                         <th>Плата за нот. дію</th>
@@ -143,6 +143,7 @@
         <scr src="./dbcontroller.js" query=
         "select top 8
         Log.Id as Id,
+        Log.RegistryId as RegistryId,
         Services.Name as Name,
         Log.RecordDate as RecordDate,
         Log.Price as Price,

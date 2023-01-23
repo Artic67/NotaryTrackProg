@@ -207,6 +207,18 @@ a {
   left: 3.5rem;
 }
 
+.prev-tr-page-arrow {
+  position: fixed;
+  bottom: 5rem;
+  right: 12rem;
+}
+
+.next-tr-page-arrow {
+  position: fixed;
+  bottom: 5rem;
+  right: 8rem;
+}
+
 .nonedisplay {
   display: none !important;
   opacity: 0 !important;

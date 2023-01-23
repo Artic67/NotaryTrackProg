@@ -41,6 +41,7 @@ const lbg = document.querySelector('.loading-background');
 
 let ChosenChangeId;
 let trToDelete;
+let trToChange;
 
 function changePage(url) {
   const ab = document.querySelector('.actions-block');
@@ -94,6 +95,7 @@ function changeBackPage(url) {
 }
 
 async function loadNewContent(url) {
+  console.log(url);
   window.section = document.createElement('div');
 
   window.section.innerHTML = await fetchHtmlAsText(url);
@@ -106,6 +108,10 @@ async function loadNewContent(url) {
   const animElems = document.querySelectorAll('.to-menu-trans-anim');
   for (const ael of animElems) {
     ael.addEventListener('click', event => {
+      if (url == "./deleterecord.html") {
+        trToDelete = null;
+        console.log('trToDelete = null');
+      }
       event.preventDefault();
       const newPage = ael.getAttribute('href');
       changeBackPage(newPage, true);
@@ -265,6 +271,9 @@ async function addRecordFunc(filename, script) {
     };
 
     let dbdata = await db.DBController.getData(scrquery);
+
+    const registryId = document.querySelector('.registry-id');
+    const copyCountSelector = document.querySelector('.copy-count-input');
     const catSelector = document.querySelector('.select-cat');
     const subcatSelector = document.querySelector('.select-subcat');
     const serviceSelector = document.querySelector('.select-service');
@@ -405,10 +414,14 @@ async function addRecordFunc(filename, script) {
     catSelector.onchange = catSelectorChange;
     subcatSelector.onchange = subcatSelectorChange;
 
+
+    
+
     document
       .querySelector('.addrecord-button')
       .addEventListener('click', async () => {
         if (
+          registryId.value !== '' &&
           serviceSelector.value !== '' &&
           incomeInput.value !== '' &&
           !isNaN(parseInt(incomeInput.value)) &&
@@ -417,6 +430,14 @@ async function addRecordFunc(filename, script) {
           dateInput.value !== '' &&
           clickAllowed === true
         ) {
+
+          let copyCount = parseInt(copyCountSelector.value);
+          console.log("Copy Count: ", copyCountSelector.value);
+          if (isNaN(copyCount)) {
+            console.log("Copy Count is NaN");
+            copyCount = 1;
+          }
+
           let freedomReasonSelectValue = freedomReasonSelect.value;
           const taxFreeInputChecked = taxFreeInput.checked;
 
@@ -427,45 +448,51 @@ async function addRecordFunc(filename, script) {
           clickAllowed = false;
           loading.start();
 
-          let nextid = await db.DBController.getData(
-            'select top 1 Id from log order by Id desc'
-          );
-          console.log(nextid);
-          if (nextid.length === 0) {
-            nextid = [
-              {
-                Id: 0,
-              },
-            ];
+          let recordAdded = null;
+
+          for (let index = 0; index < copyCount; index++) {
+            let nextid = await db.DBController.getData(
+              'select top 1 Id from log order by Id desc'
+            );
+            console.log(nextid);
+            if (nextid.length === 0) {
+              nextid = [
+                {
+                  Id: 0,
+                },
+              ];
+            }
+            recordAdded = await db.DBController.writeData(
+              `INSERT INTO Log (
+                Id, 
+                RegistryId,
+                ServiceId, 
+                RecordDate, 
+                Price, 
+                ActualPrice, 
+                DropOff, 
+                ContractSum, 
+                PersonalIncomeTax, 
+                MilitaryLevy, 
+                PensionFundPayment, 
+                PensionTaxFree, 
+                Comment
+                ) VALUES (
+                  ${nextid[0]['Id'] + 1}, 
+                  ${registryId.value},
+                  ${serviceSelector.value}, 
+                  "${dateInput.value}", 
+                  ${incomeInput.value}, 
+                  ${realIncomeInput.value}, 
+                  ${dropOffInput.checked}, 
+                  ${contractSumInput.value || 'NULL'}, 
+                  ${pdfoInput.value || 'NULL'}, 
+                  ${militaryLevyInput.value || 'NULL'}, 
+                  ${pensionFundPaymentInput.value || 'NULL'}, 
+                  ${freedomReasonSelectValue || 'NULL'}, 
+                  "${commentInput.value || ''}")`
+            );
           }
-          const recordAdded = await db.DBController.writeData(
-            `INSERT INTO Log (
-              Id, 
-              ServiceId, 
-              RecordDate, 
-              Price, 
-              ActualPrice, 
-              DropOff, 
-              ContractSum, 
-              PersonalIncomeTax, 
-              MilitaryLevy, 
-              PensionFundPayment, 
-              PensionTaxFree, 
-              Comment
-              ) VALUES (
-                ${nextid[0]['Id'] + 1}, 
-                ${serviceSelector.value}, 
-                "${dateInput.value}", 
-                ${incomeInput.value}, 
-                ${realIncomeInput.value}, 
-                ${dropOffInput.checked}, 
-                ${contractSumInput.value || 'NULL'}, 
-                ${pdfoInput.value || 'NULL'}, 
-                ${militaryLevyInput.value || 'NULL'}, 
-                ${pensionFundPaymentInput.value || 'NULL'}, 
-                ${freedomReasonSelectValue || 'NULL'}, 
-                "${commentInput.value || ''}")`
-          );
 
           if (recordAdded) {
             loading.end();
@@ -476,7 +503,7 @@ async function addRecordFunc(filename, script) {
             changeBackPage(link, true);
           }
         }
-      });
+    });
   } else {
     const file = require(filename);
     console.log(file);
@@ -488,95 +515,103 @@ async function addRecordFunc(filename, script) {
 
 async function changeRecordFunc(filename, script) {
   if (filename === './dbcontroller.js') {
-    const scrquery = script.getAttribute('query');
+    let pageNum = 1;
+    const maxTrOnPage = 7;
+    let countOnThisPage = maxTrOnPage;
+    const recordsCountQuery = `
+    SELECT count(*) as RecCount FROM log
+    `;
     const db = require(filename);
+    let countData = await db.DBController.getData(recordsCountQuery);
+    let recordCount = countData[0]['RecCount']
 
-    const dbdata = await db.DBController.getData(scrquery);
-    const tbody = document.querySelector('table.table > tbody');
 
-    console.log(JSON.stringify(dbdata));
+    const clearTable = () => {
+      const oldTbody = document.querySelector('table.table > tbody');
+      const tbody = document.createElement('tbody');
+      oldTbody.parentNode.replaceChild(tbody, oldTbody);
+    };
 
-    for (const row of dbdata) {
-      const tr = document.createElement('tr');
+    const updateTable = async () => {
+      clearTable();
+      fillChangeRecordTbody(db, pageNum, maxTrOnPage, countOnThisPage);
+      return true;
+    };
 
-      // START Normal Date
+    fillChangeRecordTbody(db, pageNum, maxTrOnPage, countOnThisPage);
 
-      const date = new Date(row['RecordDate']);
-
-      const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-
-      const month =
-        date.getMonth() + 1 < 10 ?
-          '0' + (date.getMonth() + 1) :
-          date.getMonth() + 1;
-
-      const year = date.getFullYear();
-      const datestring = `${day}.${month}.${year}`;
-      row['RecordDate'] = datestring;
-
-      // END Normal Date
-
-      // START Check Service name
-
-      let name = row['Name'];
-      if (name.length > 46) {
-        name = name.slice(0, 42) + '... ';
-      }
-
-      row['Name'] = name;
-
-      // END Check Service name
-
-      // START Drop Off normal name
-
-      const dropOffNames = {
-        true: 'Так',
-        false: 'Ні',
-      };
-
-      const dropOffName = row['DropOff'];
-
-      row['DropOff'] = dropOffNames[dropOffName];
-
-      // END Drop Off normal name
-
-      // START Normal Tax Freedom Reason
-
-      const TaxFreedomReasons = {
-        0: 'Черга на одержання',
-        1: 'Придбання вперше',
-      };
-
-      if (row['PensionTaxFree'] !== null) {
-        const reason = TaxFreedomReasons[row['PensionTaxFree']];
-        row['PensionTaxFree'] = reason;
-      }
-
-      // END Normal Tax Freedom Reason
-
-      tr.setAttribute('href', './changerecordtr.html');
-
-      /* eslint-disable */
-      tr.addEventListener("click", () => {
-        const newPage = tr.getAttribute("href");
-        ChosenChangeId = tr.getAttribute("id");
-        changePageWA(newPage);
+  
+    document
+      .querySelector('.copyrecord-button')
+      .addEventListener('click', async() => {
+        console.log("Clicked copy button");
+        if (trToChange) {
+          let recordCopied = await makeRecordCopy();
+          if (recordCopied) {
+            countData = await db.DBController.getData(recordsCountQuery);
+            recordCount = countData[0]['RecCount'];
+            updateTable();
+          } else{
+            console.error(new Error('Record isn`t copied!'));
+            notification.raise(
+            `Помилка. 
+            Не вдалося створити копію запису.`
+          );
+          }
+          
+        } else {
+          console.error(new Error('Don`t choosed the record to change or copy!'));
+          notification.raise(
+            `Не обраний запис. 
+            Спрочатку оберіть запис.`
+          );
+        }
       });
-      /* eslint-enable */
 
-      tr.setAttribute('id', row['Id']);
+    // Add Change button href attr
+    document
+      .querySelector('.changerecord-button')
+      .setAttribute('href', './changerecordtr.html');
 
-      tr.classList.add('tabletr');
+    document
+      .querySelector('.changerecord-button')
+      .addEventListener('click', () => {
+        console.log("Clicked change button");
+        if (trToChange) {
 
-      for (const cell in row) {
-        const td = document.createElement('td');
-        td.innerHTML = row[cell];
-        tr.append(td);
+          let button = document.querySelector('.changerecord-button');
+
+          const newPage = button.getAttribute("href");
+          ChosenChangeId = trToChange;
+          changePageWA(newPage);
+
+        } else {
+          console.error(new Error('Don`t choosed the record to change or copy!'));
+          notification.raise(
+            `Не обраний запис. 
+            Спрочатку оберіть запис.`
+          );
+        }
+      });
+
+    const prevArrow = document.querySelector('a.prev-tr-page-arrow');
+    const nextArrow = document.querySelector('a.next-tr-page-arrow');
+    prevArrow.addEventListener("click", async () => {
+      if (pageNum > 1) {
+        pageNum--;
+        countOnThisPage = maxTrOnPage;
+        await updateTable();
       }
+    });
+    nextArrow.addEventListener("click", async () => {
+      if (Math.ceil(recordCount/maxTrOnPage) > pageNum) {
+        pageNum++;
+        countOnThisPage = recordCount - maxTrOnPage * (pageNum - 1);
+        if (countOnThisPage > maxTrOnPage) { countOnThisPage = maxTrOnPage; } 
+        await updateTable();   
+      }
+    });
 
-      tbody.append(tr);
-      console.log(row);
-    }
   } else {
     const file = require(filename);
     console.log(file);
@@ -584,6 +619,198 @@ async function changeRecordFunc(filename, script) {
   }
 
   return true;
+}
+
+async function fillChangeRecordTbody(db, pageNum, maxTrOnPage, countOnThisPage) {
+  const scrquery = `select * from
+    ( select top ${countOnThisPage} * from
+    ( select top ${pageNum * maxTrOnPage}
+        Log.Id as Id,
+        Log.RegistryId as RegistryId,
+        Services.Name as Name,
+        Log.RecordDate as RecordDate,
+        Log.Price as Price,
+        Log.ActualPrice as ActualPrice,
+        Log.DropOff as DropOff,
+        Log.ContractSum as ContractSum,
+        Log.PersonalIncomeTax as PersonalIncomeTax,
+        Log.MilitaryLevy as MilitaryLevy,
+        Log.PensionFundPayment as PensionFundPayment,
+        Log.PensionTaxFree as PensionTaxFree,
+        Log.Comment as Comment
+        from 
+        Log
+        left join Services
+        on Log.ServiceId = Services.Id
+        order by Log.RegistryId desc, Log.Id desc ) as ft
+    order by RegistryId asc, Id asc ) as st
+    order by RegistryId desc
+  `;
+
+  const dbdata = await db.DBController.getData(scrquery);
+  const oldTbody = document.querySelector('table.table > tbody');
+  const tbody = document.createElement('tbody');
+  oldTbody.parentNode.replaceChild(tbody, oldTbody);
+  console.log(JSON.stringify(dbdata));
+  // START check all cols and append to tbody
+  for (const row of dbdata) {
+    const tr = document.createElement('tr');
+
+    // START Normal Date
+
+    const date = new Date(row['RecordDate']);
+    const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    const month =
+      date.getMonth() + 1 < 10 ?
+        '0' + (date.getMonth() + 1) :
+        date.getMonth() + 1;
+    const year = date.getFullYear();
+    const datestring = `${day}.${month}.${year}`;
+    row['RecordDate'] = datestring;
+
+    // END Normal Date
+
+    // START Check Service name
+
+    let name = row['Name'];
+    if (name.length > 46) {
+      name = name.slice(0, 42) + '... ';
+    }
+    row['Name'] = name;
+
+    // END Check Service name
+
+    // START Drop Off normal name
+
+    const dropOffNames = {
+      true: 'Так',
+      false: 'Ні',
+    };
+    const dropOffName = row['DropOff'];
+    row['DropOff'] = dropOffNames[dropOffName];
+
+    // END Drop Off normal name
+
+    // START Normal Tax Freedom Reason
+
+    const TaxFreedomReasons = {
+      0: 'Черга на одержання',
+      1: 'Придбання вперше',
+    };
+    if (row['PensionTaxFree'] !== null) {
+      const reason = TaxFreedomReasons[row['PensionTaxFree']];
+      row['PensionTaxFree'] = reason;
+    }
+
+    // END Normal Tax Freedom Reason
+
+    /* eslint-disable */
+    tr.addEventListener("click", () => {
+      trToChange = tr.getAttribute("id");
+      const trlist = document.querySelectorAll("table.table > tbody > tr");
+      for (const trel of trlist) {
+        trel.classList.remove("selectedtr");
+      }
+      tr.classList.add("selectedtr");
+
+      console.log("trToChange = " + trToChange);
+    });
+    /* eslint-enable */
+
+    tr.setAttribute('id', row['Id']);
+
+    tr.classList.add('tabletr');
+
+    for (const cell in row) {
+      if (cell === 'Id') { continue; }
+      const td = document.createElement('td');
+      td.innerHTML = row[cell];
+      tr.append(td);
+    }
+
+    tbody.append(tr);
+    console.log(row);
+  }
+  // END check all cols and append to tbody
+  
+};
+
+async function makeRecordCopy(updateTable) {
+  const dbRecord = await db.DBController.getData(
+    `SELECT * FROM Log where Id = ${trToChange}`
+  );
+
+  const date = new Date(dbRecord[0]['RecordDate']);
+
+  //Make normal Date
+
+  const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+
+  const month =
+    date.getMonth() + 1 < 10 ?
+      '0' + (date.getMonth() + 1) :
+      date.getMonth() + 1;
+
+  const year = date.getFullYear();
+  const datestring = `${day}.${month}.${year}`;
+  dbRecord[0]['RecordDate'] = datestring;
+
+  //----------------
+
+  console.log(dbRecord);
+
+  loading.start();
+  let recordCopied = null;
+  
+  let lastid = await db.DBController.getData(
+    'select top 1 Id from log order by Id desc'
+  );
+
+  console.log("Last id: ", lastid);
+  if (lastid.length === 0) {
+    lastid = [
+      {
+        Id: 0,
+      },
+    ];
+  }
+
+  recordCopied = await db.DBController.writeData(
+    `INSERT INTO Log (
+      Id, 
+      RegistryId,
+      ServiceId, 
+      RecordDate, 
+      Price, 
+      ActualPrice, 
+      DropOff, 
+      ContractSum, 
+      PersonalIncomeTax, 
+      MilitaryLevy, 
+      PensionFundPayment, 
+      PensionTaxFree, 
+      Comment
+      ) VALUES (
+        ${lastid[0]['Id'] + 1}, 
+        ${dbRecord[0]['RegistryId']},
+        ${dbRecord[0]['ServiceId']}, 
+        "${dbRecord[0]['RecordDate']}", 
+        ${dbRecord[0]['Price']}, 
+        ${dbRecord[0]['ActualPrice']}, 
+        ${dbRecord[0]['DropOff']}, 
+        ${dbRecord[0]['ContractSum'] || 'NULL'}, 
+        ${dbRecord[0]['PersonalIncomeTax'] || 'NULL'}, 
+        ${dbRecord[0]['MilitaryLevy'] || 'NULL'}, 
+        ${dbRecord[0]['PensionFundPayment'] || 'NULL'}, 
+        ${dbRecord[0]['PensionTaxFree'] || 'NULL'}, 
+        "${dbRecord[0]['Comment'] || ''}")`
+  );
+  if (recordCopied) {
+    loading.end();
+    notification.raise('Запис успішно скопійовано', 'is-primary');
+
+    return true;
+  }
 }
 
 async function changeRecordTrFunc(filename, script) {
@@ -599,6 +826,7 @@ async function changeRecordTrFunc(filename, script) {
     };
 
     let dbdata = await db.DBController.getData(scrquery);
+    const registryId = document.querySelector('.registry-id');
     const catSelector = document.querySelector('.select-cat');
     const subcatSelector = document.querySelector('.select-subcat');
     const serviceSelector = document.querySelector('.select-service');
@@ -771,6 +999,7 @@ async function changeRecordTrFunc(filename, script) {
     //----------------
     // Writing other fields
 
+    registryId.value = dbRecord[0]['RegistryId'];
     incomeInput.value = dbRecord[0]['Price'];
     realIncomeInput.value = dbRecord[0]['ActualPrice'];
     dateInput.value = dbRecord[0]['RecordDate'];
@@ -805,6 +1034,7 @@ async function changeRecordTrFunc(filename, script) {
       .querySelector('.changerecord-button')
       .addEventListener('click', async () => {
         if (
+          registryId.value !== '' &&
           serviceSelector.value !== '' &&
           incomeInput.value !== '' &&
           !isNaN(parseInt(incomeInput.value)) &&
@@ -822,7 +1052,9 @@ async function changeRecordTrFunc(filename, script) {
           loading.start();
           const recordUpdated = await db.DBController.writeData(
             `update Log
-                set ServiceId = ${serviceSelector.value}, 
+                set 
+                RegistryId = ${registryId.value},
+                ServiceId = ${serviceSelector.value}, 
                 RecordDate = "${dateInput.value}", 
                 Price = ${incomeInput.value}, 
                 ActualPrice = ${realIncomeInput.value}, 
@@ -857,127 +1089,46 @@ async function changeRecordTrFunc(filename, script) {
 
 async function deleteRecordFunc(filename, script) {
   if (filename === './dbcontroller.js') {
-    const scrquery = script.getAttribute('query');
+    
+    let pageNum = 1;
+    const maxTrOnPage = 7;
+    let countOnThisPage = maxTrOnPage;
+    const recordsCountQuery = `
+    SELECT count(*) as RecCount FROM log
+    `;
     const db = require(filename);
-
-    const setTable = async () => {
-      const dbdata = await db.DBController.getData(scrquery);
-      const tbody = document.querySelector('table.table > tbody');
-
-      console.log(JSON.stringify(dbdata));
-
-      for (const row of dbdata) {
-        const tr = document.createElement('tr');
-
-        // START Normal Date
-
-        const date = new Date(row['RecordDate']);
-
-        const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-
-        const month =
-          date.getMonth() + 1 < 10 ?
-            '0' + (date.getMonth() + 1) :
-            date.getMonth() + 1;
-
-        const year = date.getFullYear();
-        const datestring = `${day}.${month}.${year}`;
-        row['RecordDate'] = datestring;
-
-        // END Normal Date
-
-        // START Check Service name
-
-        let name = row['Name'];
-        if (name.length > 46) {
-          name = name.slice(0, 42) + '... ';
-        }
-
-        row['Name'] = name;
-
-        // END Check Service name
-
-        // START Drop Off normal name
-
-        const dropOffNames = {
-          true: 'Так',
-          false: 'Ні',
-        };
-
-        const dropOffName = row['DropOff'];
-
-        row['DropOff'] = dropOffNames[dropOffName];
-
-        // END Drop Off normal name
-
-        // START Normal Tax Freedom Reason
-
-        const TaxFreedomReasons = {
-          0: 'Черга на одержання',
-          1: 'Придбання вперше',
-        };
-
-        if (row['PensionTaxFree'] !== null) {
-          const reason = TaxFreedomReasons[row['PensionTaxFree']];
-          row['PensionTaxFree'] = reason;
-        }
-
-        // END Normal Tax Freedom Reason
-
-        /* eslint-disable */
-        tr.addEventListener("click", () => {
-          trToDelete = tr.getAttribute("id");
-          const trlist = document.querySelectorAll("table.table > tbody > tr");
-          for (const trel of trlist) {
-            trel.classList.remove("selectedtr");
-          }
-          tr.classList.add("selectedtr");
-
-          console.log("trToDelete = " + trToDelete);
-        });
-        /* eslint-enable */
-
-        tr.setAttribute('id', row['Id']);
-
-        tr.classList.add('tabletr');
-
-        for (const cell in row) {
-          const td = document.createElement('td');
-          td.innerHTML = row[cell];
-          tr.append(td);
-        }
-
-        tbody.append(tr);
-        console.log(row);
-      }
-      return true;
-    };
+    let countData = await db.DBController.getData(recordsCountQuery);
+    let recordCount = countData[0]['RecCount'];
 
     const clearTable = () => {
-      document.querySelector('table.table > tbody').innerHTML = '';
+      const oldTbody = document.querySelector('table.table > tbody');
+      const tbody = document.createElement('tbody');
+      oldTbody.parentNode.replaceChild(tbody, oldTbody);
     };
 
     const updateTable = async () => {
       clearTable();
-      await setTable();
+      fillDeleteRecordTbody(db, pageNum, maxTrOnPage, countOnThisPage);
       return true;
     };
 
-    await setTable();
+    fillDeleteRecordTbody(db, pageNum, maxTrOnPage, countOnThisPage);
 
     const deletePopupCloseList = document.querySelectorAll(
       '.close-delete-popup'
     );
+    
     for (const deletePopupClose of deletePopupCloseList) {
       deletePopupClose.addEventListener('click', () => {
         const deletePopup = document.querySelector('.delete-popup');
         deletePopup.classList.remove('is-active');
       });
     }
-
+  
     document
       .querySelector('.deleterecord-button')
       .addEventListener('click', () => {
+        console.log("Clicked delete button");
         if (trToDelete) {
           const deletePopup = document.querySelector('.delete-popup');
           deletePopup.classList.add('is-active');
@@ -990,7 +1141,7 @@ async function deleteRecordFunc(filename, script) {
           );
         }
       });
-
+    
     document
       .querySelector('.truly-deleterecord-button')
       .addEventListener('click', async () => {
@@ -1000,11 +1151,31 @@ async function deleteRecordFunc(filename, script) {
         const recordDeleted = await db.DBController.writeData(
           `delete from Log where Id = ${trToDelete}`
         );
-
+        
         if (recordDeleted) {
           await updateTable();
+          countData = await db.DBController.getData(recordsCountQuery);
+          recordCount = countData[0]['RecCount'];
           loading.end();
           notification.raise('Запис успішно видалено', 'is-primary');
+        }
+      });
+    
+      const prevArrow = document.querySelector('a.prev-tr-page-arrow');
+      const nextArrow = document.querySelector('a.next-tr-page-arrow');
+      prevArrow.addEventListener("click", async () => {
+        if (pageNum > 1) {
+          pageNum--;
+          countOnThisPage = maxTrOnPage;
+          await updateTable();
+        }
+      });
+      nextArrow.addEventListener("click", async () => {
+        if (Math.ceil(recordCount/maxTrOnPage) > pageNum) {
+          pageNum++;
+          countOnThisPage = recordCount - maxTrOnPage * (pageNum - 1);
+          if (countOnThisPage > maxTrOnPage) { countOnThisPage = maxTrOnPage; } 
+          await updateTable();
         }
       });
   } else {
@@ -1014,6 +1185,126 @@ async function deleteRecordFunc(filename, script) {
   }
 
   return true;
+}
+
+async function fillDeleteRecordTbody(db, pageNum, maxTrOnPage, countOnThisPage) {
+  const scrquery = `select * from
+    ( select top ${countOnThisPage} * from
+    ( select top ${pageNum * maxTrOnPage}
+        Log.Id as Id,
+        Log.RegistryId as RegistryId,
+        Services.Name as Name,
+        Log.RecordDate as RecordDate,
+        Log.Price as Price,
+        Log.ActualPrice as ActualPrice,
+        Log.DropOff as DropOff,
+        Log.ContractSum as ContractSum,
+        Log.PersonalIncomeTax as PersonalIncomeTax,
+        Log.MilitaryLevy as MilitaryLevy,
+        Log.PensionFundPayment as PensionFundPayment,
+        Log.PensionTaxFree as PensionTaxFree,
+        Log.Comment as Comment
+        from 
+        Log
+        left join Services
+        on Log.ServiceId = Services.Id
+        order by Log.RegistryId desc, Log.Id desc ) as ft
+    order by RegistryId asc, Id asc ) as st
+    order by RegistryId desc
+  `;
+
+const dbdata = await db.DBController.getData(scrquery);
+const tbody = document.querySelector('table.table > tbody');
+console.log(JSON.stringify(dbdata));
+
+// START check all cols and append to tbody
+for (const row of dbdata) {
+    const tr = document.createElement('tr');
+
+    // START Normal Date
+
+    const date = new Date(row['RecordDate']);
+
+    const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+
+    const month =
+      date.getMonth() + 1 < 10 ?
+        '0' + (date.getMonth() + 1) :
+        date.getMonth() + 1;
+
+    const year = date.getFullYear();
+    const datestring = `${day}.${month}.${year}`;
+    row['RecordDate'] = datestring;
+
+    // END Normal Date
+
+    // START Check Service name
+
+    let name = row['Name'];
+    if (name.length > 46) {
+      name = name.slice(0, 42) + '... ';
+    }
+
+    row['Name'] = name;
+
+    // END Check Service name
+
+    // START Drop Off normal name
+
+    const dropOffNames = {
+      true: 'Так',
+      false: 'Ні',
+    };
+
+    const dropOffName = row['DropOff'];
+
+    row['DropOff'] = dropOffNames[dropOffName];
+
+    // END Drop Off normal name
+
+    // START Normal Tax Freedom Reason
+
+    const TaxFreedomReasons = {
+      0: 'Черга на одержання',
+      1: 'Придбання вперше',
+    };
+
+    if (row['PensionTaxFree'] !== null) {
+      const reason = TaxFreedomReasons[row['PensionTaxFree']];
+      row['PensionTaxFree'] = reason;
+    }
+
+    // END Normal Tax Freedom Reason
+
+    /* eslint-disable */
+    tr.addEventListener("click", () => {
+      trToDelete = tr.getAttribute("id");
+      const trlist = document.querySelectorAll("table.table > tbody > tr");
+      for (const trel of trlist) {
+        trel.classList.remove("selectedtr");
+      }
+      tr.classList.add("selectedtr");
+
+      console.log("trToDelete = " + trToDelete);
+    });
+    /* eslint-enable */
+
+    tr.setAttribute('id', row['Id']);
+
+    tr.classList.add('tabletr');
+
+    for (const cell in row) {
+      if (cell === 'Id') { continue; }
+      const td = document.createElement('td');
+      td.innerHTML = row[cell];
+      tr.append(td);
+    }
+
+    tbody.append(tr);
+    console.log(row);
+}
+// END check all cols and append to tbody
+
 }
 
 function statFunc(filename, script) {
@@ -1046,20 +1337,60 @@ async function rightMenuFunc(filename, script) {
 
     rmDiagram2.main('rightMenuChart2');
 
+    let pageNum = 1;
+    const maxTrOnPage = 8;
+    let countOnThisPage = maxTrOnPage;
+
     // Make table
 
-    console.log('Table loading');
+    fillRightMenuTbody(db, pageNum, maxTrOnPage, countOnThisPage);
 
-    const dbdata = await db.DBController.getData(scrquery);
+  } else {
+    const file = require(filename);
+    console.log(file);
+    file.main();
+  }
 
-    console.log('Table loaded');
+  return true;
+}
 
-    const tbody = document.querySelector('table.table > tbody');
+async function fillRightMenuTbody(db, pageNum, maxTrOnPage, countOnThisPage) {
+  
+  const scrquery = `select * from
+    ( select top ${countOnThisPage} * from
+    ( select top ${pageNum * maxTrOnPage}
+        Log.Id as Id,
+        Log.RegistryId as RegistryId,
+        Services.Name as Name,
+        Log.RecordDate as RecordDate,
+        Log.Price as Price,
+        Log.ActualPrice as ActualPrice,
+        Log.DropOff as DropOff,
+        Log.ContractSum as ContractSum,
+        Log.PersonalIncomeTax as PersonalIncomeTax,
+        Log.MilitaryLevy as MilitaryLevy,
+        Log.PensionFundPayment as PensionFundPayment,
+        Log.PensionTaxFree as PensionTaxFree,
+        Log.Comment as Comment
+        from 
+        Log
+        left join Services
+        on Log.ServiceId = Services.Id
+        order by Log.RegistryId desc, Log.Id desc ) as ft
+    order by RegistryId asc, Id asc ) as st
+    order by RegistryId desc
+  `;
 
-    console.log(JSON.stringify(dbdata));
-
-    for (const row of dbdata) {
+  const dbdata = await db.DBController.getData(scrquery);
+  const oldTbody = document.querySelector('table.table > tbody');
+  const tbody = document.createElement('tbody');
+  oldTbody.parentNode.replaceChild(tbody, oldTbody);
+  console.log(JSON.stringify(dbdata));
+  // START check all cols and append to tbody
+  for (const row of dbdata) {
       const tr = document.createElement('tr');
+
+      // START Normal Date
 
       const date = new Date(row['RecordDate']);
 
@@ -1073,6 +1404,8 @@ async function rightMenuFunc(filename, script) {
       const year = date.getFullYear();
       const datestring = `${day}.${month}.${year}`;
       row['RecordDate'] = datestring;
+
+      // END Normal Date
 
       // START Check Service name
 
@@ -1112,7 +1445,12 @@ async function rightMenuFunc(filename, script) {
 
       // END Normal Tax Freedom Reason
 
+      tr.setAttribute('id', row['Id']);
+
+      tr.classList.add('tabletr');
+
       for (const cell in row) {
+        if (cell === 'Id') { continue; }
         const td = document.createElement('td');
         td.innerHTML = row[cell];
         tr.append(td);
@@ -1120,15 +1458,10 @@ async function rightMenuFunc(filename, script) {
 
       tbody.append(tr);
       console.log(row);
-    }
-  } else {
-    const file = require(filename);
-    console.log(file);
-    file.main();
   }
-
-  return true;
-}
+  // END check all cols and append to tbody
+  
+};
 
 async function leftMenuFunc() {
   // START Report settings
