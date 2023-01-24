@@ -1,5 +1,5 @@
 const notification = {
-  raise(notificationText, notificationBulmaClass = "is-danger") {
+  raise(notificationText, notificationBulmaClass = "has-bg-red") {
     try {
       const notificationContainer = document.querySelector(
         "div.notification-container"
@@ -15,6 +15,7 @@ const notification = {
       const mainDiv = document.createElement("div");
       const button = document.createElement("button");
 
+      mainDiv.classList.add("has-text-white");
       mainDiv.classList.add("notification", notificationBulmaClass);
       button.classList.add("delete", "delete-notification");
 

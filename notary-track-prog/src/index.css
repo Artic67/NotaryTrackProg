@@ -432,6 +432,26 @@ figure.main-icons-clients {
   color: #fff;
 }
 
+.has-bg-orange {
+  background-color: #df5b02;
+  border-color: transparent;
+}
+
+.has-bg-blue-bleach {
+  background-color: #0582e2;
+  border-color: transparent;
+}
+
+.has-bg-red {
+  background-color: #d4292f;
+  border-color: transparent;
+}
+
+.has-bg-green {
+  background-color: #0c8308;
+  border-color: transparent;
+}
+
 p.control .button.is-static {
   background-color: #303036;
   border-color: transparent;

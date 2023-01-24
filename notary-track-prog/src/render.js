@@ -112,6 +112,10 @@ async function loadNewContent(url) {
         trToDelete = null;
         console.log('trToDelete = null');
       }
+      if (url == "./changerecord.html") {
+        trToChange = null;
+        console.log('trToChange = null');
+      }
       event.preventDefault();
       const newPage = ael.getAttribute('href');
       changeBackPage(newPage, true);
@@ -499,7 +503,7 @@ async function addRecordFunc(filename, script) {
             const link = document
               .querySelector('.addrecord-button')
               .getAttribute('hreflink');
-            notification.raise('Запис успішно додано', 'is-primary');
+            notification.raise('Запис успішно додано', 'has-bg-green');
             changeBackPage(link, true);
           }
         }
@@ -550,6 +554,7 @@ async function changeRecordFunc(filename, script) {
           if (recordCopied) {
             countData = await db.DBController.getData(recordsCountQuery);
             recordCount = countData[0]['RecCount'];
+            trToChange = null;
             updateTable();
           } else{
             console.error(new Error('Record isn`t copied!'));
@@ -583,6 +588,7 @@ async function changeRecordFunc(filename, script) {
 
           const newPage = button.getAttribute("href");
           ChosenChangeId = trToChange;
+          trToChange = null;
           changePageWA(newPage);
 
         } else {
@@ -598,6 +604,7 @@ async function changeRecordFunc(filename, script) {
     const nextArrow = document.querySelector('a.next-tr-page-arrow');
     prevArrow.addEventListener("click", async () => {
       if (pageNum > 1) {
+        trToChange = null;
         pageNum--;
         countOnThisPage = maxTrOnPage;
         await updateTable();
@@ -605,6 +612,7 @@ async function changeRecordFunc(filename, script) {
     });
     nextArrow.addEventListener("click", async () => {
       if (Math.ceil(recordCount/maxTrOnPage) > pageNum) {
+        trToChange = null;
         pageNum++;
         countOnThisPage = recordCount - maxTrOnPage * (pageNum - 1);
         if (countOnThisPage > maxTrOnPage) { countOnThisPage = maxTrOnPage; } 
@@ -807,7 +815,7 @@ async function makeRecordCopy(updateTable) {
   );
   if (recordCopied) {
     loading.end();
-    notification.raise('Запис успішно скопійовано', 'is-primary');
+    notification.raise('Запис успішно скопійовано', 'has-bg-green');
 
     return true;
   }
@@ -1075,7 +1083,7 @@ async function changeRecordTrFunc(filename, script) {
             const link = document
               .querySelector('.changerecord-button')
               .getAttribute('hreflink');
-            notification.raise('Запис успішно змінено', 'is-primary');
+            notification.raise('Запис успішно змінено', 'has-bg-green');
             changeBackPage(link, true);
           }
         }
@@ -1153,11 +1161,12 @@ async function deleteRecordFunc(filename, script) {
         );
         
         if (recordDeleted) {
+          trToDelete = null;
           await updateTable();
           countData = await db.DBController.getData(recordsCountQuery);
           recordCount = countData[0]['RecCount'];
           loading.end();
-          notification.raise('Запис успішно видалено', 'is-primary');
+          notification.raise('Запис успішно видалено', 'has-bg-green');
         }
       });
     
@@ -1165,6 +1174,7 @@ async function deleteRecordFunc(filename, script) {
       const nextArrow = document.querySelector('a.next-tr-page-arrow');
       prevArrow.addEventListener("click", async () => {
         if (pageNum > 1) {
+          trToDelete = null;
           pageNum--;
           countOnThisPage = maxTrOnPage;
           await updateTable();
@@ -1172,6 +1182,7 @@ async function deleteRecordFunc(filename, script) {
       });
       nextArrow.addEventListener("click", async () => {
         if (Math.ceil(recordCount/maxTrOnPage) > pageNum) {
+          trToDelete = null;
           pageNum++;
           countOnThisPage = recordCount - maxTrOnPage * (pageNum - 1);
           if (countOnThisPage > maxTrOnPage) { countOnThisPage = maxTrOnPage; } 
@@ -1667,7 +1678,7 @@ async function leftMenuFunc() {
       let fileWritten = await config.write(configFile, configObectToWrite);
 
       if (fileWritten) {
-        notification.raise('Налаштування звітів успішно збережені', 'is-primary');
+        notification.raise('Налаштування звітів успішно збережені', 'has-bg-green');
       }
       else {
         notification.raise('Налаштування звітів не збережені');
@@ -2012,7 +2023,7 @@ async function leftMenuFunc() {
           `Річний звіт успішно створений в папці ${
             configObject['reportFolder']
           }`,
-          'is-primary'
+          'has-bg-green'
         );
         loading.end();
       }
@@ -2139,7 +2150,7 @@ async function leftMenuFunc() {
           `Квартальний звіт успішно створений в папці ${
             configObject['reportFolder']
           }`,
-          'is-primary'
+          'has-bg-green'
         );
         loading.end();
       }
@@ -2221,7 +2232,7 @@ async function leftMenuFunc() {
             el
           );
         }
-      }
+      }is-primary
 
       let performer = '';
 
@@ -2453,7 +2464,7 @@ async function leftMenuFunc() {
           `Пенсійний звіт успішно створений в папці ${
             configObject['reportFolder']
           }`,
-          'is-primary'
+          'has-bg-green'
         );
         loading.end();
       }
